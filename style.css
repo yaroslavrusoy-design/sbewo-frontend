@@ -45,3 +45,8 @@
 @media(max-height:650px){.welcome-identity .mark{height:43px;width:43px}.welcome-identity strong{font-size:23px}.welcome-copy h1{font-size:20px}.welcome-art img{max-height:220px}.welcome-actions{padding-top:7px;gap:6px}.welcome-screen{padding-top:10px}.home-intro{height:74px}.home-intro img{height:92px}.stats .stat{min-height:83px}.home-links .link-row{min-height:55px}}
 @media(max-width:340px){.home-intro h1{font-size:20px}.home-intro img{width:112px}.home-links .link-row{min-height:56px}.stat{min-height:94px}.welcome-copy h1{font-size:21px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+/* Functional notifications and chat visibility controls */
+.switch{position:relative;flex-shrink:0;width:42px;height:25px;border:0;border-radius:20px;background:#cbd7e9;cursor:pointer;transition:background .2s}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:white;box-shadow:0 1px 4px #213b6826;transition:transform .2s}
+.switch.active{background:#2189fa}.switch.active::after{transform:translateX(17px)}
+.filter-mark{font-size:12px;font-weight:700;color:var(--blue,#248bff)}
