@@ -1,4 +1,2 @@
-// After deploying backend on Render, paste the NEW URL here. NO trailing slash.
-window.SBEWO_API_URL = '';
-// Set the bot's public username without @ after creating it in BotFather.
-window.SBEWO_BOT_USERNAME = '';
+window.SBEWO_API_URL = 'https://sbewo-backend.onrender.com';
+window.SBEWO_BOT_USERNAME = '@testbetasbewo_bot';
