@@ -935,44 +935,30 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
  }
 }
 
-/* v37 — quiet connection diagnostics, no changes to capsule navigation. */
-.s37-monitor-status{margin:10px 4px 14px;padding:0 4px;color:#65748d;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 
-/* v38: cohesive reading layout, preserve existing floating navigation and mascot layers. */
-.s19-page,.s13-detail-page{min-width:0;overflow-wrap:anywhere}
-.s19-chat-card,.s19-event-card{transition:background-color .15s ease,border-color .15s ease}
-.s19-chat-card:active,.s19-event-card:active{background:#f1f7ff}
-.s19-chat-info strong,.s19-chat-detailhead h1{min-width:0;max-width:100%;text-overflow:ellipsis}
-.s19-chat-info small.s38-chat-event{font-weight:750;color:#677f9d}
-.s19-chat-info small.s38-chat-event.is-deleted{color:#d94e67}
-.s19-chat-info small.s38-chat-event.is-edited{color:#1978e0}
-.s19-chat-info small.s38-chat-event.is-saved{color:#638199}
-.s19-event-body strong,.s19-event-body small,.s19-event-body em{overflow-wrap:anywhere;word-break:break-word}
-.s19-event-card time{font-variant-numeric:tabular-nums}
-.s38-version-compare{display:grid;gap:10px;margin:0 0 12px}
-.s38-version-compare>div{border-radius:16px;border:1px solid #dce9fb;padding:13px 15px;background:#fff;min-width:0}
-.s38-version-compare>div:first-child{background:#fff6f7;border-color:#f8dee3}
-.s38-version-compare>div:last-child{background:#eff7ff;border-color:#d8eaff}
-.s38-version-compare span{font-size:12px;font-weight:800;color:#71849f}
-.s38-version-compare p{margin:6px 0 0;color:#14274a;font-size:15px;line-height:1.55;overflow-wrap:anywhere;white-space:pre-wrap}
-.s38-pro-title{margin-top:20px}
-.s19-settings-page .s19-pro-card{margin-top:6px}
-.s13-app .s19-pagehead h1{font-size:clamp(23px,6vw,28px)}
-.s13-app .s19-chat-detailhead>div{min-width:0}
-/* Smaller screens: keep the original straight status-card silhouette and gripping kitty. */
-@media(max-width:375px){
- .s13-app .s14-home{--sbewo-compact:1}
- .s28-hero.s28-active{height:328px!important}
- .s28-hero.s28-offline{height:264px!important}
- .s19-chat-card{padding:12px 10px;gap:10px}
- .s19-event-card{padding:12px 9px;gap:8px}
- .s19-chat-card .avatar,.s19-avatar{width:42px;height:42px}
- .s19-chat-detailhead h1{font-size:18px}
- .s19-event-card time{font-size:10px}
-}
-@media(max-width:330px){
- .s19-event-icon{width:34px;height:34px}
- .s19-event-card time{max-width:55px;white-space:normal;text-align:right}
- .s19-chat-info strong{font-size:14px}
- .s13-app .s13-main{padding-left:12px;padding-right:12px}
-}
+/* Sbewo v37 — compact active-state card. Standalone real elements, old offline state untouched. */
+.s37-hero{position:relative;isolation:isolate;box-sizing:border-box;overflow:hidden;width:100%;height:218px;margin:0 0 16px;padding:17px 19px 15px;border-radius:28px;background:linear-gradient(130deg,#4599ec 0%,#2877d3 43%,#1053ad 100%);box-shadow:0 12px 21px rgba(33,100,194,.17),inset 0 1px 0 rgba(255,255,255,.22);color:#fff}
+.s37-hero::before{content:'';position:absolute;z-index:0;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(ellipse at 79% 16%,rgba(82,164,255,.37),transparent 47%);box-shadow:inset 0 0 0 1px rgba(244,250,255,.1)}
+.s37-status{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;min-height:25px;padding:5px 10px;border-radius:999px;color:#fff;background:rgba(238,248,255,.21);border:1px solid rgba(255,255,255,.14);font-size:11px;line-height:1;font-weight:750;white-space:nowrap}
+.s37-status i{display:block;width:10px;height:10px;flex:none;border-radius:50%;background:#27e888;box-shadow:0 0 10px rgba(29,240,123,.6)}
+.s37-hero h2{position:relative;z-index:2;margin:11px 0 6px;font-size:21px;font-weight:850;line-height:1.07;letter-spacing:-.65px;color:#fff;max-width:208px}
+.s37-hero p{position:relative;z-index:2;margin:0;max-width:240px;font-size:11px;line-height:1.35;font-weight:500;color:#e4f0ff}
+.s37-mascot{position:absolute;z-index:1;right:12px;top:41px;width:141px;height:132px;pointer-events:none}
+.s37-mascot img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 5px rgba(5,45,108,.20))}
+.s37-check{position:absolute;display:grid;place-items:center;right:0;top:-5px;width:27px;height:27px;border-radius:9px;background:linear-gradient(135deg,#8ec9ff,#347cf5);border:1px solid rgba(255,255,255,.38);box-shadow:0 4px 9px rgba(13,63,143,.2);color:#fff}
+.s37-check svg{width:19px;height:19px}
+.s37-sparks{position:absolute;right:-4px;top:28px;width:13px;height:26px}
+.s37-sparks b{position:absolute;background:#eaf4ff;border-radius:6px;width:2px;height:8px;display:block}
+.s37-sparks b:nth-child(1){right:9px;top:0;transform:rotate(-25deg)}
+.s37-sparks b:nth-child(2){right:1px;top:9px;transform:rotate(52deg)}
+.s37-sparks b:nth-child(3){right:3px;top:19px;transform:rotate(72deg)}
+.s37-actions{position:absolute;z-index:3;bottom:15px;left:19px;right:19px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.85fr);gap:8px;height:42px}
+.s37-actions button{display:flex;align-items:center;justify-content:center;gap:9px;min-width:0;border-radius:13px;font-size:12px;font-weight:800;white-space:nowrap}
+.s37-events{background:#fff;color:#0d6df1;box-shadow:0 4px 10px rgba(6,59,135,.12)}
+.s37-events svg{width:17px;height:17px}
+.s37-manage{border:1.5px solid rgba(234,245,255,.66);color:#fff;background:rgba(255,255,255,.09)}
+@media(min-width:410px){.s37-hero{height:226px;padding:19px 21px 16px}.s37-hero h2{font-size:23px;max-width:225px}.s37-hero p{font-size:12px}.s37-mascot{right:13px;top:42px;width:151px;height:140px}.s37-actions{left:21px;right:21px;bottom:16px;height:44px}}
+@media(max-width:359px){.s37-hero{height:211px;padding:15px 14px 13px;border-radius:24px}.s37-hero h2{font-size:19px;max-width:177px}.s37-hero p{font-size:10px;max-width:196px}.s37-mascot{top:40px;right:2px;width:117px;height:121px}.s37-status{font-size:10px}.s37-actions{left:14px;right:14px;bottom:13px;height:39px;gap:6px}.s37-actions button{font-size:11px}}
+/* Keep three lines of description clear of both the mascot and the CTA. */
+.s37-hero p{max-width:198px;font-size:10.5px;line-height:1.3}
+@media(max-width:359px){.s37-hero p{max-width:175px;font-size:10px}}
