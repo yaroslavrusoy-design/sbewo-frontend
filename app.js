@@ -196,7 +196,7 @@ const s16NavIcon=ic=>({
  'ri-archive-line':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.4" y="4.5" width="17.2" height="4.6" rx="1"/><path d="M5.3 9.3v10h13.4v-10M10 13.8h4"/></svg>',
  'ri-chat-3-line':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 11.4c0 4.7-3.9 8.3-8.8 8.3-1.6 0-3.2-.4-4.5-1.2l-4.4 1 1.2-4a7.9 7.9 0 0 1-1.1-4.1c0-4.6 3.9-8.3 8.8-8.3s8.8 3.7 8.8 8.3Z"/></svg>'
 }[ic]||'');
-const s13Bottom=()=>`<nav class="s13-bottom" aria-label="Разделы">${[['home','Главная','ri-home-5-line'],['chats','Чаты','ri-chat-3-line'],['settings','Настройки','ri-settings-4-line']].map(([p,t,ic])=>`<button class="${page===p?'active':''}" data-go="${p}" aria-label="${t}"><i class="${ic}" aria-hidden="true">${ic==='ri-settings-4-line'?ico('settings'):s16NavIcon(ic)}</i><span>${t}</span></button>`).join('')}</nav>`;
+const s13Bottom=()=>`<nav class="s13-bottom s20-bottom" aria-label="Разделы">${[['home','Главная','ri-home-5-line'],['chats','Сервисы','ri-apps-2-line'],['settings','Профиль','ri-user-3-line']].map(([p,t,ic])=>`<button class="${page===p?'active':''}" data-go="${p}" aria-label="${t}"><i class="${ic}" aria-hidden="true">${s16NavIcon(ic)}</i><span>${t}</span></button>`).join('')}</nav>`;
 const s13Face=(key='welcome',klass='')=>kyu(key,`s13-kyu ${klass}`);
 const s13Empty=(title,detail,img='empty',action='')=>`<div class="s13-empty">${s13Face(img)}<h2>${title}</h2><p>${detail}</p>${action}</div>`;
 const s13Tab=(arr,active,attr)=>`<div class="s13-segment">${arr.map(([v,t])=>`<button class="${active===v?'active':''}" data-${attr}="${v}">${t}</button>`).join('')}</div>`;
@@ -232,7 +232,7 @@ function s14ProfileBlock(){
  const name=[u.first_name,u.last_name].filter(Boolean).join(' ')||'Мой профиль';
  const handle=u.username?'@'+u.username:'Аккаунт Telegram';
  const photo=typeof u.photo_url==='string'&&/^https:\/\//i.test(u.photo_url)?`<img class="s14-user-photo" src="${esc(u.photo_url)}" alt="Аватар Telegram" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${avatar(name)}</span>`:avatar(name);
- return `<div class="s14-profile-row"><div class="s14-profile-card"><div class="s14-profile-person" aria-label="Профиль пользователя">${photo}<span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small></span></div></div><button class="s14-settings-card" data-go="settings" aria-label="Настройки профиля"><i class="ri-settings-4-line" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5h4l.6 2.2c.5.2 1 .5 1.4.8l2.1-.7 2 3.5-1.7 1.5c.1.7.1 1.2 0 1.8l1.7 1.6-2 3.5-2.1-.7c-.4.3-.9.6-1.4.8L14 20.5h-4l-.6-2.2c-.5-.2-1-.5-1.4-.8l-2.1.7-2-3.5 1.7-1.6a7 7 0 0 1 0-1.8L3.9 9.3l2-3.5 2.1.7c.4-.3.9-.6 1.4-.8z"/><circle cx="12" cy="12" r="3.1"/></svg></i></button></div>`;
+ return `<div class="s14-profile-row s20-profile-row"><div class="s14-profile-card s20-profile-card"><div class="s14-profile-person" aria-label="Профиль пользователя">${photo}<span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small></span></div></div></div>`;
 }
 function s14HomeConnectCard(){
  const chatCount=connections().length;

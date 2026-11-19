@@ -405,3 +405,23 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s19-media-preview{margin-top:12px;border-radius:15px;overflow:hidden;background:#fff;padding:5px}.s19-media-preview img,.s19-media-preview video{display:block;width:100%;max-height:350px;object-fit:contain;border-radius:12px}.s19-media-preview audio{width:100%}.s19-media-missing{color:#657d9b;font-size:12px;line-height:1.45;padding:12px;background:#e9f3ff;border-radius:12px}
 
 .s19-note-editor{margin-top:13px;background:#fff;padding:14px;border:1px solid #dce8f6;border-radius:15px}.s19-note-editor label{font-size:12px;font-weight:800;color:#27416e}.s19-note-editor textarea{display:block;width:100%;resize:vertical;min-height:80px;padding:10px;border:1px solid #d4e6fb;border-radius:10px;outline-color:#217af3;margin:9px 0;font-size:13px;line-height:1.4;color:#172950}.s19-note-editor>div{display:flex;justify-content:flex-end;gap:9px}.s19-note-editor button{padding:10px 14px;border-radius:10px;background:#e5f1ff;color:#196fe2;font-size:12px;font-weight:800}.s19-note-editor button:last-child{background:#197bf2;color:#fff}
+
+
+/* Sbewo v20 — bottom nav refresh and simplified home profile */
+.s20-profile-row{grid-template-columns:minmax(0,1fr);margin-bottom:16px}
+.s20-profile-card{padding:14px 16px;border-radius:22px;background:rgba(255,255,255,.96);border:1px solid #dce9f9;box-shadow:0 10px 24px rgba(38,88,164,.08)}
+.s20-profile-card .s14-profile-person{min-height:64px}
+.s20-profile-card .s14-profile-info strong{font-size:15px;letter-spacing:-.2px}
+.s20-profile-card .s14-profile-info small{font-size:13px;color:#6f80a2}
+.s20-bottom{left:14px;right:14px;bottom:calc(10px + env(safe-area-inset-bottom));width:auto;max-width:532px;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px;border:1px solid rgba(102,139,216,.22);background:linear-gradient(180deg,#0f2359 0%,#0c1b49 100%);border-radius:32px;box-shadow:0 16px 35px rgba(9,26,72,.24), inset 0 1px 0 rgba(255,255,255,.06)}
+.s20-bottom button{min-height:74px;border-radius:24px;color:#bbc7ea;font-size:12px;font-weight:700;gap:7px;transition:background .18s ease,color .18s ease,transform .18s ease}
+.s20-bottom button.active{background:linear-gradient(180deg,#163b8f 0%,#15327c 100%);color:#4f93ff;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.s20-bottom button:active{transform:translateY(1px)}
+.s20-bottom button i[class^="ri-"]{font-size:28px;width:28px;height:28px}
+.s20-bottom button span{font-size:12px;letter-spacing:-.1px}
+.s13-app .s13-main{padding-bottom:118px}
+@media (max-width:420px){
+  .s20-bottom{left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom));padding:7px;border-radius:28px}
+  .s20-bottom button{min-height:68px;border-radius:22px}
+  .s20-bottom button i[class^="ri-"]{font-size:26px;width:26px;height:26px}
+}
