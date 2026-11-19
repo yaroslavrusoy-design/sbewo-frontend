@@ -847,3 +847,14 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 }
 /* Reveal chin and paws as one contiguous foreground layer across straight top edge. */
 .s28-active .s28-kitty-paws{clip-path:inset(52% 0 0 0)!important}
+
+/* v31: rectangular status cards; one mascot image per state. */
+.s28-hero.s28-active,.s28-hero.s28-offline{overflow:visible!important}
+.s28-hero.s28-active .s28-kitty.s31-kitty-active{position:absolute!important;right:12px!important;top:-29px!important;width:176px!important;height:111px!important;z-index:4!important;clip-path:none!important;overflow:visible!important;filter:drop-shadow(0 3px 4px rgba(43,83,167,.12))}
+.s28-hero.s28-active .s31-kitty-active img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;clip-path:none!important}
+.s28-hero.s28-offline .s31-kitty-offline{right:11px!important;top:64px!important;width:128px!important;height:132px!important;overflow:visible!important}
+.s28-hero.s28-offline .s31-kitty-offline > span{display:none!important}
+@media(max-width:360px){
+.s28-hero.s28-active .s28-kitty.s31-kitty-active{right:4px!important;top:-22px!important;width:158px!important;height:103px!important}
+.s28-hero.s28-offline .s31-kitty-offline{right:5px!important;top:70px!important;width:110px!important;height:120px!important}
+}
