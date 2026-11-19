@@ -304,3 +304,24 @@ html,body{background:var(--s13-bg)!important}
 /* Prefer the official Remix font after successful font loading; retain SVG otherwise. */
 html.remix-ready .s14-settings i[class^="ri-"]::before,html.remix-ready .s13-bottom i[class^="ri-"]::before{display:inline-block!important}
 html.remix-ready .s14-settings i[class^="ri-"] svg,html.remix-ready .s13-bottom i[class^="ri-"] svg{display:none!important}
+
+
+/* v17 separate profile and settings blocks */
+.s14-profile-row{display:grid;grid-template-columns:minmax(0,1fr) 86px;gap:12px;align-items:stretch;margin-bottom:14px}
+.s14-profile-card,.s14-settings-card{background:#fff;border:1px solid #e1ebf8;border-radius:18px;box-shadow:0 8px 22px rgba(63,104,181,.08)}
+.s14-profile-card{min-height:84px;padding:12px 14px;display:flex;align-items:center}
+.s14-profile-card .s14-profile-person{display:flex;align-items:center;gap:12px;min-width:0;flex:1;pointer-events:none;cursor:default}
+.s14-profile-card .s14-profile-info strong{font-size:16px;color:#10224d}
+.s14-profile-card .s14-profile-info small{font-size:12px;color:#6b7c99}
+.s14-settings-card{min-height:84px;display:flex;align-items:center;justify-content:center;padding:0;background:linear-gradient(180deg,#ffffff,#f3f8ff);color:#116af0}
+.s14-settings-card i[class^="ri-"]{display:flex;align-items:center;justify-content:center;width:28px;height:28px}
+.s14-settings-card i[class^="ri-"] svg{width:26px;height:26px;display:block}
+.s14-settings-card i[class^="ri-"]::before{display:none!important}
+html.remix-ready .s14-settings-card i[class^="ri-"]::before{display:inline-block!important}
+html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
+@media(max-width:359px){
+  .s14-profile-row{grid-template-columns:minmax(0,1fr) 78px;gap:10px}
+  .s14-profile-card{min-height:78px;padding:10px 12px}
+  .s14-settings-card{min-height:78px}
+  .s14-profile-card .s14-profile-info strong{font-size:14px}
+}
