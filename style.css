@@ -261,3 +261,46 @@ html,body{background:var(--s13-bg)!important}
   .s14-connect-card p{max-width:none}
   .s14-compact-intro{padding:12px}
 }
+
+
+/* Sbewo 16: compact connection hero & official Remix Icon navigation. */
+.s14-profile{margin-bottom:12px}
+.s14-settings{display:flex;align-items:center;justify-content:center;min-width:46px;min-height:46px}
+.s14-settings .ri-settings-4-line{font-size:24px;font-weight:normal;line-height:1;display:block;color:#116af0}
+.s13-bottom button i[class^="ri-"]{font-family:remixicon!important;font-style:normal;font-size:24px;font-weight:400;line-height:1;display:block}
+.s13-bottom button{gap:4px}
+.s13-mainpage.s14-home{padding-top:12px!important}
+.s16-connection{border-radius:22px;padding:16px 16px 14px;margin-bottom:17px;overflow:hidden;color:#fff;position:relative;background:linear-gradient(120deg,#1766e3 0%,#2385f4 100%);box-shadow:0 9px 23px rgba(21,95,208,.15)}
+.s16-connection.is-offline{background:linear-gradient(120deg,#1c59bc 0%,#276fdb 100%)}
+.s16-connection-upper{display:grid;grid-template-columns:minmax(0,1fr) 110px;align-items:center;gap:6px;min-height:124px}
+.s16-connection-text{position:relative;z-index:2;min-width:0}
+.s16-status{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.17);padding:6px 10px;border:1px solid rgba(255,255,255,.16);border-radius:50px;font-size:11px;font-weight:750;line-height:1.15;white-space:nowrap}
+.s16-status-dot{width:8px;height:8px;flex:none;border-radius:50%;background:#6af5b8;box-shadow:0 0 0 3px #54f6af22}
+.is-offline .s16-status-dot{background:#ffb1ae;box-shadow:none}
+.s16-connection h2{font-size:22px;letter-spacing:-.6px;line-height:1.08;margin:11px 0 7px;font-weight:850;max-width:240px}
+.s16-connection p{font-size:12px;line-height:1.38;color:#e6f1ff;max-width:240px;margin:0}
+.s16-connection-mascot{display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.s16-connection-mascot img{width:115px;height:133px;object-fit:contain;display:block;filter:drop-shadow(0 5px 13px #103d8f38)}
+.s16-metrics{display:flex;gap:12px;margin-top:11px;color:#ebf5ff;font-size:11px;align-items:baseline}
+.s16-metrics span{white-space:nowrap}
+.s16-metrics strong{font-size:15px;color:#fff;margin-right:2px}
+.s16-connect-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:12px;position:relative;z-index:3}
+.s16-action{min-height:41px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:5px;padding:0 15px;font-size:12px;font-weight:800;white-space:nowrap}
+.s16-action.primary{background:#fff;color:#1466df;box-shadow:0 4px 10px rgba(7,43,118,.1)}
+.s16-action.primary svg{width:15px;height:15px}
+.s16-action.secondary{border:1px solid rgba(255,255,255,.3);background:#ffffff20;color:#fff}
+.s14-events-head{margin-top:0;margin-bottom:8px}
+.s14-section-title{font-size:19px;margin-bottom:4px}
+.s14-head-chip{font-size:10px;padding:5px 8px}
+.s14-home .s13-date{font-size:12px}
+@media (max-width:360px){.s16-connection{padding:13px}.s16-connection-upper{grid-template-columns:minmax(0,1fr) 94px;min-height:120px}.s16-connection h2{font-size:19px}.s16-connection p{font-size:11px}.s16-connection-mascot img{width:99px;height:121px}.s16-action{font-size:11px;padding:0 11px}.s16-metrics{gap:8px}}
+
+/* Reliable vector fallbacks when Telegram WebView cannot fetch the icon font. */
+.s14-settings i[class^="ri-"]{display:flex;align-items:center;justify-content:center;width:24px;height:24px;position:relative}
+.s13-bottom i[class^="ri-"]{width:24px;height:24px;display:flex!important;align-items:center;justify-content:center;position:relative}
+.s14-settings i[class^="ri-"] svg,.s13-bottom i[class^="ri-"] svg{width:24px;height:24px;display:block}
+.s14-settings i[class^="ri-"]::before,.s13-bottom i[class^="ri-"]::before{display:none!important}
+
+/* Prefer the official Remix font after successful font loading; retain SVG otherwise. */
+html.remix-ready .s14-settings i[class^="ri-"]::before,html.remix-ready .s13-bottom i[class^="ri-"]::before{display:inline-block!important}
+html.remix-ready .s14-settings i[class^="ri-"] svg,html.remix-ready .s13-bottom i[class^="ri-"] svg{display:none!important}
