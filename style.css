@@ -908,3 +908,12 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
  .s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-back,
  .s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-front{right:8px!important;top:-22px!important;width:187px!important;height:117px!important}
 }
+
+/* v35 — Scroll content disappears beneath the existing bottom dock.
+   The dock itself (layout, size, icons, colours, and shape) is UNCHANGED.
+   Clip only the scrollable main content in the dock zone. This also stops
+   translucent elements and shadows from showing through or beside the dock. */
+.app.s13-app:has(> .s13-bottom.s21-bottom) > .s13-main {
+  -webkit-clip-path: inset(0 0 calc(84px + env(safe-area-inset-bottom, 0px)) 0);
+  clip-path: inset(0 0 calc(84px + env(safe-area-inset-bottom, 0px)) 0);
+}
