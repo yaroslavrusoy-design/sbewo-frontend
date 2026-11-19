@@ -416,3 +416,29 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s13-bottom.s21-bottom button svg{width:25px;height:25px}
 .s13-app .s13-main{padding-bottom:108px}
 @media(max-width:350px){.s13-bottom.s21-bottom{left:8px;right:8px;border-radius:27px}.s13-bottom.s21-bottom button{min-height:64px;border-radius:20px;font-size:11px}}
+
+/* v22: profile card is one compact, full-width row, same width as connection card. */
+.s13-app .s14-profile-row.s21-profile-row{
+  display:block!important;
+  grid-template-columns:none!important;
+  width:100%;
+  margin:0 0 12px!important;
+}
+.s13-app .s14-profile-card.s21-profile-card{
+  width:100%;
+  min-width:0;
+  min-height:70px!important;
+  padding:9px 14px;
+  border-radius:20px;
+}
+.s13-app .s21-profile-card .s14-profile-person{min-height:50px;gap:11px}
+.s13-app .s21-profile-card .s14-user-photo,
+.s13-app .s21-profile-card .s14-profile-person .avatar{
+  width:46px;
+  height:46px;
+}
+@media(max-width:359px){
+  .s13-app .s14-profile-card.s21-profile-card{min-height:66px!important;padding:8px 12px}
+  .s13-app .s21-profile-card .s14-user-photo,
+  .s13-app .s21-profile-card .s14-profile-person .avatar{width:42px;height:42px}
+}
