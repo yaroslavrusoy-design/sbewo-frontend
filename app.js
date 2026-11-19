@@ -36,15 +36,19 @@ const visible=()=>db.items.filter(x=>!excludedChats.includes(x.chat));
 const records=()=>visible().filter(x=>x.deleted||x.edited).slice().sort((a,b)=>(b.updated||0)-(a.updated||0));
 const mediaRecords=()=>visible().filter(x=>x.kind&&x.kind!=='text');
 const connections=()=>{const groups={};visible().forEach(x=>{(groups[x.chat]??=[]).push(x)});return Object.entries(groups)};
-const avatar=(name)=>`<span class="avatar">${esc((name||'?')[0].toUpperCase())}</span>`;
-const tabbar=()=>`<nav class="tabbar">${[['home','Главная'],['history','События'],['archive','Архив'],['settings','Настройки']].map(([k,label])=>`<button data-go="${k}" class="${parent()===k?'active':''}" aria-label="${label}">${ico(k)}<span>${label}</span></button>`).join('')}</nav>`;
+const cleanName=(name)=>{const n=String(name||'').trim();return n&&n!=='.'&&n!=='-'?n:'Чат без названия'};
+const avatar=(name)=>`<span class="avatar">${esc(cleanName(name)==='Чат без названия'?'✦':cleanName(name)[0].toUpperCase())}</span>`;
+
+const tabbar=()=>`<nav class="tabbar" aria-label="Главное меню">${[['home','Главная'],['history','События'],['archive','Сохранено'],['settings','Моё']].map(([k,label])=>`<button data-go="${k}" class="${parent()===k?'active':''}" aria-label="${label}">${ico(k)}<span>${label}</span></button>`).join('')}</nav>`;
+
 const header=(title)=>`<div class="topbar"><button class="back" data-back="1">${ico('back')} Назад</button><strong>${esc(title)}</strong><span class="placeholder"></span></div>`;
 const btn=(label,target)=>`<button class="primary" data-go="${target}">${label} ${ico('chevron')}</button>`;
 const row=(icon,title,sub,target,color='')=>`<button class="link-row ${color}" data-go="${target}"><span class="bubble">${ico(icon)}</span><span class="grow"><strong>${title}</strong><small>${sub}</small></span>${ico('chevron','chev')}</button>`;
 const noData=(k,title,detail,action='')=>`<div class="empty">${kyu(k)}<strong>${title}</strong><p>${detail}</p>${action}</div>`;
 const chips=(entries,active,action='flt')=>`<div class="chips">${entries.map(([v,l])=>`<button data-${action}="${v}" class="${active===v?'active':''}">${l}</button>`).join('')}</div>`;
 const searchBox=(ph)=>`<input id="search" class="search" placeholder="${ph}" value="${esc(query)}" aria-label="Поиск">`;
-const item=(m)=>{const kind=m.deleted?'deleted':m.edited?'edited':'media',label=kind==='deleted'?'Удалённое сообщение':kind==='edited'?'Изменённое сообщение':'Сохранено';return `<button class="event" data-message="${esc(m.key)}">${avatar(m.chat)}<span class="grow"><span class="event-top"><strong>${esc(m.chat)}</strong><time>${fmt(m.updated||m.time)}</time></span><span class="pill ${kind==='edited'?'edit':kind==='media'?'media':''}">${ico(kind==='deleted'?'trash':kind==='edited'?'edit':'image')}${label}</span><p>${esc(m.text||'Текст ранее не получен')}</p></span></button>`};
+const item=(m)=>{const kind=m.deleted?'deleted':m.edited?'edited':'media',label=kind==='deleted'?'Удалённое сообщение':kind==='edited'?'Изменённое сообщение':'Сведения о медиа';const revisions=Array.isArray(m.versions)?m.versions:[];const old=revisions[0]?.text, current=revisions[revisions.length-1]?.text;return `<button class="event event-${kind}" data-message="${esc(m.key)}">${avatar(m.chat)}<span class="grow"><span class="event-top"><strong>${esc(cleanName(m.chat))}</strong><time>${fmt(m.updated||m.time)}</time></span><span class="pill ${kind==='edited'?'edit':kind==='media'?'media':''}">${ico(kind==='deleted'?'trash':kind==='edited'?'edit':'image')} ${label}</span>${m.edited&&revisions.length>1?`<p class="change-preview">Было: ${esc(old||'Не сохранено')}<br>Стало: <b>${esc(current||m.text||'Текст недоступен')}</b></p>`:m.kind!=='text'?`<p>${esc(m.text||'Сведения о вложении (файл не сохранён)')}</p>`:`<p>${esc(m.text||'Текст сообщения недоступен')}</p>`}</span></button>`};
+
 function welcome(){
  return `<section class="simple-welcome">
   <div class="welcome-brand"><span class="mark">${ico('layers')}</span><strong>Sbewo</strong></div>
@@ -58,39 +62,35 @@ function welcome(){
 }
 
 function home(){
- const all=records(),deleted=all.filter(x=>x.deleted).length,edited=all.filter(x=>x.edited).length,media=mediaRecords().length;
+ const all=records(),del=all.filter(x=>x.deleted).length,edit=all.filter(x=>x.edited).length,media=mediaRecords().length;
  const recent=all.slice(0,3);
- return `<div class="brandbar"><span class="brand-symbol">${ico('layers')}</span><strong>Sbewo</strong><button class="brand-help" data-go="help" aria-label="Помощь">${ico('help')}</button></div>
- <section class="friendly-hero"><div class="friendly-copy"><div class="soft-pill">${ico('shield')} ${db.connected?'Кью на связи':'Ещё не подключено'}</div>
- <h1>${db.connected?'Я на связи! 👋':'Привет! Я Кью 👋'}</h1><p>${db.connected?(all.length?'Вот что произошло в твоих чатах.':'Пока всё спокойно. Я покажу новые события здесь.'):'Я покажу, что удалили и изменили в доступных чатах.'}</p></div>${kyu(db.connected&&all.length?'home':'empty')}</section>
- ${!db.connected?`<button class="primary connect-cta" data-go="connection">${ico('send')} Подключить Sbewo ${ico('chevron')}</button>`:''}
- <h2 class="section-title">Что ищем?</h2>
- <div class="quick-grid">
- <button class="quick-card quick-red" data-event-filter="deleted"><span class="quick-icon">${ico('trash')}</span><strong>Удалили</strong><small>${deleted?`${deleted} событий`:'Сообщения'}</small></button>
- <button class="quick-card quick-amber" data-event-filter="edited"><span class="quick-icon">${ico('edit')}</span><strong>Изменили</strong><small>${edited?`${edited} событий`:'История правок'}</small></button>
- <button class="quick-card quick-blue" data-archive-filter="media"><span class="quick-icon">${ico('image')}</span><strong>Медиа</strong><small>${media?`${media} записей`:'Доступные вложения'}</small></button>
- </div>
- <div class="section-heading"><h2 class="section-title">Недавние события</h2><button data-go="history">Все ${ico('chevron')}</button></div>
- ${recent.length?`<div class="recent-list">${recent.map(item).join('')}</div>`:`<div class="friendly-empty">${kyu('notifications')}<div><strong>Пока тихо ✨</strong><p>Новые удаления и правки появятся здесь.</p></div></div>`}
- <button class="inline-archive" data-go="archive">${ico('archive')} Открыть мой архив ${ico('chevron')}</button>
- ${!initData?`<button class="demo-link" data-demo="1">${ico('star')} Посмотреть пример с вымышленными сообщениями</button>`:''}`;
+ return `<div class="brandbar"><span class="brand-symbol">${ico('layers')}</span><strong>Sbewo</strong><button class="brand-help" data-go="notifications" aria-label="Уведомления">${ico('bell')}</button></div>
+ <section class="v9-home-hero"><div class="home-kyu">${kyu('welcome')}</div><div class="home-dialogue"><strong>${db.connected?'Привет! 👋<br>Я Кью!':'Привет! 👋<br>Я Кью!'}</strong><p>${db.connected?'Слежу за твоими чатами и сохраняю доступные события.':'Покажу, как сохранить доступные события из чатов.'}</p></div><span class="hero-spark">✦</span></section>
+ ${!db.connected?`<button class="primary v9-connect" data-go="connection">${ico('send')} Подключить Sbewo ${ico('chevron')}</button>`:''}
+ <div class="v9-quick-grid"><button class="v9-quick v9-quick-red" data-event-filter="deleted"><span class="v9-qicon">${ico('trash')}</span><strong>Удалили</strong><small>${del} событий</small></button><button class="v9-quick v9-quick-gold" data-event-filter="edited"><span class="v9-qicon">${ico('edit')}</span><strong>Изменили</strong><small>${edit} событий</small></button><button class="v9-quick v9-quick-blue" data-archive-filter="media"><span class="v9-qicon">${ico('image')}</span><strong>Медиа</strong><small>${media} записей</small></button></div>
+ <div class="v9-today"><span>Сегодня в твоих чатах</span><strong>${all.length} ${all.length===1?'событие':'событий'}</strong><span class="v9-plane">${ico('send')}</span></div>
+ <div class="section-heading v9-section"><h2 class="section-title">Последние события</h2><button data-go="history">Все ${ico('chevron')}</button></div>
+ ${recent.length?`<div class="recent-list v9-recent">${recent.map(item).join('')}</div>`:`<div class="friendly-empty">${kyu('empty')}<div><strong>Всё спокойно 💤</strong><p>Кью покажет новые доступные удаления и изменения здесь.</p></div></div>`}
+ ${!initData?`<button class="demo-link" data-demo="1">${ico('star')} Посмотреть демонстрационные события</button>`:''}`;
 }
 
 function history(){
  let xs=records();if(flt==='deleted')xs=xs.filter(x=>x.deleted);if(flt==='edited')xs=xs.filter(x=>x.edited);
  if(query)xs=xs.filter(x=>(x.chat+' '+(x.text||'')).toLowerCase().includes(query.toLowerCase()));
- return `<div class="page-hero"><div><h1>События</h1><p>Всё важное — в одном месте</p></div>${kyu('edited')}</div>
- ${chips([['all','Все'],['deleted','Удалили'],['edited','Изменили']],flt)}
+ return `<div class="v9-page-heading"><h1>События</h1><button class="circle-action" data-refresh="1" aria-label="Обновить события">${ico('refresh')}</button></div>
+ <div class="v9-page-intro">Здесь всё, что Кью успел заметить ✨</div>
+ ${chips([['all','Все'],['deleted','Удаления'],['edited','Изменения']],flt)}
  ${searchBox('Найти сообщение или чат')}
- ${xs.length?`<div class="section-heading"><h2 class="section-title">${xs.length} ${xs.length===1?'событие':'событий'}</h2><button data-refresh="1" aria-label="Обновить">${ico('refresh')}</button></div><div class="events-list">${xs.map(item).join('')}</div>`:
- noData('empty',flt==='deleted'?'Пока ничего не удаляли':flt==='edited'?'Пока ничего не меняли':'Кью пока отдыхает 💤','Как только появятся доступные события, увидишь их здесь.')}`;
+ ${xs.length?`<div class="v9-event-count">${xs.length} ${xs.length===1?'событие':xs.length<5?'события':'событий'}</div><div class="events-list">${xs.map(item).join('')}</div>`:
+ noData('empty',flt==='deleted'?'Ничего не удаляли':flt==='edited'?'Изменений пока нет':'Кью пока отдыхает 💤','Доступные события появятся после подключения.')}`;
 }
 
-function archive(){return `<div class="page-hero archive-hero"><div><h1>Мой архив</h1><p>То, что удалось сохранить</p></div>${kyu('archive')}</div>
+function archive(){return `<div class="v9-page-heading"><h1>Сохранено</h1></div>
  ${chips([['all','Чаты'],['media','Медиа'],['star','Избранное']],flt)}
- ${searchBox(flt==='all'?'Найти чат':'Поиск по архиву')}
+ <section class="v9-archive-mascot">${kyu('empty')}<h2>Твой архив</h2><p>Все доступные записи и изменения — в одном месте</p></section>
+ ${searchBox(flt==='all'?'Найти чат':'Поиск по сохранённому')}
  ${flt==='media'?mediaList():flt==='star'?starList():chatList()}
- ${flt==='all'?`<div class="archive-footnote">${ico('info')} Архив пополняется только после подключения и только доступными боту сообщениями.</div>`:''}`;}
+ ${flt==='all'?`<div class="archive-footnote">${ico('info')} В архив попадают только доступные боту события после подключения.</div>`:''}`;}
 
 function chatList(){let xs=connections().filter(([ch])=>ch.toLowerCase().includes(query.toLowerCase()));return xs.length?xs.map(([name,items])=>`<button class="row-chat" data-chat="${esc(name)}">${avatar(name)}<span class="grow"><strong>${esc(name)}</strong><small>${items.length} сохранённых записей</small></span>${ico('chevron','chev')}</button>`).join(''):noData('archive','Архив пуст','Новые доступные сообщения появятся здесь.')}
 function starList(){let xs=visible().filter(x=>x.starred&&[x.chat,x.text].join(' ').toLowerCase().includes(query.toLowerCase()));return xs.length?xs.map(item).join(''):noData('archive','Нет избранного','Отмечай важные сообщения звёздочкой в деталях.')}
@@ -133,13 +133,11 @@ function groups(){
 
 function connection(){return `${header('Подключение')}<div class="top-illustration"><h1>Подключить Sbewo</h1>${kyu('settings')}</div><div class="card group-card">${row('person','Личные чаты','Подключённый Telegram Business бот','help')}${row('group','Группы','Недоступно в этой версии','groups')}</div><div class="notice">Мы не просим номер, код подтверждения и пароль. Telegram передаёт только новые события из чатов, к которым ты разрешишь боту доступ.</div><div class="card" style="padding:15px;font-size:12px;line-height:1.8"><strong>Как подключить:</strong><br>1. Открой Telegram → Настройки → Telegram для бизнеса → Чат-боты.<br>2. Выбери бота Sbewo и разреши доступ к нужным чатам.<br>3. Вернись сюда и проверь подключение.<br><span style="font-size:10px;color:var(--muted)">Доступность функции зависит от аккаунта Telegram.</span></div>${USERNAME?`<button class="secondary" style="width:100%;margin:12px 0" data-bot="1">Открыть @${esc(USERNAME)}</button>`:''}<button class="primary" style="margin-top:12px" data-refresh="1">${ico('refresh')} Проверить подключение</button><div class="empty-meta">${db.connected?`Подключено: ${db.connections}`:'Пока нет активного подключения'}</div>`}
 const setting=(icon,title,target,sub='',color='')=>row(icon,title,sub,target,color);
-function settings(){return `<div class="page-hero settings-hero-v8"><div><h1>Настройки</h1><p>Сделаем Sbewo удобным для тебя</p></div>${kyu('settings')}</div>
- <h2 class="settings-label">Самое важное</h2>
- <div class="settings-list">${setting('send','Подключение','connection',db.connected?'Кью подключён':'Выбрать доступные чаты')}${setting('bell','Уведомления','notifications','Удаления и изменения')}${setting('filter','Скрыть чаты','filters','Настрой, что видно в архиве')}</div>
- <h2 class="settings-label">О приложении</h2>
- <div class="settings-list">${setting('lock','Приватность и данные','privacy')}${setting('archive','Хранилище','storage')}${setting('help','Помощь','help')}${setting('info','О Sbewo','about')}</div>
- <button class="theme-row" data-go="toggle-theme">${ico('settings')} ${theme==='dark'?'Включить светлую тему':'Включить тёмную тему'} ${ico('chevron')}</button>
- <div class="settings-kyu-note">Кью рядом, если нужна помощь 💙</div>`;}
+function settings(){const count=db.items.length;return `<div class="v9-settings-top"><h1>Моё</h1><div class="v9-settings-kyu">${kyu('settings')}</div><div class="v9-settings-cloud cloud-a"></div><div class="v9-settings-cloud cloud-b"></div></div>
+ <div class="v9-settings-panel">${setting('send','Подключение','connection',db.connected?'Кью на связи':'Ещё не подключено')}${setting('bell','Уведомления','notifications','Об удалениях и изменениях')}${setting('filter','Скрыть чаты','filters','Выбери, что показывать')}${setting('archive','Хранилище','storage',`${count} записей · лимит ${db.retention_days} дней`)}</div>
+ <button class="v9-pro" data-go="pro"><span class="v9-crown">${ico('crown')}</span><span><strong>Sbewo Pro</strong><small>Будущие возможности</small></span>${ico('chevron')}</button>
+ <div class="v9-settings-panel v9-settings-bottom">${setting('help','Помощь','help','Ответы на вопросы')}${setting('lock','Приватность и данные','privacy','Как работает сохранение')}${setting('info','О приложении','about','Версия Sbewo')}</div>
+ <button class="theme-row" data-go="toggle-theme">${ico('settings')} ${theme==='dark'?'Светлая тема':'Тёмная тема'} ${ico('chevron')}</button>`;}
 
 function notifications(){return `${header('Уведомления')}<section class="compact-hero"><h1>Уведомления</h1>${kyu('notifications')}</section>
 <div class="settings-list">${[['delete','trash','Удалённые сообщения'],['edit','edit','Изменённые сообщения']].map(([k,ic,name])=>`<div class="link-row"><span class="bubble">${ico(ic)}</span><span class="grow"><strong>${name}</strong><small>${notify[k]?'Включены':'Выключены'}</small></span><button class="switch ${notify[k]?'active':''}" data-notify="${k}" role="switch" aria-checked="${!!notify[k]}" aria-label="${name}"></button></div>`).join('')}</div>
