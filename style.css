@@ -734,3 +734,116 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
  .s28-offline .s28-content p{max-width:170px;font-size:10.4px;line-height:1.4}
  .s28-offline .s28-kitty-offline{right:7px;top:81px;width:102px;height:112px}
 }
+
+/* v29: true compact floating pill. Scrolling cards run BEHIND an opaque dock. */
+.s13-app .s13-bottom.s21-bottom{
+  position:absolute !important;
+  inset:auto 11px calc(10px + env(safe-area-inset-bottom)) 11px !important;
+  width:auto !important;
+  max-width:536px !important;
+  margin:0 auto !important;
+  padding:5px !important;
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:3px !important;
+  align-items:stretch !important;
+  height:auto !important;
+  min-height:0 !important;
+  background:#f9fcff !important;
+  border:1px solid #c9def9 !important;
+  border-radius:999px !important;
+  box-shadow:0 9px 26px rgba(29,86,166,.19),inset 0 1px 0 #fff !important;
+  isolation:isolate;
+  overflow:hidden !important;
+  z-index:80 !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+/* Remove the rectangular white screen-wide backing that flattened the pill. */
+.s13-app .s13-bottom.s21-bottom::before,
+.s13-app .s13-bottom.s21-bottom::after{content:none !important;display:none !important}
+.s13-app .s13-bottom.s21-bottom button{
+  padding:5px 3px 4px !important;
+  min-height:52px !important;
+  height:52px !important;
+  border:0 !important;
+  border-radius:999px !important;
+  background:transparent !important;
+  color:#5d6d8e !important;
+  gap:2px !important;
+  font-size:11px !important;
+  line-height:1.08 !important;
+  font-weight:750 !important;
+}
+.s13-app .s13-bottom.s21-bottom button.active{
+  background:#dcecff !important;
+  color:#0968f4 !important;
+  border-radius:999px !important;
+}
+.s13-app .s13-bottom.s21-bottom button svg{height:21px !important;width:21px !important}
+.s13-app .s13-bottom.s21-bottom button i[class^="ri-"]{height:22px !important;width:22px !important;font-size:21px !important}
+/* No clipped last event: content can scroll above the overlaid navigation. */
+.s13-app .s13-main{padding-bottom:calc(93px + env(safe-area-inset-bottom)) !important;scroll-padding-bottom:calc(93px + env(safe-area-inset-bottom))}
+@media(max-width:350px){
+  .s13-app .s13-bottom.s21-bottom{left:8px !important;right:8px !important;padding:4px !important}
+  .s13-app .s13-bottom.s21-bottom button{height:50px !important;min-height:50px !important;font-size:10.5px !important}
+}
+
+
+/* v30 — straight-top status cards, fixed compact capsule navigation */
+/* Profile and event feed retain their previous dimensions and behavior. */
+.s28-hero.s28-active{height:342px}
+.s28-hero.s28-offline{height:264px!important}
+.s28-active .s28-kitty{right:7px;top:-2px;width:185px;height:119px}
+.s28-active .s28-kitty-paws{clip-path:inset(72% 0 0 0)}
+.s28-active .s28-content{padding-top:97px}
+.s28-active .s28-plane{right:20px;top:123px;width:78px;height:74px;transform:none;opacity:.74}
+.s28-offline .s28-content{padding-top:48px}
+.s28-offline .s28-kitty-offline{top:68px;right:12px;width:127px;height:127px}
+/* An opaque single pill floats above, not inside, the scrollable content. */
+.app.s13-app{position:relative;isolation:isolate;overflow:hidden}
+.app.s13-app .s13-bottom.s21-bottom{
+ position:absolute!important;
+ left:12px!important;right:12px!important;
+ bottom:calc(12px + env(safe-area-inset-bottom))!important;
+ width:auto!important;max-width:536px!important;
+ margin:0 auto!important;padding:4px!important;
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:3px!important;align-items:stretch!important;
+ height:64px!important;min-height:64px!important;
+ border:1px solid #c8ddf7!important;border-radius:999px!important;
+ background:#fbfdff!important;
+ box-shadow:0 8px 24px rgba(35,91,161,.18),inset 0 1px 0 white!important;
+ overflow:hidden!important;isolation:isolate;z-index:100!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+.app.s13-app .s13-bottom.s21-bottom::before,
+.app.s13-app .s13-bottom.s21-bottom::after{content:none!important;display:none!important}
+.app.s13-app .s13-bottom.s21-bottom button{
+ height:54px!important;min-height:54px!important;
+ padding:3px 4px!important;border:0!important;
+ border-radius:999px!important;background:transparent!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ flex-direction:column!important;gap:2px!important;
+ color:#5b688c!important;font-size:11px!important;line-height:1.05!important;
+}
+.app.s13-app .s13-bottom.s21-bottom button.active{
+ background:#d9eaff!important;color:#075dea!important;
+}
+.app.s13-app .s13-main{
+ overflow-y:auto!important;overscroll-behavior-y:contain;
+ padding-bottom:calc(96px + env(safe-area-inset-bottom))!important;
+ scroll-padding-bottom:calc(96px + env(safe-area-inset-bottom))!important;
+}
+@media(max-width:360px){
+ .s28-hero.s28-active{height:332px}
+ .s28-hero.s28-offline{height:264px!important}
+ .s28-active .s28-kitty{right:2px;top:2px;width:170px;height:110px}
+ .s28-active .s28-plane{right:12px;top:121px;width:64px;height:62px}
+ .s28-offline .s28-content{padding-top:48px}
+ .s28-offline .s28-kitty-offline{right:7px;top:72px;width:108px;height:110px}
+ .app.s13-app .s13-bottom.s21-bottom{left:9px!important;right:9px!important;height:60px!important;min-height:60px!important}
+ .app.s13-app .s13-bottom.s21-bottom button{height:50px!important;min-height:50px!important}
+}
+/* Reveal chin and paws as one contiguous foreground layer across straight top edge. */
+.s28-active .s28-kitty-paws{clip-path:inset(52% 0 0 0)!important}
