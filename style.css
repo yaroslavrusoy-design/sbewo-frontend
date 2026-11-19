@@ -609,3 +609,61 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s26-active .s26-mascot img{object-fit:contain;filter:drop-shadow(0 2px 3px rgba(34,82,160,.15))}
 .s26-rays{display:none}
 @media(max-width:360px){.s26-active .s26-mascot{width:180px;height:113px;top:-70px;right:1px}}
+
+
+/* v27: reference C — tighter wave geometry, balanced typography and foreground layers */
+.s13-app .s14-home{padding-top:8px!important}
+.s13-app .s25-profile{min-height:66px;margin-bottom:77px!important;background:linear-gradient(100deg,#fff 40%,#f7fbff 100%);border:1px solid rgba(227,238,254,.96);border-radius:22px;box-shadow:0 6px 16px rgba(51,108,181,.065)}
+.s26-bot{filter:drop-shadow(0 10px 17px rgba(57,109,194,.14));margin-bottom:16px}
+.s26-bot.s26-active{height:259px}
+.s26-bot.s26-offline{height:222px;margin-top:0}
+.s26-shape{filter:none}
+.s26-inner{padding-left:25px;padding-right:25px;padding-bottom:14px}
+.s26-active .s26-inner{padding-top:27px}
+.s26-offline .s26-inner{padding-top:29px}
+.s26-status{font-size:11.5px;padding:7px 11px;min-height:27px;line-height:1;background:rgba(243,249,255,.63);border:1px solid rgba(255,255,255,.30);box-shadow:none}
+.s26-status-dot{height:11px;width:11px;flex:none}
+.s26-inner h2{font-size:24px;letter-spacing:-.7px;margin:10px 0 5px;line-height:1.08}
+.s26-inner p{font-size:13px;line-height:1.31;letter-spacing:-.1px}
+.s26-active .s26-mascot{width:183px;height:116px;right:9px;top:-73px;z-index:3}
+.s26-active .s26-mascot img{filter:drop-shadow(0 2px 3px rgba(52,108,181,.11))}
+.s26-plane{top:55px;right:14px;width:86px;height:84px;transform:rotate(-6deg);z-index:0;opacity:.88}
+.s26-stats{gap:9px;margin-bottom:11px}
+.s26-stat{height:57px;padding:7px 13px;gap:10px;border-radius:17px;border:1.5px solid rgba(255,255,255,.96);box-shadow:0 4px 9px rgba(45,99,184,.065),inset 0 1px 2px rgba(255,255,255,.6);background:linear-gradient(130deg,rgba(255,255,255,.78),rgba(241,247,255,.7))}
+.s26-stat svg{width:26px;height:26px}
+.s26-stat strong{font-size:19px}
+.s26-actions button{height:44px;border-radius:14px;font-size:12px}
+.s26-primary,.s26-icon-action{border:1px solid rgba(255,255,255,.57);box-shadow:0 4px 9px rgba(15,95,230,.14)}
+.s26-offline .s26-inner h2{font-size:22px;max-width:205px;letter-spacing:-.5px;margin:10px 0 8px;line-height:1.06}
+.s26-offline .s26-inner p{font-size:12px;max-width:295px;line-height:1.4}
+.s26-offline .s26-mascot{width:125px;height:125px;right:12px;top:29px;z-index:1}
+.s26-offline .s26-actions{gap:9px;grid-template-columns:minmax(0,1.2fr) minmax(0,.83fr)}
+.s26-offline .s26-actions button{height:43px;font-size:12px}
+.s13-app .s14-home:has(.s26-offline) .s25-profile{margin-bottom:16px!important}
+@media (max-width:360px){
+ .s13-app .s25-profile{margin-bottom:73px!important}
+ .s26-bot.s26-active{height:254px}
+ .s26-bot.s26-offline{height:220px}
+ .s26-inner{padding-left:21px;padding-right:21px;padding-bottom:12px}
+ .s26-active .s26-inner{padding-top:27px}
+ .s26-offline .s26-inner{padding-top:28px}
+ .s26-active .s26-mascot{width:167px;height:107px;top:-67px;right:4px}
+ .s26-plane{top:58px;right:10px;width:70px;height:73px}
+ .s26-inner h2{font-size:21px}
+ .s26-inner p{font-size:11.5px}
+ .s26-stat{height:54px;padding:6px 9px;gap:6px}
+ .s26-stat svg{width:22px;height:22px}
+ .s26-stat strong{font-size:17px}
+ .s26-offline .s26-inner h2{font-size:20px;max-width:175px}
+ .s26-offline .s26-inner p{font-size:11px;max-width:244px}
+ .s26-offline .s26-mascot{width:116px;height:116px;top:31px;right:6px}
+ .s26-offline .s26-actions{grid-template-columns:minmax(0,1.2fr) minmax(0,.87fr);gap:7px}
+ .s26-offline .s26-actions button{font-size:11px;height:42px}
+ .s13-app .s14-home:has(.s26-offline) .s25-profile{margin-bottom:15px!important}
+}
+/* Small iPhone overlap guard: reserve readable space beside offline Kyu. */
+@media (max-width:360px){
+ .s26-offline .s26-inner h2{font-size:18px;max-width:164px}
+ .s26-offline .s26-inner p{font-size:10.3px;max-width:158px;line-height:1.36}
+ .s26-offline .s26-mascot{width:106px;height:106px;right:2px;top:32px}
+}
