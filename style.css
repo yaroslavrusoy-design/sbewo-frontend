@@ -858,3 +858,53 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s28-hero.s28-active .s28-kitty.s31-kitty-active{right:4px!important;top:-22px!important;width:158px!important;height:103px!important}
 .s28-hero.s28-offline .s31-kitty-offline{right:5px!important;top:70px!important;width:110px!important;height:120px!important}
 }
+
+
+/* v33: one fully transparent Kyu with both paws gripping the top of the straight-edged active card.
+   Separate backdrop pixels removed from the embedded mascot; keep the real card border underneath. */
+.s28-hero.s28-active{overflow:visible!important}
+.s28-hero.s28-active .s28-kitty.s31-kitty-active{
+  right:16px!important;
+  top:-26px!important;
+  width:205px!important;
+  height:130px!important;
+  z-index:4!important;
+  overflow:visible!important;
+  clip-path:none!important;
+  transform:none!important;
+  filter:drop-shadow(0 5px 5px rgba(34,87,171,.13))!important;
+}
+.s28-hero.s28-active .s31-kitty-active img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  clip-path:none!important;
+}
+@media(max-width:360px){
+ .s28-hero.s28-active .s28-kitty.s31-kitty-active{right:8px!important;top:-22px!important;width:187px!important;height:117px!important}
+}
+/* Reserve clear breathing room between the account card and the mascot head. */
+.s13-app .s14-home:has(.s28-active) .s25-profile{margin-bottom:28px!important}
+@media(max-width:360px){.s13-app .s14-home:has(.s28-active) .s25-profile{margin-bottom:25px!important}}
+
+
+/* v34 — Real layered Kyu. Head behind rectangular top edge; only paws in foreground.
+   The old transparent cutout was drawn entirely in front of the hero and its bottom edge looked amputated. */
+.s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-back,
+.s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-front{
+  right:16px!important;top:-26px!important;width:205px!important;height:130px!important;
+  overflow:visible!important;transform:none!important;clip-path:none!important;filter:none!important;
+}
+.s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-back{z-index:1!important;filter:drop-shadow(0 3px 5px rgba(32,67,132,.12))!important}
+.s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-front{z-index:4!important;pointer-events:none}
+.s28-hero.s28-active .s34-kitty-front img{
+  -webkit-mask-image:radial-gradient(ellipse 20% 23% at 30% 78%,#000 63%,transparent 92%),radial-gradient(ellipse 20% 25% at 53% 82%,#000 67%,transparent 94%);
+  mask-image:radial-gradient(ellipse 20% 23% at 30% 78%,#000 63%,transparent 92%),radial-gradient(ellipse 20% 25% at 53% 82%,#000 67%,transparent 94%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+@media(max-width:360px){
+ .s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-back,
+ .s28-hero.s28-active .s28-kitty.s31-kitty-active.s34-kitty-front{right:8px!important;top:-22px!important;width:187px!important;height:117px!important}
+}
