@@ -937,3 +937,42 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 
 /* v37 — quiet connection diagnostics, no changes to capsule navigation. */
 .s37-monitor-status{margin:10px 4px 14px;padding:0 4px;color:#65748d;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+
+/* v38: cohesive reading layout, preserve existing floating navigation and mascot layers. */
+.s19-page,.s13-detail-page{min-width:0;overflow-wrap:anywhere}
+.s19-chat-card,.s19-event-card{transition:background-color .15s ease,border-color .15s ease}
+.s19-chat-card:active,.s19-event-card:active{background:#f1f7ff}
+.s19-chat-info strong,.s19-chat-detailhead h1{min-width:0;max-width:100%;text-overflow:ellipsis}
+.s19-chat-info small.s38-chat-event{font-weight:750;color:#677f9d}
+.s19-chat-info small.s38-chat-event.is-deleted{color:#d94e67}
+.s19-chat-info small.s38-chat-event.is-edited{color:#1978e0}
+.s19-chat-info small.s38-chat-event.is-saved{color:#638199}
+.s19-event-body strong,.s19-event-body small,.s19-event-body em{overflow-wrap:anywhere;word-break:break-word}
+.s19-event-card time{font-variant-numeric:tabular-nums}
+.s38-version-compare{display:grid;gap:10px;margin:0 0 12px}
+.s38-version-compare>div{border-radius:16px;border:1px solid #dce9fb;padding:13px 15px;background:#fff;min-width:0}
+.s38-version-compare>div:first-child{background:#fff6f7;border-color:#f8dee3}
+.s38-version-compare>div:last-child{background:#eff7ff;border-color:#d8eaff}
+.s38-version-compare span{font-size:12px;font-weight:800;color:#71849f}
+.s38-version-compare p{margin:6px 0 0;color:#14274a;font-size:15px;line-height:1.55;overflow-wrap:anywhere;white-space:pre-wrap}
+.s38-pro-title{margin-top:20px}
+.s19-settings-page .s19-pro-card{margin-top:6px}
+.s13-app .s19-pagehead h1{font-size:clamp(23px,6vw,28px)}
+.s13-app .s19-chat-detailhead>div{min-width:0}
+/* Smaller screens: keep the original straight status-card silhouette and gripping kitty. */
+@media(max-width:375px){
+ .s13-app .s14-home{--sbewo-compact:1}
+ .s28-hero.s28-active{height:328px!important}
+ .s28-hero.s28-offline{height:264px!important}
+ .s19-chat-card{padding:12px 10px;gap:10px}
+ .s19-event-card{padding:12px 9px;gap:8px}
+ .s19-chat-card .avatar,.s19-avatar{width:42px;height:42px}
+ .s19-chat-detailhead h1{font-size:18px}
+ .s19-event-card time{font-size:10px}
+}
+@media(max-width:330px){
+ .s19-event-icon{width:34px;height:34px}
+ .s19-event-card time{max-width:55px;white-space:normal;text-align:right}
+ .s19-chat-info strong{font-size:14px}
+ .s13-app .s13-main{padding-left:12px;padding-right:12px}
+}
