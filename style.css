@@ -183,3 +183,25 @@ html,body{background:var(--s13-bg)!important}
 .s13-onboard-visual{height:26dvh;margin-bottom:23px}
 .s13-onboard-visual img{height:92%}
 .s13-app .s13-onboard-visual img.s13-kyu{height:100%!important;width:100%!important;max-width:100%!important;max-height:100%!important;min-height:0!important;position:static!important;object-fit:contain!important;transform:none!important}
+
+/* v14: Telegram owns the app title and BackButton. Prevent double bars. */
+.s13-app .s13-header,.s13-app .topbar {display:none!important}
+.s13-app .s13-main{scroll-padding-top:0}
+.s13-app .s13-mainpage{padding-top:18px}
+.s13-app .s13-detail-page{padding-top:20px}
+.s14-home .s13-title-row{margin-top:19px;margin-bottom:8px}
+.s14-home .s13-title-row h1{font-size:28px;letter-spacing:-.6px}
+.s14-profile{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border:1px solid #e1ebf8;background:#fff;border-radius:17px;box-shadow:0 3px 11px #6c95c414}
+.s14-profile-person{display:flex;align-items:center;gap:12px;min-width:0;flex:1;text-align:left;border:0;background:none;padding:0;color:#142348}
+.s14-profile-person .avatar{width:48px;height:48px;flex:none;border-radius:50%}
+.s14-profile-info{display:flex;flex-direction:column;gap:5px;min-width:0}
+.s14-profile-info strong{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s14-profile-info small{color:#70819e;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s14-settings{background:#e8f3ff;color:#116af0;width:43px;height:43px;display:grid;place-items:center;border:0;border-radius:13px;flex-shrink:0}
+.s14-settings svg{width:22px;height:22px}
+.s14-section-title{font-size:19px;letter-spacing:-.35px;margin:23px 0 11px;font-weight:800;color:#16234b}
+@media(max-width:359px){.s14-profile{padding:10px}.s14-profile-person .avatar{width:40px;height:40px}.s14-home .s13-title-row h1{font-size:25px}}
+
+.s14-user-photo{height:48px;width:48px;border-radius:50%;object-fit:cover;flex:none}
+.s14-profile-person>span[hidden]{display:none}
+.s14-profile-person>span:not(.s14-profile-info):not([hidden]){flex:none}
