@@ -934,3 +934,6 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
   mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 106px - env(safe-area-inset-bottom, 0px)),transparent calc(100% - 73px - env(safe-area-inset-bottom, 0px)),transparent 100%);
  }
 }
+
+/* v37 — quiet connection diagnostics, no changes to capsule navigation. */
+.s37-monitor-status{margin:10px 4px 14px;padding:0 4px;color:#65748d;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
