@@ -2934,3 +2934,110 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
  .s102-switch.active .s102-knob{transform:translateX(16px)}
  .s102-open-bot{font-size:12px}
 }
+
+
+/* v103 — Notification page compact mobile layout matching Settings. */
+.app.s13-app.s13-no-bottom > .s13-main:has(> .s102-notifications-page){
+  padding:0!important;
+  overscroll-behavior:none;
+  overflow-x:hidden!important;
+}
+.s102-notifications-page{
+  padding:12px 15px 12px;
+  min-height:0;
+  margin:0 auto;
+}
+.s102-notifications-page::before{height:92px;opacity:.5}
+.s102-heading{margin:0 0 12px;padding:0 3px}
+.s102-heading h1{
+  font-size:17px;
+  line-height:1.24;
+  font-weight:500;
+  letter-spacing:0;
+  color:#314c73;
+  margin:0 0 3px;
+}
+.s102-heading p{font-size:11px;line-height:1.3;font-weight:400;color:#6a7c97;margin:0}
+.s102-group{
+  border-radius:20px;
+  padding:10px 12px 6px;
+  margin-bottom:10px;
+  box-shadow:0 5px 13px rgba(55,94,163,.06);
+}
+.s102-group-title{
+  font-size:14px;
+  letter-spacing:0;
+  font-weight:720;
+  gap:8px;
+  margin:0 0 3px;
+  min-height:22px;
+}
+.s102-group-title svg{width:17px;height:17px;stroke-width:1.9}
+.s102-notify-row{min-height:57px;gap:10px;padding:6px 0}
+.s102-notify-row + .s102-notify-row::before{left:51px}
+.s102-iconbox{width:41px;height:41px;border-radius:13px}
+.s102-iconbox svg{width:21px;height:21px;stroke-width:1.9}
+.s102-notify-copy{gap:3px}
+.s102-notify-copy strong{font-size:13px;line-height:1.17;font-weight:720}
+.s102-notify-copy small{font-size:10.5px;line-height:1.26;font-weight:420}
+.s102-switch{width:41px;height:25px}
+.s102-switch .s102-knob{top:3px;left:3px;width:19px;height:19px}
+.s102-switch.active .s102-knob{transform:translateX(16px)}
+.s102-notify-note{
+  margin:2px 0 10px;
+  padding:10px 11px;
+  gap:8px;
+  border-radius:14px;
+  font-size:10.5px;
+  line-height:1.35;
+}
+.s102-notify-note-icon svg{width:17px;height:17px}
+.s102-open-bot{
+  min-height:42px;
+  padding:8px 7px;
+  border-radius:14px;
+  font-size:12px;
+  gap:7px;
+}
+.s102-open-bot svg{width:18px;height:18px}
+@media(min-width:410px){
+  .s102-notifications-page{padding:12px 18px 13px}
+  .s102-heading{margin-bottom:13px}
+  .s102-group{padding:10px 14px 6px;margin-bottom:11px}
+  .s102-notify-row{min-height:59px}
+}
+@media(max-width:350px){
+  .s102-notifications-page{padding:9px 10px 9px}
+  .s102-heading{margin-bottom:9px}
+  .s102-heading h1{font-size:15px}
+  .s102-heading p{font-size:10px}
+  .s102-group{padding:8px 9px 4px;margin-bottom:8px;border-radius:18px}
+  .s102-group-title{font-size:13px;margin-bottom:2px}
+  .s102-notify-row{min-height:52px;gap:7px;padding:4px 0}
+  .s102-iconbox{width:36px;height:36px;border-radius:11px}
+  .s102-iconbox svg{width:19px;height:19px}
+  .s102-notify-row+.s102-notify-row::before{left:43px}
+  .s102-notify-copy strong{font-size:11.8px}
+  .s102-notify-copy small{font-size:9.6px}
+  .s102-switch{width:37px;height:23px}
+  .s102-switch .s102-knob{top:2.5px;left:3px;width:18px;height:18px}
+  .s102-switch.active .s102-knob{transform:translateX(13px)}
+  .s102-notify-note{font-size:9.6px;padding:8px 9px;margin-bottom:8px}
+  .s102-open-bot{min-height:39px;font-size:11px}
+}
+/* Compact-height iPhone: keep the final bot button visible above the bottom safe area. */
+@media(max-height:735px){
+  .s102-notifications-page{padding-top:7px;padding-bottom:6px}
+  .s102-heading{margin-bottom:7px}
+  .s102-heading h1{font-size:15px;margin-bottom:1px}
+  .s102-heading p{font-size:10px}
+  .s102-group{padding-top:7px;padding-bottom:3px;margin-bottom:6px}
+  .s102-group-title{font-size:13px;min-height:19px;margin-bottom:1px}
+  .s102-notify-row{min-height:49px;padding:3px 0}
+  .s102-iconbox{width:35px;height:35px;border-radius:11px}
+  .s102-iconbox svg{width:18px;height:18px}
+  .s102-notify-copy strong{font-size:11.5px}
+  .s102-notify-copy small{font-size:9.3px;line-height:1.16}
+  .s102-notify-note{font-size:9.4px;margin:1px 0 6px;padding:7px 9px}
+  .s102-open-bot{min-height:37px;padding:6px;font-size:11px}
+}
