@@ -30,6 +30,7 @@ const KYU_IMAGES={
 const kyu=(k,cls='')=>`<img class="${cls}" src="${KYU_IMAGES[k]||KYU_IMAGES.empty}" alt="Кью — помощник Sbewo" loading="eager" decoding="async">`;
 const pref=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch{return null}};
 let page=(pref('sbewo-v8-onboarded')==='yes'||pref('sbewo-v6-onboarded')==='yes')?'home':'welcome',previous='home',onboard=0,flt='all',mediaFilter='all',query='',selectedChat='',selectedKey='',demo=false,busy=false,error='',theme=pref('sbewo-v5-theme')||'light';
+let s65PreviewState=pref('sbewo-status-preview')||'';
 let notify={delete:false,edit:false,bot_started:false};
 let excludedChats=JSON.parse(pref('sbewo-hidden-chats')||'[]');
 let db={connected:false,connections:0,items:[],limits:{media_download:false,group_deletions:false,push_notifications:false,payments:false},retention_days:30};
@@ -273,6 +274,7 @@ function s14ProfileBlock(){
 }
 function s25Count(n,forms){const value=Math.max(0,Math.floor(Number(n)||0));const mod10=value%10,mod100=value%100;return `${value} ${mod10===1&&mod100!==11?forms[0]:mod10>=2&&mod10<=4&&(mod100<12||mod100>14)?forms[1]:forms[2]}`;}
 function s60CardState(){
+ if(s65PreviewState)return s65PreviewState;
  if(!db.connected)return 'disconnected';
  const access=db.access||{};
  if(access.status==='paid'&&access.paid_until)return 'paid';
@@ -290,25 +292,39 @@ function s60Date(value){
  const d=new Date(value);
  return Number.isFinite(d.getTime())?d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}):'';
 }
+function s65BadgeDot(kind='solid'){
+ return `<span class="s65-dot s65-dot-${kind}" aria-hidden="true"></span>`;
+}
+function s65BadgeIcon(kind){
+ const icons={
+  gift:'<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9h16v11H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v11M4 13h16M7.5 9c-1.5 0-2.5-.9-2.5-2.2C5 5.5 6 4.5 7.4 4.5 9.3 4.5 10.4 6.1 12 9M16.5 9c1.5 0 2.5-.9 2.5-2.2 0-1.3-1-2.3-2.4-2.3C14.7 4.5 13.6 6.1 12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/><path d="M12 7.5v5l3 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  alert:'<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8.2v4.7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12 16.9h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/></svg>'
+ };
+ return icons[kind]||'';
+}
+function s65PreviewPanel(){
+ const options=[['disconnected','Не подключен'],['trial-3','3 дня'],['trial-2','2 дня'],['trial-1','1 день'],['paid','Подписка'],['expired','Закончился'],['','Авто']];
+ return `<div class="s65-preview-panel"><div class="s65-preview-label">Тест карточек</div><div class="s65-preview-row">${options.map(([value,label])=>`<button class="${s65PreviewState===value?'active':''}" data-s65-preview="${value}">${label}</button>`).join('')}</div></div>`;
+}
 function s14HomeConnectCard(){
  const state=s60CardState();
  const a=db.access||{};
- const paidDate=s60Date(a.paid_until);
- const configs={
-  disconnected:{badge:'Не подключен',symbol:'○',title:'Подключи Sbewo',desc:'Начни отслеживать удаления и изменения в Telegram.',primary:'Подключить',pgo:'connect-personal'},
-  'trial-3':{badge:'Пробный период',symbol:'🎁',title:'3 дня работы',desc:'Бесплатный доступ ко всем функциям Sbewo.',primary:'Подробнее',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
-  'trial-2':{badge:'Осталось 2 дня',symbol:'◷',title:'Осталось 2 дня',desc:'Твоё пробное использование заканчивается. Успей оформить подписку!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
-  'trial-1':{badge:'Остался 1 день',symbol:'!',title:'Остался 1 день!',desc:'Пробный период заканчивается завтра. Не потеряй доступ к функциям Sbewo!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
-  paid:{badge:'Подписка активна',symbol:'●',title:'Sbewo работает',desc:`Твоя подписка активна.<br>${a.auto_renew?'Следующий платёж':'Доступ до'}: <strong>${esc(paidDate||'—')}</strong>`,html:true,primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'pro'},
-  expired:{badge:'Пробный период завершён',symbol:'!',title:'Доступ закончился',desc:'Три бесплатных дня прошли. Выбери тариф, чтобы продолжить работу с Sbewo.',primary:'Выбрать тариф',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
-  unverified:{badge:'Бот активен',symbol:'●',title:'Sbewo следит за чатами',desc:'Новые события из выбранных чатов появятся здесь.',primary:'События',scroll:true,secondary:'Управление',sgo:'connect-list'}
- };
- const c=configs[state];
- const mascot=state==='unverified'?'./kyu-active-transparent.png':`./kyu-status-${state}.png`;
+ const paidDate=s60Date(a.paid_until)||'20 янв 2027';
  const arrow='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const configs={
+  disconnected:{badge:'Не подключен',badgeHtml:s65BadgeDot('outline'),title:'Подключи Sbewo',desc:'Начни отслеживать<br>изменения и удалённые<br>сообщения в Telegram.',primary:'Подключить',pgo:'connect-personal',mascot:'./kyu-status-disconnected.png'},
+  'trial-3':{badge:'Пробный период',badgeHtml:s65BadgeIcon('gift'),title:'3 дня работы',desc:'Бесплатный доступ ко всем<br>функциям Sbewo.',primary:'Подробнее',pgo:'pro',secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-trial-3.png'},
+  'trial-2':{badge:'Осталось 2 дня',badgeHtml:s65BadgeIcon('clock'),title:'Осталось 2 дня',desc:'Твоё пробное использование<br>заканчивается. Успей<br>оформить подписку!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-trial-2.png'},
+  'trial-1':{badge:'Остался 1 день',badgeHtml:s65BadgeIcon('alert'),title:'Остался 1 день!',desc:'Пробный период заканчивается<br>завтра. Не потеряй доступ<br>к функциям Sbewo!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-trial-1.png'},
+  paid:{badge:'Подписка активна',badgeHtml:s65BadgeDot('green'),title:'Sbewo работает',desc:`Твоя подписка активна.<br>${a.auto_renew?'Следующий платёж':'Доступ до'}: <strong>${esc(paidDate)}</strong>`,html:true,primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'pro',mascot:'./kyu-status-paid.png'},
+  expired:{badge:'Доступ закончился',badgeHtml:s65BadgeIcon('alert'),title:'Доступ закончился',desc:'Пробный период завершён.<br>Выбери тариф, чтобы снова<br>получить доступ к Sbewo.',primary:'Выбрать тариф',pgo:'pro',secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-expired.png'},
+  unverified:{badge:'Подписка активна',badgeHtml:s65BadgeDot('green'),title:'Sbewo работает',desc:'Новые события из выбранных чатов<br>появятся здесь сразу после<br>изменений.',primary:'События',scroll:true,secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-paid.png'}
+ };
+ const c=configs[state]||configs.disconnected;
  const primaryAttr=c.scroll?'data-s37-scroll="events"':`data-go="${c.pgo}"`;
  const secondaryAttr=c.scrollSecondary?'data-s37-scroll="events"':`data-go="${c.sgo}"`;
- return `<section class="s37-hero s60-status-card s65-status-card s60-${state}" aria-label="${esc(c.badge)}"><div class="s37-status"><span class="s65-badge-icon" aria-hidden="true">${c.symbol}</span>${esc(c.badge)}</div><h2>${esc(c.title)}</h2><p>${c.html?c.desc:esc(c.desc)}</p><div class="s37-mascot" aria-hidden="true"><img src="${mascot}" alt="" loading="eager" decoding="async"></div><div class="s37-actions ${c.secondary?'':'s65-single-action'}"><button class="s37-events" ${primaryAttr}>${esc(c.primary)} ${arrow}</button>${c.secondary?`<button class="s37-manage" ${secondaryAttr}>${esc(c.secondary)}</button>`:''}</div></section>`;
+ return `<section class="s65-card s65-card--${state}" aria-label="${esc(c.badge)}"><div class="s65-card-badge">${c.badgeHtml}<span>${esc(c.badge)}</span></div><div class="s65-card-copy"><h2>${esc(c.title)}</h2><p>${c.html?c.desc:c.desc}</p></div><div class="s65-card-mascot" aria-hidden="true"><img src="${c.mascot}" alt="" loading="eager" decoding="async"></div><div class="s65-card-actions ${c.secondary?'':'s65-card-actions-single'}"><button class="s65-card-primary" ${primaryAttr}>${esc(c.primary)} ${arrow}</button>${c.secondary?`<button class="s65-card-secondary" ${secondaryAttr}>${esc(c.secondary)}</button>`:''}</div></section>`;
 }
 // Group event cards by the actual event date (edited/deleted timestamp), not today's date.
 // Use local calendar days: midnight boundaries must not be calculated in UTC.
@@ -348,7 +364,7 @@ const s40IsGroupEvent=m=>{
  if(m?.chat_id!=null&&String(m.chat_id).trim()&&Number.isSafeInteger(id)&&id!==0)return id<0;
  return false; // Legacy entries without peer ID are treated as private, not guessed by name.
 };
-function s13Home(){let xs=records().filter(m=>s13EventScope==='groups'?s40IsGroupEvent(m):!s40IsGroupEvent(m));if(flt==='deleted')xs=xs.filter(x=>x.deleted);if(flt==='edited')xs=xs.filter(x=>x.edited);return `<section class="s13-mainpage s14-home">${s14ProfileBlock()}${s14HomeConnectCard()}${s13Tab([['personal','Личные','personal'],['groups','Группы','groups']],s13EventScope,'s13-scope')}${xs.length?`<div class="s13-stack s14-event-stack">${s39DatedEvents(xs,s13Event)}</div>`:s13Empty(s13EventScope==='groups'?'Пока нет событий групп':'Пока тихо',s13EventScope==='groups'?'События групп пока не поддерживаются подключённым ботом. Когда эта функция появится, они будут здесь.':db.connected?'Кью покажет здесь новые доступные удаления и правки.':'После подключения здесь появятся доступные события.','empty',s13EventScope==='groups'?'':s13Btn('Посмотреть подключения','connect-list'))}</section>`;}
+function s13Home(){let xs=records().filter(m=>s13EventScope==='groups'?s40IsGroupEvent(m):!s40IsGroupEvent(m));if(flt==='deleted')xs=xs.filter(x=>x.deleted);if(flt==='edited')xs=xs.filter(x=>x.edited);return `<section class="s13-mainpage s14-home">${s14ProfileBlock()}${s14HomeConnectCard()}${s65PreviewPanel()}${s13Tab([['personal','Личные','personal'],['groups','Группы','groups']],s13EventScope,'s13-scope')}${xs.length?`<div class="s13-stack s14-event-stack">${s39DatedEvents(xs,s13Event)}</div>`:s13Empty(s13EventScope==='groups'?'Пока нет событий групп':'Пока тихо',s13EventScope==='groups'?'События групп пока не поддерживаются подключённым ботом. Когда эта функция появится, они будут здесь.':db.connected?'Кью покажет здесь новые доступные удаления и правки.':'После подключения здесь появятся доступные события.','empty',s13EventScope==='groups'?'':s13Btn('Посмотреть подключения','connect-list'))}</section>`;}
 function s13Archive(){return `${s13Header('close')}<section class="s13-mainpage s14-root-page"><div class="s14-compact-intro"><div><h2>Сохранённые переписки</h2><p>Ищи по чатам, медиа и избранному без лишних переходов.</p></div>${s13Face('archive')}</div>${s13Tab([['chats','Чаты'],['media','Медиа'],['favorites','Избранное']],s13ArchiveTab,'s13-archive')}<input id="search" class="s13-search" placeholder="Найти в архиве" value="${esc(query)}" />${s13ArchiveTab==='chats'?s13ChatList():s13ArchiveTab==='media'?mediaList():starList()}<p class="s13-footnote">Данные появляются после подключения. Полученные и сохранённые файлы можно открыть из карточки события.</p></section>`;}
 function s13ChatList(){const xs=connections().filter(([name,items])=>s38ChatName(name,items).toLowerCase().includes(query.toLowerCase()));return xs.length?`<div class="s13-stack">${xs.map(([name,items])=>`<button class="s13-chat-row" data-chat="${esc(name)}">${avatar(s38ChatName(name,items))}<span><strong>${esc(s13Human(s38ChatName(name,items)))}</strong><small>${items.length} сохранённых записей</small></span>${s13Icon('chevron')}</button>`).join('')}</div>`:s13Empty('Архив пуст','Когда Sbewo получит разрешённые события, они появятся здесь.','archive');}
 function s13Chats(){
@@ -542,7 +558,7 @@ document.querySelectorAll('[data-s19-media]').forEach(b=>b.onclick=async()=>{
  }catch(e){s19MediaError=e.message||'Не удалось подготовить файл';s19MediaPreview={key};render()}
 });
 document.querySelectorAll('[data-s19-archive]').forEach(b=>b.onclick=async()=>{const next=!s19FullArchive;b.disabled=true;try{if(!demo){const data=await call('/api/archive-settings',{full_archive:next});s19FullArchive=!!data.full_archive;await refresh()}else{s19FullArchive=next;render()}}catch(e){error=e.message;render()}});
-document.querySelectorAll('[data-s13-scope]').forEach(b=>b.onclick=()=>{s13EventScope=b.dataset.s13Scope;render()});document.querySelectorAll('[data-s13-archive]').forEach(b=>b.onclick=()=>{s13ArchiveTab=b.dataset.s13Archive;query='';render()});document.querySelectorAll('[data-s13-chat-tab]').forEach(b=>b.onclick=()=>{s13ChatTab=b.dataset.s13ChatTab;render()});document.querySelectorAll('[data-action]').forEach(b=>b.onclick=async()=>{switch(b.dataset.action){case 'next-onboarding':if(s13Step===0&&!s13Accepted)return;if(s13Step===5){goto('connect-personal');return}s13Step++;render();break;case 'skip-onboarding':pref('sbewo-v8-onboarded','yes');page='home';render();break;case 'start-personal':goto('connect-personal');break;case 'start-group':goto('connect-group');break;case 'check-connection':try{await refresh();}catch(e){error=e.message}goto('connection-check');break;case 'clear-archive':if(!s13Confirm){s13Confirm=true;b.textContent='Подтвердить удаление';return}try{if(!demo)await call('/api/clear');db.items=[];s13Confirm=false;goto('archive')}catch(e){error=e.message;render()}break;}});const terms=$('#accept-terms');if(terms)terms.onchange=()=>{s13Accepted=terms.checked;render()};};
+document.querySelectorAll('[data-s13-scope]').forEach(b=>b.onclick=()=>{s13EventScope=b.dataset.s13Scope;render()});document.querySelectorAll('[data-s13-archive]').forEach(b=>b.onclick=()=>{s13ArchiveTab=b.dataset.s13Archive;query='';render()});document.querySelectorAll('[data-s13-chat-tab]').forEach(b=>b.onclick=()=>{s13ChatTab=b.dataset.s13ChatTab;render()});document.querySelectorAll('[data-s65-preview]').forEach(b=>b.onclick=()=>{s65PreviewState=b.dataset.s65Preview||'';pref('sbewo-status-preview',s65PreviewState);render()});document.querySelectorAll('[data-action]').forEach(b=>b.onclick=async()=>{switch(b.dataset.action){case 'next-onboarding':if(s13Step===0&&!s13Accepted)return;if(s13Step===5){goto('connect-personal');return}s13Step++;render();break;case 'skip-onboarding':pref('sbewo-v8-onboarded','yes');page='home';render();break;case 'start-personal':goto('connect-personal');break;case 'start-group':goto('connect-group');break;case 'check-connection':try{await refresh();}catch(e){error=e.message}goto('connection-check');break;case 'clear-archive':if(!s13Confirm){s13Confirm=true;b.textContent='Подтвердить удаление';return}try{if(!demo)await call('/api/clear');db.items=[];s13Confirm=false;goto('archive')}catch(e){error=e.message;render()}break;}});const terms=$('#accept-terms');if(terms)terms.onchange=()=>{s13Accepted=terms.checked;render()};};
 const s13OldGoto=goto;
 goto=function(to){if(to==='back'){back();return}if(to==='star-action'){starAction();return}if(to==='note-action'){noteAction();return}if(to==='history'||to==='deleted'||to==='edited'){flt=to==='deleted'?'deleted':to==='edited'?'edited':'all';to='home'}if(to==='archive')to='chats';if(to==='media'){s19ChatView='media';to='chats'}if(to==='services')to='catalog';if(to==='connection')to='connect-list';if(to==='notifications'||to==='storage'||to==='filters'||to==='about'||to==='pro'){ /* Existing functional secondary pages */ }if(to==='chat'){s19ChatView='events';s50FilterOpen=false;}if(to==='chat-clear'){s48ClearSelection.clear();s48Clearing=false;}if(to==='settings')s13Return=page;if(to==='eventdetail'){s13Return=page;s19MediaPreview=null;s19MediaError='';s19NoteEditor=false;}if(to==='welcome')s13Step=0;if(to==='home'||to==='archive'||to==='chats'){if(to==='home')flt='all';if(to==='archive')query=''}previous=page;page=to;error='';render();const main=$('#main');if(main)main.scrollTop=0;};
 back=function(){if(page==='welcome'){if(s13Step>0){s13Step--;render()}else goto('home');return}const mappings={eventdetail:s13Return,revision:'eventdetail',chat:'chats','archive-view':'home','chat-manage':'chats','chat-clear':'chat','connect-personal':'connect-list','connect-group':'connect-list','connection-check':'connect-personal','connect-list':'chats',catalog:'settings',access:'settings',privacy:'settings','confirm-clear':'privacy',help:'settings',notifications:'settings',storage:'privacy',filters:'settings'};goto(mappings[page]||'home');};
