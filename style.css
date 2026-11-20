@@ -1955,3 +1955,35 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     height:134px;
   }
 }
+
+/* v70 — targeted changes only: disconnected CTA and trial-3 status badge. */
+.s65-card.s65-card--disconnected .s65-card-actions-single{
+  left:16px;
+  right:16px;
+  width:auto;
+  max-width:none;
+  grid-template-columns:minmax(0,1fr);
+}
+.s65-card.s65-card--disconnected .s65-card-primary{
+  font-size:12.5px;
+  letter-spacing:-.15px;
+  white-space:nowrap;
+  gap:8px;
+  position:relative;
+  z-index:4;
+}
+.s65-card.s65-card--trial-3 .s65-card-badge{
+  background:linear-gradient(135deg,#29be75 0%,#159e5e 100%);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.22);
+}
+.s65-card.s65-card--trial-3 .s65-card-badge svg,
+.s65-card.s65-card--trial-3 .s65-card-badge span{color:#fff;}
+@media(min-width:390px){
+ .s65-card.s65-card--disconnected .s65-card-actions-single{left:18px;right:18px;}
+ .s65-card.s65-card--disconnected .s65-card-primary{font-size:14px;}
+}
+@media(max-width:359px){
+ .s65-card.s65-card--disconnected .s65-card-actions-single{left:12px;right:12px;}
+ .s65-card.s65-card--disconnected .s65-card-primary{font-size:11.5px;gap:5px;letter-spacing:-.3px;}
+}

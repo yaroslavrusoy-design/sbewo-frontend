@@ -313,7 +313,7 @@ function s14HomeConnectCard(){
  const paidDate=s60Date(a.paid_until)||'20 янв 2027';
  const arrow='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  const configs={
-  disconnected:{badge:'Не подключен',badgeHtml:s65BadgeDot('outline'),title:'Подключи Sbewo',desc:'Начни отслеживать<br>изменения и удалённые<br>сообщения в Telegram.',primary:'Подключить',pgo:'connect-personal',mascot:'./kyu-status-disconnected.png'},
+  disconnected:{badge:'Не подключен',badgeHtml:s65BadgeDot('outline'),title:'Подключи Sbewo',desc:'Начни отслеживать<br>изменения и удалённые<br>сообщения в Telegram.',primary:'Подключить бесплатный период',pgo:'connect-personal',mascot:'./kyu-status-disconnected.png'},
   'trial-3':{badge:'Пробный период',badgeHtml:s65BadgeIcon('gift'),title:'3 дня работы',desc:'Бесплатный доступ ко всем<br>функциям Sbewo.',primary:'Подробнее',pgo:'pro',secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-trial-3.png'},
   'trial-2':{badge:'Осталось 2 дня',badgeHtml:s65BadgeIcon('clock'),title:'Осталось 2 дня',desc:'Твоё пробное использование<br>заканчивается. Успей<br>оформить подписку!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-trial-2.png'},
   'trial-1':{badge:'Остался 1 день',badgeHtml:s65BadgeIcon('alert'),title:'Остался 1 день!',desc:'Пробный период заканчивается<br>завтра. Не потеряй доступ<br>к функциям Sbewo!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list',mascot:'./kyu-status-trial-1.png'},
