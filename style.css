@@ -2034,3 +2034,21 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary:active{
  background:linear-gradient(115deg,#10784c 0%,#075535 100%);
 }
+
+/* v74 — solid classic lime-green CTA on disconnected card only. */
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary{
+  background:#64C936;
+  background-image:none;
+  color:#fff;
+  border:1px solid #64C936;
+  box-shadow:none;
+  text-shadow:0 1px 1px rgba(20,89,12,.22);
+}
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary svg{
+  color:#fff;
+  filter:none;
+}
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary:active{
+  background:#57B72B;
+  background-image:none;
+}
