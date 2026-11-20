@@ -4,7 +4,8 @@ const API=(window.SBEWO_API_URL||'').replace(/\/$/,'');
 const USERNAME=(window.SBEWO_BOT_USERNAME||'').replace(/^@/,'');
 const initData=tg?.initData||'';
 const S51_PRO_KYU='sbewo-pro-kyu.png';
-let s51Plan='6m';
+let s51Plan='12m';
+let s91TariffMode='personal';
 
 // Official Remix Icon glyphs are used when their webfont is available.
 // Inline SVG fallbacks keep the interface readable in offline/restricted WebViews.
@@ -167,8 +168,37 @@ function notifications(){return `${header('Уведомления')}<section cla
 function filters(){const chats=[...new Set(db.items.map(x=>x.chat))].sort();return `${header('Фильтры')}<div class="top-illustration"><h1>Скрытые чаты</h1>${kyu('settings')}</div><div class="notice">Выбранные чаты скрываются только на этом устройстве. Запись на сервере продолжается. Для прекращения сбора данных отмени доступ к этим чатам в Telegram Business.</div>${chats.length?chats.map(name=>`<button class="link-row" data-exclude="${esc(name)}"><span class="bubble">${ico(excludedChats.includes(name)?'lock':'person')}</span><span class="grow"><strong>${esc(name)}</strong><small>${excludedChats.includes(name)?'Скрыт':'Отображается'}</small></span><span class="filter-mark">${excludedChats.includes(name)?'Показать':'Скрыть'}</span></button>`).join(''):noData('empty','Пока нет чатов','Чаты появятся после получения сообщений.')}`;}
 function storage(){return `${header('Хранилище')}<div class="top-illustration"><h1>Хранилище</h1>${kyu('archive')}</div><div class="card group-card">${row('archive','Записей',String(db.items.length),'chats')}${row('history','Срок хранения',`${db.retention_days} дней (серверный лимит)`,'privacy')}</div><button class="secondary" style="width:100%;color:#e05269" data-clear="1">Удалить мой архив</button><div class="notice warn">Очистка необратима. Подключение Telegram Business при этом остаётся активным, пока его не отключить в Telegram.</div>`}
 function privacy(){return `${header('Безопасность и данные')}<div class="top-illustration"><h1>Твои данные</h1>${kyu('settings')}</div><div class="card" style="padding:16px;line-height:1.7;font-size:12px">Sbewo проверяет подпись данных Telegram Mini App. Доступные тексты сообщений и заметки хранятся в базе в зашифрованном виде. История событий ограничена разрешениями подключённого бота. Сохранённые записи можно очистить в настройках.</div><div class="notice">До подключения бот не знает ранее удалённые сообщения. Фото и видео пока не скачиваются. Для максимальной конфиденциальности ограничь доступ бота нужными чатами.</div>`}
-function pro(){const plans=[{id:'1m',title:'1 месяц',price:'299 ₽',save:'',monthly:''},{id:'6m',title:'6 месяцев',price:'1 190 ₽',save:'Экономия 604 ₽ · 34%',monthly:'198 ₽ / месяц'},{id:'12m',title:'12 месяцев',price:'1 790 ₽',save:'Экономия 1 798 ₽ · 50%',monthly:'149 ₽ / месяц'}];const chosen=plans.find(p=>p.id===s51Plan)||plans[1];const features=[["trash","Удалённые сообщения"],["edit","История правок"],["image","Сохранение фото,\nстикеров и файлов"],["layers","Архив событий"],["bell","Уведомления"],["send","Экспорт истории чата"]];return `${header('Подписка Sbewo')}<section class="s51-pro-page"><div class="s51-hero"><div class="s51-hero-art"><img src="${S51_PRO_KYU}" alt="Кью — маскот Sbewo"></div><div class="s51-hero-copy"><h1>Подписка<br>Sbewo</h1><div class="s51-trial-card"><span class="s51-trial-icon">${ico('crown')}</span><div><strong>3 дня бесплатно</strong><p>В течение 3 дней пробного периода доступны все функции приложения, кроме мониторинга групп — для групп действует отдельный тариф.</p></div></div></div></div><div class="s51-plan-list">${plans.map(plan=>`<button class="s51-plan ${plan.id===s51Plan?'active':''}" data-s51-plan="${plan.id}" aria-pressed="${plan.id===s51Plan}"><div class="s51-plan-copy"><span class="s51-plan-title">${plan.title}</span><strong>${plan.price}</strong>${plan.save?`<span class="s51-plan-save">${plan.save}</span>`:''}${plan.monthly?`<small>${plan.monthly}</small>`:''}</div><span class="s51-plan-radio">${plan.id===s51Plan?ico('check'):''}</span></button>`).join('')}</div><div class="s51-features-card"><div class="s51-features-head"><span class="s51-features-icon">${ico('crown')}</span><div><h2>Что входит в подписку</h2><p>Доступно после пробного периода:</p></div></div><div class="s51-features-grid">${features.map(([icon,label])=>`<div class="s51-feature"><span>${ico(icon)}</span><b>${label.replace(/\n/g,'<br>')}</b></div>`).join('')}</div><div class="s51-groups-note"><span>${ico('info')}</span><p>Группы не входят в эту подписку и оплачиваются по отдельному тарифу.</p></div></div><button class="primary s51-submit" data-s51-checkout="1">Выбрать тариф ${ico('chevron')}</button><p class="s51-submit-note">Сейчас страница оформлена как UI. Подключение оплаты можно сделать следующим этапом.</p></section>`;}
-
+function pro(){
+ const plans=[
+  {id:'1m',period:'1 месяц',price:'299 ₽',per:'299 ₽ / месяц',save:'',benefit:''},
+  {id:'6m',period:'6 месяцев',price:'1 190 ₽',per:'198 ₽ / месяц',save:'Экономия 34%',benefit:''},
+  {id:'12m',period:'12 месяцев',price:'1 790 ₽',per:'149 ₽ / месяц',save:'Экономия 50%',benefit:'Максимальная выгода'}
+ ];
+ const chosen=plans.find(p=>p.id===s51Plan)||plans[2];
+ const features=[
+  ['trash','Удалённые сообщения'],['edit','История правок'],
+  ['image','Фото, стикеры и файлы'],['layers','Архив событий'],
+  ['bell','Уведомления'],['send','Экспорт истории чата']
+ ];
+ const groupMode=s91TariffMode==='groups';
+ return `${s13Header()}<section class="s91-pricing-page" aria-label="Тарифы и подписка">
+ <div class="s91-pricing-head"><h1>Тарифы <span class="s91-gold-crown" aria-hidden="true">${ico('crown')}</span></h1><p>Выбери подходящий период<br>и пользуйся всеми возможностями</p></div>
+ <div class="s91-plan-switch" role="tablist" aria-label="Вид подписки">
+  <button type="button" role="tab" aria-selected="${!groupMode}" data-s91-mode="personal" class="${!groupMode?'active':''}">${ico('person')} Личный</button>
+  <button type="button" role="tab" aria-selected="${groupMode}" data-s91-mode="groups" class="${groupMode?'active':''}">${ico('group')} Группы</button>
+ </div>
+ ${groupMode?`<div class="s91-groups-placeholder"><img src="./kyu-pricing-peek.png" alt="Кью ждёт групповые тарифы"/><h2>Тарифы для групп скоро появятся</h2><p>Мониторинг групп пока в разработке. Подписку для личных чатов можно выбрать на соседней вкладке.</p><button type="button" data-s91-mode="personal">Посмотреть личные тарифы</button></div>`:`
+ <div class="s91-pricing-columns">
+  <div class="s91-plan-column" role="radiogroup" aria-label="Период подписки">
+   ${plans.map(plan=>`<button type="button" role="radio" aria-checked="${plan.id===s51Plan}" class="s91-plan ${plan.id===s51Plan?'selected':''}" data-s51-plan="${plan.id}">${plan.benefit?`<span class="s91-benefit">${ico('crown')} ${plan.benefit}</span>`:''}<span class="s91-plan-title">${plan.period}</span><strong>${plan.price}</strong><span class="s91-per">${plan.per}</span>${plan.save?`<span class="s91-save">${plan.save}</span>`:''}<span class="s91-plan-radio">${plan.id===s51Plan?ico('check'):''}</span></button>`).join('')}
+  </div>
+  <div class="s91-feature-column"><h2>Что входит<br>в подписку?</h2><div class="s91-peek"><img src="./kyu-pricing-peek.png" alt="Кью — маскот Sbewo" loading="eager" decoding="async"/></div><div class="s91-feature-list">${features.map(([icon,label])=>`<div class="s91-feature"><span class="s91-feature-icon">${ico(icon)}</span><span class="s91-feature-name">${label}</span><span class="s91-feature-check">${ico('check')}</span></div>`).join('')}</div></div>
+ </div>
+ <button type="button" class="s91-checkout" data-s51-checkout="1"><span>Подключить за ${chosen.price}</span><span class="s91-checkout-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+ <p class="s91-payment-note">${ico('shield')} Безопасная оплата через Telegram</p>
+ <p class="s91-setup-note">Оплата пока не подключена. Выбор тарифа доступен для предварительного просмотра.</p>
+ `}</section>`;
+}
 const faqs=[['Как работает Sbewo?','Бот получает разрешённые новые Telegram Business события и сохраняет информацию в личный архив.'],['Можно увидеть старые удаления?','Нет. Доступны лишь события после подключения и только если бот получал исходное сообщение.'],['Что сохраняется?','Доступные тексты новых сообщений, события редактирования и удаления, типы вложений и заметки. Сами медиафайлы пока не скачиваются.'],['Нужно входить в аккаунт?','Нет, номер, пароль и код Telegram не требуются.'],['Работает ли в группах?','Пока нет: нужен отдельный режим с учётом ограничений Bot API и прав бота.'],['Как удалить данные?','Настройки → Хранилище → Удалить мой архив. Для прекращения получения событий также отключи бота в Telegram Business.']];
 let faqOpen=-1;function help(){return `${header('Помощь')}<section class="compact-hero"><h1>Помощь</h1>${kyu('help')}</section><div class="faq-stack">${faqs.map(([q,a],i)=>`<button class="faq" data-faq="${i}"><span>${ico(['info','image','shield','lock','group','help'][i]||'help')}</span><strong>${esc(q)}</strong>${ico('chevron')}${faqOpen===i?`<p>${esc(a)}</p>`:''}</button>`).join('')}</div>`;}
 
@@ -526,7 +556,7 @@ document.querySelectorAll('[data-message]').forEach(b=>{const original=b.onclick
    error='';
   }catch(e){error=e.message||'Не удалось скачать историю'}finally{s50Exporting=false;render()}
  };
- document.querySelectorAll('[data-s51-plan]').forEach(b=>b.onclick=()=>{s51Plan=b.dataset.s51Plan;render()});
+ document.querySelectorAll('[data-s91-mode]').forEach(b=>b.onclick=()=>{s91TariffMode=b.dataset.s91Mode;render()}); document.querySelectorAll('[data-s51-plan]').forEach(b=>b.onclick=()=>{s51Plan=b.dataset.s51Plan;render()});
  const checkoutBtn=$('[data-s51-checkout]');if(checkoutBtn)checkoutBtn.onclick=()=>{const planMap={'1m':'1 месяц · 299 ₽','6m':'6 месяцев · 1 190 ₽','12m':'12 месяцев · 1 790 ₽'};try{tg?.showAlert?.(`Выбран тариф: ${planMap[s51Plan]||'Подписка Sbewo'}. Подключение оплаты добавим следующим этапом.`)}catch{alert(`Выбран тариф: ${planMap[s51Plan]||'Подписка Sbewo'}. Подключение оплаты добавим следующим этапом.`)}};
 document.querySelectorAll('[data-clear-choice]').forEach(btn=>btn.onclick=()=>{
  const id=btn.dataset.clearChoice;

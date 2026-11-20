@@ -2347,3 +2347,101 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   .s13-app .s84-groups-empty h2{font-size:18px}
   .s13-app .s84-groups-empty p{font-size:11.5px}
 }
+
+/* v91 — pricing page faithfully adapted from the supplied Sbewo reference.
+   Everything is scoped to .s91-pricing-page; settings tariff banner is untouched. */
+.s13-no-bottom .s13-main:has(.s91-pricing-page){background:radial-gradient(ellipse at 48% 15%,#dbe9ff 0%,#cfdef8 49%,#e6f2ff 100%)!important}
+.s91-pricing-page{box-sizing:border-box;max-width:570px!important;margin:0 auto;padding:12px 15px 30px;color:#09123d}
+.s91-pricing-page *{box-sizing:border-box}
+.s91-pricing-head{text-align:center;margin:0 auto 17px}
+.s91-pricing-head h1{margin:0;display:flex;justify-content:center;align-items:flex-start;gap:10px;color:#060b39;font-weight:900;letter-spacing:-1.5px;font-size:clamp(34px,9vw,46px);line-height:1.12}
+.s91-gold-crown{color:#efbb14;transform:rotate(15deg);margin-top:0}
+.s91-gold-crown .ico{width:30px;height:30px;stroke-width:2.3}
+.s91-pricing-head p{font-size:clamp(12px,3.6vw,16px);line-height:1.32;color:#3c5079;margin:8px auto 0;font-weight:480}
+.s91-plan-switch{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:0 1px 18px;padding:4px;background:linear-gradient(115deg,#e7efff 0%,#f2f6ff 100%);border-radius:999px;box-shadow:0 5px 16px #3e78c71b,inset 0 1px 0 #fff;border:1px solid #fff}
+.s91-plan-switch button{height:45px;display:flex;justify-content:center;align-items:center;gap:9px;border:0;border-radius:999px;background:none;color:#111a43;font-size:15px;font-weight:780}
+.s91-plan-switch button .ico{width:22px;height:22px}
+.s91-plan-switch button.active{color:#fff;background:linear-gradient(180deg,#2eb2ff,#0060ed);box-shadow:0 5px 10px #1674e638,inset 0 1px 0 #c4e7ff}
+.s91-pricing-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;align-items:stretch}
+.s91-plan-column{display:flex;flex-direction:column;gap:12px;padding-top:0}
+.s91-plan{position:relative;flex:1;min-height:110px;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;text-align:left;padding:12px 11px;border:1.4px solid rgba(255,255,255,.95);border-radius:23px;background:linear-gradient(130deg,#f9fbff 0%,#e9f1ff 100%);box-shadow:0 10px 22px #547cb322;color:#090f38}
+.s91-plan.selected{border:2px solid #0876ff;box-shadow:0 7px 16px #147ce33a,inset 0 0 0 1px #8ac6ff}
+.s91-plan-title{font-size:14px;font-weight:850;line-height:1.2;letter-spacing:-.25px}
+.s91-plan strong{font-weight:900;font-size:25px;line-height:1.05;letter-spacing:-.6px;color:#070e3b}
+.s91-per{font-size:11px;color:#7081a4;line-height:1.2}
+.s91-save{display:block;white-space:nowrap;padding:4px 9px;border-radius:999px;background:linear-gradient(#d9f8d2,#c2efbb);color:#0c7e1d;font-size:11px;font-weight:800;line-height:1.15;margin-top:4px}
+.s91-plan-radio{position:absolute;top:50%;right:9px;transform:translateY(-50%);height:23px;width:23px;border:1.5px solid #90a5d0;border-radius:50%;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.1);color:#fff}
+.s91-plan.selected .s91-plan-radio{border-color:#0077fb;background:linear-gradient(145deg,#39bcff,#0562ee);box-shadow:0 2px 8px #1769d84d}
+.s91-plan-radio svg{width:16px;height:16px}
+.s91-benefit{position:absolute;left:13px;top:-12px;padding:5px 8px;border-radius:20px;background:linear-gradient(100deg,#2b85ff,#7567ec);color:#fff;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;font-size:10px;font-weight:700;box-shadow:0 3px 9px #4566ca66}
+.s91-benefit svg{height:12px;width:12px}
+.s91-feature-column{position:relative;min-width:0;padding:10px 7px 8px;border:1.4px solid #fff;border-radius:25px;background:linear-gradient(135deg,#f7faff 0%,#e6eefc 100%);box-shadow:0 10px 20px #4573b026;display:flex;flex-direction:column}
+.s91-feature-column h2{margin:0;text-align:center;font-weight:900;font-size:16px;letter-spacing:-.3px;line-height:1.12;color:#070f38}
+.s91-peek{position:relative;height:92px;margin:5px -4px -15px;z-index:2;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;pointer-events:none}
+.s91-peek img{display:block;width:94%;max-width:185px;height:auto;object-fit:contain;object-position:bottom;transform:translateY(1px);filter:drop-shadow(0 3px 6px #6088c535)}
+.s91-feature-list{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;justify-content:space-around;padding:7px 5px 4px;background:linear-gradient(110deg,rgba(255,255,255,.88),rgba(241,247,255,.83));border:1px solid #fff;border-radius:18px;box-shadow:0 4px 12px #748eba17}
+.s91-feature{display:flex;align-items:center;min-height:29px;gap:4px;border-bottom:1px solid #dce6f7}
+.s91-feature:last-child{border-bottom:0}
+.s91-feature-icon{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:8px;background:#e1ebff;color:#087aff}
+.s91-feature-icon svg{width:16px;height:16px}
+.s91-feature-name{flex:1;min-width:0;color:#091037;font-size:9px;font-weight:730;line-height:1.16;letter-spacing:-.15px}
+.s91-feature-check{display:grid;place-items:center;flex:none;color:#006fff}
+.s91-feature-check svg{width:15px;height:15px;stroke-width:3px}
+.s91-checkout{display:flex;align-items:center;justify-content:center;position:relative;width:100%;min-height:62px;border-radius:30px;margin-top:36px;border:2px solid #fff;background:linear-gradient(100deg,#1fafff 0%,#0574f2 58%,#5549e8 100%);box-shadow:0 10px 20px #296bb536,inset 0 1px 0 #a3e8ff;color:#fff;font-size:clamp(15px,4.2vw,20px);font-weight:850;letter-spacing:-.2px;padding:0 59px 0 14px}
+.s91-checkout-arrow{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#f6faff;color:#0a6cf2;display:grid;place-items:center;box-shadow:0 2px 9px #143b9380}
+.s91-checkout-arrow svg{width:24px;height:24px}
+.s91-payment-note{display:flex;justify-content:center;align-items:center;gap:10px;color:#172648;font-size:13px;margin:22px 0 0}
+.s91-payment-note .ico{height:21px;width:21px;color:#2185ff;filter:drop-shadow(0 2px 3px #3a72b64f)}
+.s91-setup-note{text-align:center;font-size:10px;color:#697c9f;margin:15px 10px 0;line-height:1.35}
+.s91-groups-placeholder{min-height:290px;padding:20px;text-align:center;background:rgba(255,255,255,.72);border:1.5px solid #fff;border-radius:27px;box-shadow:0 8px 18px #5785b329}
+.s91-groups-placeholder img{width:175px;height:90px;object-fit:contain;object-position:center}
+.s91-groups-placeholder h2{font-size:19px;color:#101946;margin:10px auto}
+.s91-groups-placeholder p{font-size:13px;color:#687c9f;line-height:1.45}
+.s91-groups-placeholder button{background:#1485f5;color:#fff;padding:13px 18px;border-radius:16px;font-weight:780;margin:10px auto}
+@media(max-width:360px){
+.s91-pricing-page{padding:9px 11px 22px}
+.s91-pricing-head{margin-bottom:12px}
+.s91-pricing-head h1{font-size:32px}
+.s91-pricing-head p{font-size:11px}
+.s91-plan-switch{margin-bottom:14px}
+.s91-plan-switch button{height:40px;font-size:13px}
+.s91-pricing-columns{gap:7px}
+.s91-plan-column{gap:10px}
+.s91-plan{min-height:104px;padding:9px 8px;border-radius:19px}
+.s91-plan-title{font-size:12px}
+.s91-plan strong{font-size:23px}
+.s91-per{font-size:10px}
+.s91-save{font-size:10px;padding:3px 7px}
+.s91-plan-radio{right:6px;width:20px;height:20px}
+.s91-feature-column{border-radius:20px;padding:7px 5px}
+.s91-feature-column h2{font-size:14px}
+.s91-peek{height:86px}
+.s91-feature-list{padding:5px 3px;border-radius:15px}
+.s91-feature-name{font-size:8px}
+.s91-feature-icon{height:22px;width:21px}
+.s91-feature-icon svg{height:14px;width:14px}
+.s91-feature{gap:3px}
+.s91-feature-check svg{width:13px;height:13px}
+.s91-checkout{margin-top:24px;min-height:57px}
+}
+@media(min-width:430px){
+.s91-pricing-page{padding:15px 20px 35px}
+.s91-pricing-columns{gap:13px}
+.s91-plan-column{gap:14px}
+.s91-plan{min-height:126px;padding:15px 16px}
+.s91-plan strong{font-size:31px}
+.s91-plan-title{font-size:17px}
+.s91-per{font-size:13px}
+.s91-save{font-size:12px}
+.s91-feature-column h2{font-size:20px}
+.s91-peek{height:112px;margin-bottom:-16px}
+.s91-feature{min-height:35px}
+.s91-feature-name{font-size:11px}
+.s91-feature-icon{height:28px;width:28px}
+.s91-checkout{min-height:68px}
+}
+/* Correct aspect ratio for the supplied wide 2048x682 transparent mascot. */
+.s91-peek{height:118px;margin:3px -4px -10px;overflow:hidden}
+.s91-peek img{width:292px;max-width:none;flex-shrink:0;height:auto;transform:translateY(0)}
+@media(max-width:360px){.s91-peek{height:108px;margin:2px -4px -9px}.s91-peek img{width:268px}}
+@media(min-width:430px){.s91-peek{height:133px;margin:4px -4px -14px}.s91-peek img{width:335px}}
