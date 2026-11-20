@@ -1469,3 +1469,7 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* Prevent double-tap zoom on buttons/links without disturbing scroll gestures. */
 #app button, #app a, #app [role="button"] { touch-action: manipulation; }
 #app img { -webkit-user-drag: none; user-drag: none; }
+
+/* Sbewo 61: explain historical capture limitation directly in the archive toggle. */
+.s50-archive-description .s61-history-hint{display:flex;align-items:flex-start;gap:7px;margin-top:5px;color:#3975b1;font-size:11px;line-height:1.45;font-weight:500}
+.s61-history-hint-icon{display:inline-flex;align-items:center;justify-content:center;flex:none;width:15px;height:15px;margin-top:1px;border:1.4px solid currentColor;border-radius:50%;font-size:10px;font-weight:800;line-height:1}
