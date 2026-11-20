@@ -1434,3 +1434,11 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .app.s13-app.s13-has-bottom > .s13-main {
   background:transparent!important;
 }
+
+/* v59 — softened rectangular bottom navigation (no underlying panel). */
+.app.s13-app.s13-has-bottom .s13-bottom.s21-bottom {
+  border-radius:24px!important;
+}
+.app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button {
+  border-radius:19px!important;
+}
