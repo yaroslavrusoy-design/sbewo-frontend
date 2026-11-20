@@ -2263,3 +2263,37 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 .s78-settings-page .s78-row-text strong{font-size:13px}
 .s78-settings-page .s78-row-text small{font-size:10px}
 }
+
+
+/* v83 — hard, straight cut-off above floating navigation.
+   Removes visible rounded feed-card corners on both sides of the capsule.
+   We clip the scrolling content only: no white overlay, no extra backing panel,
+   and no changes to the floating navigation's border, glow or geometry. */
+.app.s13-app.s13-has-bottom > .s13-main {
+  -webkit-mask-image: linear-gradient(to bottom,
+    #000 0,
+    #000 calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
+    transparent calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
+    transparent 100%) !important;
+  mask-image: linear-gradient(to bottom,
+    #000 0,
+    #000 calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
+    transparent calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
+    transparent 100%) !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+}
+@media (max-width:360px) {
+  .app.s13-app.s13-has-bottom > .s13-main {
+    -webkit-mask-image: linear-gradient(to bottom,
+      #000 0,
+      #000 calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
+      transparent calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
+      transparent 100%) !important;
+    mask-image: linear-gradient(to bottom,
+      #000 0,
+      #000 calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
+      transparent calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
+      transparent 100%) !important;
+  }
+}
