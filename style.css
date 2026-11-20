@@ -1230,3 +1230,22 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
   .s51-plan-save,.s51-plan-copy small,.s51-trial-card p,.s51-groups-note p{font-size:12px}
   .s51-features-grid{grid-template-columns:1fr}
 }
+
+
+/* Settings subscription banner (v54) — reference-specific, scoped to Settings only. */
+.s19-settings-page .s52-sub-card{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.85fr);align-items:stretch;isolation:isolate;overflow:hidden;min-height:270px;padding:17px 14px 16px;border:1.5px solid rgba(255,255,255,.95);border-radius:25px;background:radial-gradient(ellipse at 80% 26%,#b8d8ff 0%,transparent 52%),linear-gradient(125deg,#eaf3ff 0%,#ecf5ff 48%,#acd2ff 100%);box-shadow:0 9px 19px rgba(36,99,181,.12);margin:4px 0 17px;color:#102455}
+.s19-settings-page .s52-sub-card::after{content:"";position:absolute;inset:auto -26% -120% 20%;height:200%;border-radius:50%;border:1px solid rgba(255,255,255,.6);pointer-events:none;z-index:-1}
+.s19-settings-page .s52-sub-glow{position:absolute;inset:-80% -25% auto 32%;height:180%;width:110%;background:radial-gradient(ellipse,#93c6fd55 0%,transparent 65%);z-index:-1;pointer-events:none}
+.s19-settings-page .s52-sub-copy{display:flex;flex-direction:column;align-items:flex-start;position:relative;z-index:2;min-width:0}
+.s19-settings-page .s52-sub-label{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border:1px solid #ffffffb7;border-radius:999px;background:#d5e6ffb0;color:#102455;font-size:clamp(10px,2.8vw,13px);font-weight:800;padding:7px 10px;line-height:1.1}
+.s19-settings-page .s52-sub-star{color:#2079ff;font-size:16px;line-height:1}
+.s19-settings-page .s52-sub-copy h2{margin:16px 0 9px;font-size:clamp(23px,6.8vw,36px);font-weight:850;line-height:1.02;letter-spacing:-.9px;color:#0c2054}
+.s19-settings-page .s52-sub-copy p{font-size:clamp(11px,3vw,13px);line-height:1.38;font-weight:500;color:#495d82;margin:0 0 16px;max-width:265px}
+.s19-settings-page .s52-sub-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;max-width:100%;margin-top:auto;border:1px solid #96ccff;border-radius:16px;padding:9px 14px;background:linear-gradient(180deg,#319dff,#0963e9);color:#fff;font-size:clamp(11px,3vw,14px);font-weight:800;white-space:nowrap;box-shadow:0 4px 7px #1477e424}
+.s19-settings-page .s52-sub-cta span{font-size:19px;line-height:1}
+.s19-settings-page .s52-sub-visual{position:relative;display:flex;align-items:flex-end;justify-content:center;min-width:0;z-index:1}
+.s19-settings-page .s52-sub-visual img{position:absolute;right:-9%;bottom:0;width:145%;max-width:none;height:auto;max-height:238px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 7px 8px #568bda2b)}
+.s19-settings-page .s52-sub-crown{position:absolute;top:1%;right:0;display:grid;place-items:center;width:45px;height:43px;border:1px solid #e9f5ff;border-radius:16px;background:linear-gradient(145deg,#96c7ff,#d0e6ff);box-shadow:0 4px 8px #4488d32e;color:#fff;transform:rotate(10deg)}
+.s19-settings-page .s52-sub-crown svg{height:28px;width:28px;stroke-width:2.3}
+@media (min-width:480px){.s19-settings-page .s52-sub-card{min-height:290px;grid-template-columns:1.15fr .85fr;padding:22px 22px 20px}.s19-settings-page .s52-sub-visual img{width:130%;max-height:270px}}
+@media (max-width:370px){.s19-settings-page .s52-sub-card{grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);min-height:278px;padding:15px 11px 14px}.s19-settings-page .s52-sub-copy h2{font-size:23px}.s19-settings-page .s52-sub-copy p{font-size:11px}.s19-settings-page .s52-sub-cta{padding:9px 9px;gap:4px;font-size:11px}.s19-settings-page .s52-sub-visual img{right:-15%;width:156%;max-height:222px}}
