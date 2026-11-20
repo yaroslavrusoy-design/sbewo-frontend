@@ -1987,3 +1987,16 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
  .s65-card.s65-card--disconnected .s65-card-actions-single{left:12px;right:12px;}
  .s65-card.s65-card--disconnected .s65-card-primary{font-size:11.5px;gap:5px;letter-spacing:-.3px;}
 }
+
+
+/* v71: Bright green CTA ONLY on the disconnected status card. */
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary{
+  background:linear-gradient(135deg,#4cf49a 0%,#20e27c 55%,#0dc969 100%);
+  color:#073c30;
+  border:1px solid rgba(143,255,197,.68);
+  box-shadow:0 8px 19px rgba(7,57,71,.19),inset 0 1px 0 rgba(255,255,255,.40);
+}
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary svg{color:#073c30;}
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary:active{
+  background:linear-gradient(135deg,#27dd82 0%,#0fc56d 100%);
+}
