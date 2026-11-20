@@ -979,3 +979,8 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s39-day-pill svg{width:16px;height:16px;flex:none}
 .s19-events .s39-day-heading{margin-top:14px}
 .s19-events .s39-day-heading:first-child{margin-top:0}
+
+/* v44 — put personal/group scope directly under the bot card. */
+.s14-home .s13-segment{margin-top:12px;margin-bottom:12px}
+.s14-home .s14-event-stack{margin-top:0}
+.s14-home .s39-day-heading:first-child{margin-top:0}
