@@ -2297,3 +2297,53 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
       transparent 100%) !important;
   }
 }
+
+
+/* v84 — unified empty Groups state on Home and Chats. */
+.s13-app .s84-groups-empty {
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  margin:16px 0 12px;
+  padding:22px 18px 24px;
+  border:1px solid #e4edf8;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 7px 20px rgba(56,104,159,.065);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.s13-app .s84-groups-empty .s84-groups-mascot {
+  display:block;
+  width:132px;
+  height:120px;
+  max-width:100%;
+  margin:0 0 9px;
+  object-fit:contain;
+  object-position:center;
+  flex:none;
+}
+.s13-app .s84-groups-empty h2 {
+  margin:0 0 7px;
+  color:#142b56;
+  font-size:20px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:-.35px;
+}
+.s13-app .s84-groups-empty p {
+  margin:0;
+  color:#667795;
+  font-size:12.5px;
+  line-height:1.5;
+  font-weight:450;
+}
+@media (max-width:359px) {
+  .s13-app .s84-groups-empty{padding:19px 12px 22px;border-radius:21px}
+  .s13-app .s84-groups-empty .s84-groups-mascot{width:115px;height:105px}
+  .s13-app .s84-groups-empty h2{font-size:18px}
+  .s13-app .s84-groups-empty p{font-size:11.5px}
+}
