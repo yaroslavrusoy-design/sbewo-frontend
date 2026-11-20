@@ -1028,3 +1028,63 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s19-page .s49-clear-row .s48-clear-entry svg{width:17px;height:17px}
 .s19-page .s49-clear-row .s48-clear-entry span{flex:0 1 auto}
 .s19-page .s49-clear-row .s48-clear-entry:active{background:#ffe0e8}
+
+
+/* v50 — vertical event timeline on Home only. Chat history is unchanged. */
+.s14-home .s14-event-stack {
+  position: relative;
+  isolation: isolate;
+  padding-left: 26px;
+  gap: 10px;
+}
+.s14-home .s14-event-stack::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 17px;
+  bottom: 19px;
+  left: 9px;
+  width: 2px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, #5b9df5 0%, #a8ccfc 60%, #d3e5fa 100%);
+  pointer-events: none;
+}
+.s14-home .s14-event-stack .s39-day-heading {
+  position: relative;
+  min-height: 34px;
+  margin: 16px 0 1px;
+  padding: 0;
+}
+.s14-home .s14-event-stack .s39-day-heading:first-child {
+  margin-top: 0;
+}
+.s14-home .s14-event-stack .s39-day-heading::before {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  width: 11px;
+  height: 11px;
+  left: -21.5px;
+  top: 12px;
+  z-index: 1;
+  border-radius: 50%;
+  background: #2581f7;
+  border: 2px solid #eaf5ff;
+  box-shadow: 0 0 0 2px #a8ceff;
+}
+.s14-home .s14-event-stack .s39-day-pill {
+  background: #e0edff;
+  border: 1px solid #c8defd;
+  color: #344873;
+  box-shadow: none;
+}
+.s14-home .s14-event-stack .s13-event {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+}
+@media (max-width: 360px) {
+  .s14-home .s14-event-stack { padding-left: 22px; }
+  .s14-home .s14-event-stack::before { left: 7px; }
+  .s14-home .s14-event-stack .s39-day-heading::before { left: -20px; }
+}
