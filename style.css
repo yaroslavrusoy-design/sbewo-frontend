@@ -988,3 +988,14 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 /* Chats list: remove intro heading and use compact top spacing. */
 .s13-mainpage.s19-page{padding-top:8px!important}
 .s13-mainpage.s19-page>.s19-search{margin-top:0}
+
+/* v47: The bottom fade belongs to the three pages that actually have a capsule nav.
+   Detail pages have no bottom nav, so they must not receive its fade or padding. */
+.app.s13-app.s13-no-bottom > .s13-main {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  -webkit-clip-path: none !important;
+  clip-path: none !important;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+  scroll-padding-bottom: 20px !important;
+}
