@@ -2224,3 +2224,21 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   .s78-settings-page .s78-row-text strong{font-size:13.5px;}
   .s78-settings-page .s78-row-text small{font-size:10.5px;}
 }
+
+
+/* v81 — soft floating capsule: a subtle white halo, no extra underlay. */
+.app.s13-app.s13-has-bottom .s13-bottom.s21-bottom {
+  border-radius:28px!important;
+  border-color:rgba(206,226,246,.94)!important;
+  box-shadow:
+    0 -5px 15px rgba(255,255,255,.62),
+    0 4px 12px rgba(255,255,255,.35),
+    0 9px 25px rgba(35,91,165,.17)!important;
+}
+.app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button {
+  border-radius:23px!important;
+}
+@media(max-width:360px) {
+  .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom {border-radius:26px!important;}
+  .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button {border-radius:21px!important;}
+}
