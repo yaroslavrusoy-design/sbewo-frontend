@@ -2795,3 +2795,34 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 .s98-status-profile .s25-profile-identity .s98-avatar-ring.s98-avatar-ring--inactive{
   background:#c9d3df;
 }
+
+/* v100 — notification toggles: exactly one thumb, in either state. */
+.s13-app .switch[data-notify]{
+  position:relative;
+  display:inline-block;
+  flex:0 0 42px;
+  width:42px;
+  height:25px;
+  min-height:25px;
+  padding:0;
+  border:0;
+  border-radius:999px;
+  background:#cbd7e9;
+  overflow:visible;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.s13-app .switch[data-notify]::before{content:none!important;display:none!important;}
+.s13-app .switch[data-notify]::after{
+  content:"";
+  position:absolute;
+  left:3px;top:3px;
+  width:19px;height:19px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 1px 4px rgba(33,59,104,.2);
+  transform:translateX(0);
+  transition:transform .18s ease;
+}
+.s13-app .switch[data-notify].active{background:#2189fa;}
+.s13-app .switch[data-notify].active::after{transform:translateX(17px);}
