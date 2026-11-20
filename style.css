@@ -1452,5 +1452,20 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom{border-radius:15px!important}
 .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button{border-radius:11px!important}
 
-/* Restricted media labels inherit the existing event design. */
-.s19-media-missing{overflow-wrap:anywhere}
+/* Sbewo v65 — app-style touch behaviour, no selection or focus zoom. */
+html, body, #app, #app * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* Allow cursor movement, text editing and paste in actual text fields. */
+#app input, #app textarea, #app [contenteditable], #app [role="textbox"] {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+  font-size: 16px !important; /* iPhone Safari avoids focus auto-zoom at >= 16px */
+}
+/* Prevent double-tap zoom on buttons/links without disturbing scroll gestures. */
+#app button, #app a, #app [role="button"] { touch-action: manipulation; }
+#app img { -webkit-user-drag: none; user-drag: none; }

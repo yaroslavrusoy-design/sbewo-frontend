@@ -1,1 +1,37 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eaf6ff"><title>Sbewo — Telegram Mini App</title><link rel="icon" href="data:,"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"><link rel="stylesheet" href="./style.css?v=64.0"><script src="https://telegram.org/js/telegram-web-app.js"></script><script src="./config.js"></script><script src="./app.js?v=64.0" defer></script></head><body><div id="app"><div class="boot"><div class="loader"></div><strong>Открываем Sbewo…</strong></div></div></body></html>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#eaf6ff"><title>Sbewo — Telegram Mini App</title><link rel="icon" href="data:,"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"><link rel="stylesheet" href="./style.css?v=65.0"><script src="https://telegram.org/js/telegram-web-app.js"></script><script src="./config.js"></script><script src="./app.js?v=64.0" defer></script><script>
+/* Sbewo: touch-first Telegram Mini App interaction guards. */
+(function () {
+  'use strict';
+  const editable = (target) => !!(target && target.closest && target.closest('input, textarea, [contenteditable=""], [contenteditable="true"], [role="textbox"]'));
+  const stop = (event) => event.preventDefault();
+  // Copy/cut and browser context menus should never be triggered by accidental touches.
+  document.addEventListener('copy', stop, true);
+  document.addEventListener('cut', stop, true);
+  document.addEventListener('contextmenu', stop, true);
+  document.addEventListener('dragstart', stop, true);
+  document.addEventListener('selectstart', (event) => {
+    if (!editable(event.target)) event.preventDefault();
+  }, true);
+  // On iOS, Safari zoom can be invoked by gestures and double tap.
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach((name) => {
+    document.addEventListener(name, stop, { passive: false });
+  });
+  document.addEventListener('touchmove', (event) => {
+    if (event.touches && event.touches.length > 1) event.preventDefault();
+  }, { passive: false });
+  document.addEventListener('dblclick', (event) => {
+    if (!editable(event.target)) event.preventDefault();
+  }, true);
+  // Keyboard modifiers / trackpads can also change scale in desktop browsers.
+  document.addEventListener('wheel', (event) => {
+    if (event.ctrlKey || event.metaKey) event.preventDefault();
+  }, { passive: false });
+  document.addEventListener('keydown', (event) => {
+    if (!(event.ctrlKey || event.metaKey)) return;
+    const key = String(event.key || '').toLowerCase();
+    if (key === 'c' || key === 'x' || key === '+' || key === '-' || key === '=' || key === '0') {
+      event.preventDefault();
+    }
+  }, true);
+})();
+</script></head><body><div id="app"><div class="boot"><div class="loader"></div><strong>Открываем Sbewo…</strong></div></div></body></html>
