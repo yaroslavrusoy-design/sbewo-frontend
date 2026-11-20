@@ -217,7 +217,31 @@ const s13Time=(m)=>fmt(m.updated||m.time);
 let s19NoteEditor=false;let s19MediaPreview=null;let s19MediaError='';let s19ChatAvatars={};let s19ChatQuery='';let s19ChatFilter='all';let s19ChatView='events';let s19FullArchive=false;let s19AvatarLoading=false;
 const s19Kinds={photo:'Фото',video:'Видео',voice:'Голосовое',video_note:'Кружок',animation:'GIF',audio:'Аудио',document:'Файл',sticker:'Стикер',text:'Сообщение'};
 function s19ChatAvatar(key,items=[]){const name=s38ChatName(key,items);const id=items.find(x=>x.chat_id)?.chat_id||(String(key).startsWith("id:")?String(key).slice(3):null);const src=id&&s19ChatAvatars[String(id)];return src?`<span class="s19-avatar-wrap"><img class="s19-avatar" alt="" src="${src}" onerror="this.hidden=true;this.nextElementSibling.hidden=false" /><span hidden>${avatar(name)}</span></span>`:avatar(name);}
-async function s19LoadAvatars(){if(demo||s19AvatarLoading||!initData||!API)return;const ids=[...new Set(db.items.map(x=>Number(x.chat_id)).filter(x=>Number.isSafeInteger(x)&&x>0))].slice(0,12);if(!ids.length)return;s19AvatarLoading=true;try{const data=await call('/api/chat-avatars',{chat_ids:ids});if(data.avatars){s19ChatAvatars={...data.avatars};if(['chats','chat'].includes(page))render()}}catch(e){console.debug('Avatar API unavailable',e)}finally{s19AvatarLoading=false;}}
+let s41AvatarLastCheck=0;
+// Reload photos from Telegram, including contacts who acquired a profile picture after
+// their chat was first archived. The server limits each request to 12 chat IDs.
+async function s19LoadAvatars(force=false){
+ if(demo||s19AvatarLoading||!initData||!API)return;
+ const now=Date.now();
+ if(now-s41AvatarLastCheck<(force?20000:60000))return;
+ const recent=[...db.items].sort((a,b)=>Number(b.updated||b.time||0)-Number(a.updated||a.time||0));
+ const ids=[...new Set(recent.map(x=>Number(x.chat_id)).filter(x=>Number.isSafeInteger(x)&&x>0))].slice(0,48);
+ if(!ids.length)return;
+ s19AvatarLoading=true;
+ s41AvatarLastCheck=now;
+ try{
+  const next={};
+  // Check all recent chats, not just the first 12 returned by the archive.
+  for(let i=0;i<ids.length;i+=12){
+   const data=await call('/api/chat-avatars',{chat_ids:ids.slice(i,i+12)});
+   Object.assign(next,data.avatars||{});
+  }
+  const changed=JSON.stringify(next)!==JSON.stringify(s19ChatAvatars);
+  s19ChatAvatars=next;
+  if(changed&&['chats','chat'].includes(page))render();
+ }catch(e){console.debug('Avatar refresh unavailable',e)}
+ finally{s19AvatarLoading=false}
+}
 const s19EventOnly=m=>m.deleted||m.edited;
 function s19ChatCard(name,items){const changed=items.filter(s19EventOnly),last=changed[0]||items[0];return `<button class="s19-chat-card" data-chat="${esc(name)}">${s19ChatAvatar(name,items)}<span class="s19-chat-info"><strong>${esc(s13Human(s38ChatName(name,items)))}</strong><small>${changed.length} событий · ${last?.deleted?'Удаление':last?.edited?'Правка':'Архив'}</small><em>${esc((last?.text||s19Kinds[last?.kind]||'').slice(0,65))}</em></span>${s13Icon('chevron')}</button>`;}
 function s19ChatEvent(m){const original=m.versions?.[0]?.text||'',changed=m.versions?.at(-1)?.text||m.text||'';let desc=m.deleted?m.text||s19Kinds[m.kind]||'Удалённое сообщение':original&&original!==changed?original+' → '+changed:changed;return `<button class="s19-event-card" data-message="${esc(m.key)}"><span class="s19-event-icon ${m.deleted?'red':'blue'}">${ico(m.deleted?'trash':'edit')}</span><span class="s19-event-body"><strong>${m.deleted?'Удалено':'Изменено'} · ${esc(s19Kinds[m.kind]||'Сообщение')}</strong><small>${esc(desc||'Текст недоступен')}</small>${m.note?`<em>Заметка: ${esc(m.note)}</em>`:''}</span>${m.starred?`<span class="s19-star">★</span>`:''}<time>${fmt(m.updated||m.time)}</time></button>`;}
@@ -360,4 +384,14 @@ window.SbewoDev={demo:demoStart,resetIntro:()=>{pref('sbewo-v6-onboarded','no');
 // Re-entry after onboarding goes to the Events page.
 if(page==='services')page='home';
 
+// Recheck avatars when entering the chat list and periodically while it is visible.
+// A hidden or unavailable Telegram photo still falls back to the name initial.
+const s41OldGoto=goto;
+goto=function(to){
+ s41OldGoto(to);
+ if(page==='chats'||page==='chat')void s19LoadAvatars(true);
+};
+setInterval(()=>{
+ if(!document.hidden&&['chats','chat'].includes(page))void s19LoadAvatars();
+},90000);
 render();if(initData&&!isIntro())refresh();
