@@ -1483,3 +1483,21 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .s50-archive-control .s61-history-hint .s61-history-hint-icon{width:13px;height:13px;min-width:13px;margin:0;display:inline-flex;align-items:center;justify-content:center;border:1px solid currentColor;border-radius:50%;font-size:9px;line-height:1;font-weight:700}
 .s50-archive-control .s61-history-hint-text{display:block;min-width:0;flex:1;font-size:inherit!important;line-height:inherit!important;font-weight:inherit!important;color:inherit!important}
 .s50-archive-control .s50-toggle{flex:0 0 45px;align-self:center}
+
+/* Sbewo v60 — a single fixed, branded hero for all access states. */
+.s60-status-card{height:226px;min-height:226px;max-height:226px;overflow:hidden;contain:layout}
+.s60-status-card.s60-disconnected{background:linear-gradient(135deg,#73b5eb 0%,#438ccc 49%,#2463a9 100%)}
+.s60-status-card.s60-trial-3{background:linear-gradient(130deg,#4599ec,#2877d3 43%,#1053ad)}
+.s60-status-card.s60-trial-2{background:linear-gradient(135deg,#f6ce75 0%,#e5ad49 55%,#ba7829 100%)}
+.s60-status-card.s60-trial-1{background:linear-gradient(135deg,#fa8490 0%,#e35770 54%,#b72c50 100%)}
+.s60-status-card.s60-paid{background:linear-gradient(130deg,#4599ec,#2877d3 43%,#1053ad)}
+.s60-status-card.s60-expired{background:linear-gradient(135deg,#8ca5c7,#58759c 56%,#36557f)}
+.s60-status-card .s37-mascot{top:31px;right:8px;width:145px;height:145px;overflow:visible}
+.s60-status-card .s37-mascot img{object-fit:contain;object-position:center;max-width:100%;max-height:100%;filter:drop-shadow(0 7px 6px rgba(15,48,96,.19))}
+.s60-status-card .s37-status{max-width:calc(100% - 15px);overflow:hidden;text-overflow:ellipsis}
+.s60-status-card .s37-actions{bottom:15px}
+.s60-status-card.s60-trial-2 .s37-status i{background:#fff4cb;box-shadow:0 0 6px #fff4cb}
+.s60-status-card.s60-trial-1 .s37-status i,.s60-status-card.s60-expired .s37-status i{background:#ffe8eb;box-shadow:0 0 6px #ffe8eb}
+.s60-status-card.s60-trial-1 .s37-check{font-size:24px;font-weight:900;background:linear-gradient(135deg,#ffdf7b,#ff8d66)}
+@media(min-width:410px){.s60-status-card{height:226px;min-height:226px;max-height:226px}.s60-status-card .s37-mascot{top:29px;right:12px;width:154px;height:154px}}
+@media(max-width:359px){.s60-status-card{height:226px;min-height:226px;max-height:226px}.s60-status-card .s37-mascot{top:30px;right:0;width:123px;height:135px}.s60-status-card p{max-width:176px}}

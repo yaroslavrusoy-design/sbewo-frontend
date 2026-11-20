@@ -272,16 +272,43 @@ function s14ProfileBlock(){
  return `<button class="s25-profile" data-go="settings" aria-label="Профиль и настройки пользователя"><span class="s25-profile-identity">${photo}<span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small></span></span><span class="s25-profile-arrow" aria-hidden="true">${s13Icon('chevron')}</span></button>`;
 }
 function s25Count(n,forms){const value=Math.max(0,Math.floor(Number(n)||0));const mod10=value%10,mod100=value%100;return `${value} ${mod10===1&&mod100!==11?forms[0]:mod10>=2&&mod10<=4&&(mod100<12||mod100>14)?forms[1]:forms[2]}`;}
-function s14HomeConnectCard(){
- const connected=!!db.connected;
- if(connected){
-  const check='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5.1 12.3 4.1 4.1 9.7-10" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const arrow='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  return `<section class="s37-hero" aria-label="Бот активен"><div class="s37-status"><i></i>Бот активен</div><h2>Sbewo следит<br>за чатами</h2><p>Новые события из выбранных чатов появятся здесь сразу после изменений.</p><div class="s37-mascot" aria-hidden="true"><img src="./kyu-active-transparent.png" alt=""/><span class="s37-check">${check}</span><span class="s37-sparks"><b></b><b></b><b></b></span></div><div class="s37-actions"><button class="s37-events" data-s37-scroll="events">События ${arrow}</button><button class="s37-manage" data-go="connect-list">Управление</button></div></section>`;
+function s60CardState(){
+ if(!db.connected)return 'disconnected';
+ const access=db.access||{};
+ if(access.status==='paid'&&access.paid_until)return 'paid';
+ if(access.status==='trial'){
+   const d=Number(access.days_left);
+   if(d>=3)return 'trial-3';
+   if(d===2)return 'trial-2';
+   if(d===1)return 'trial-1';
  }
- const shape='<svg class="s28-shape" viewBox="0 0 360 260" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="sbewo-offline-28" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3F86DA"/><stop offset=".48" stop-color="#2B67BA"/><stop offset="1" stop-color="#174C9F"/></linearGradient></defs><rect x="12" y="18" width="339" height="237" rx="29" ry="29" fill="url(#sbewo-offline-28)" stroke="rgba(224,240,255,.94)" stroke-width="2.1"/></svg>';
- const content=`<span class="s28-status"><i></i>Бот не подключён</span><h2>Подключи Sbewo<br>к чатам</h2><p>Выбери чаты в Telegram Business,<br>чтобы получать новые события.</p><div class="s28-actions"><button class="s28-primary" data-go="connect-personal">Подключить <span aria-hidden="true">→</span></button><button class="s28-secondary" data-go="welcome">Как работает</button></div>`;
- return `<section class="s28-hero s28-offline" aria-label="Бот не подключён">${shape}<div class="s28-kitty-offline s31-kitty-offline" aria-hidden="true">${s13Face('help')}</div><div class="s28-content">${content}</div></section>`;
+ if(access.status==='expired')return 'expired';
+ return 'unverified';
+}
+function s60Date(value){
+ if(!value)return '';
+ const d=new Date(value);
+ return Number.isFinite(d.getTime())?d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}):'';
+}
+function s14HomeConnectCard(){
+ const state=s60CardState();
+ const a=db.access||{};
+ const configs={
+  disconnected:{status:'Не подключено',title:'Подключи Sbewo<br>к чатам',desc:'Кью начнёт сохранять новые события после подключения.',primary:'Подключить',pgo:'connect-personal',secondary:'Как работает',sgo:'welcome'},
+  'trial-3':{status:'3 дня бесплатно',title:'Кью на связи!',desc:'Твой пробный период начался. Новые события уже под присмотром.',primary:'События',scroll:true,secondary:'Мой тариф',sgo:'pro'},
+  'trial-2':{status:'Осталось 2 дня',title:'Ещё 2 дня<br>с Кью',desc:'Пробный период скоро завершится. Выбери тариф заранее.',primary:'Выбрать тариф',pgo:'pro',secondary:'События',scrollSecondary:true},
+  'trial-1':{status:'Остался 1 день',title:'Всего 1 день!',desc:'Последний день бесплатного доступа. Кью предупреждает!',primary:'Продлить доступ',pgo:'pro',secondary:'События',scrollSecondary:true},
+  paid:{status:'Подписка активна',title:'Sbewo следит<br>за чатами',desc:`${a.auto_renew?'Следующий платёж':'Доступ активен до'}: ${s60Date(a.paid_until)||'—'}`,primary:'События',scroll:true,secondary:'Подписка',sgo:'pro'},
+  expired:{status:'Пробный период завершён',title:'Продолжим<br>с Кью?',desc:'Пробные 3 дня прошли. Выбери тариф для дальнейшего доступа.',primary:'Выбрать тариф',pgo:'pro',secondary:'Подключения',sgo:'connect-list'},
+  unverified:{status:'Бот активен',title:'Sbewo следит<br>за чатами',desc:'Новые события из выбранных чатов появятся здесь.',primary:'События',scroll:true,secondary:'Управление',sgo:'connect-list'}
+ };
+ const c=configs[state];
+ const src=state==='unverified'?'./kyu-active-transparent.png':`./kyu-status-${state}.png`;
+ const check='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5.1 12.3 4.1 4.1 9.7-10" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const arrow='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const primaryAttr=c.scroll?'data-s37-scroll="events"':`data-go="${c.pgo}"`;
+ const secondaryAttr=c.scrollSecondary?'data-s37-scroll="events"':`data-go="${c.sgo}"`;
+ return `<section class="s37-hero s60-status-card s60-${state}" aria-label="${esc(c.status)}"><div class="s37-status"><i></i>${esc(c.status)}</div><h2>${c.title}</h2><p>${esc(c.desc)}</p><div class="s37-mascot" aria-hidden="true"><img src="${src}" alt="" loading="eager" decoding="async"><span class="s37-check">${state==='trial-1'?'!':check}</span><span class="s37-sparks"><b></b><b></b><b></b></span></div><div class="s37-actions"><button class="s37-events" ${primaryAttr}>${esc(c.primary)} ${arrow}</button><button class="s37-manage" ${secondaryAttr}>${esc(c.secondary)}</button></div></section>`;
 }
 // Group event cards by the actual event date (edited/deleted timestamp), not today's date.
 // Use local calendar days: midnight boundaries must not be calculated in UTC.
