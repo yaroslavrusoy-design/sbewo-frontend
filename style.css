@@ -2467,3 +2467,64 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 .s91-pricing-page .s91-peek{z-index:5;overflow:visible}
 .s91-pricing-page .s91-peek img{position:relative;z-index:6}
 .s91-pricing-page .s91-feature-list{z-index:2}
+
+/* v94 — pricing header follows the soft-blue title reference; no crown. */
+.s91-pricing-page .s91-pricing-head{
+  position:relative;
+  isolation:isolate;
+  margin: -6px -14px 15px;
+  padding: 18px 16px 13px;
+  text-align:center;
+  overflow:hidden;
+  border-radius: 0 0 38% 34% / 0 0 18px 15px;
+  background:
+    radial-gradient(ellipse 43% 60% at 12% -10%,rgba(255,255,255,.78),transparent 100%),
+    radial-gradient(ellipse 45% 55% at 95% 0%,rgba(255,255,255,.62),transparent 100%),
+    linear-gradient(180deg,rgba(181,211,255,.69),rgba(210,228,255,.26) 75%,transparent);
+}
+.s91-pricing-page .s91-pricing-head h1{
+  position:relative;z-index:1;
+  display:block;
+  margin:0;
+  color:#08113f;
+  font-size:clamp(35px,9.3vw,45px);
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-1.35px;
+}
+.s91-pricing-page .s94-pricing-subtitle{
+  display:inline-flex;
+  position:relative;
+  z-index:1;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  margin:10px auto 0;
+  padding:8px 13px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.79);
+  background:rgba(255,255,255,.64);
+  box-shadow:0 5px 16px rgba(73,118,189,.08),inset 0 1px 0 rgba(255,255,255,.8);
+}
+.s91-pricing-page .s94-pricing-subtitle p{
+  margin:0;
+  font-size:clamp(10px,2.85vw,13px);
+  font-weight:560;
+  line-height:1.25;
+  color:#40577f;
+  text-align:left;
+}
+.s91-pricing-page .s94-bolt{color:#f3b800;font-size:21px;font-weight:850;line-height:1;flex:none;transform:rotate(10deg)}
+.s91-pricing-page .s94-head-spark{
+  position:absolute;
+  z-index:1;
+  color:#fff;
+  text-shadow:0 1px 8px rgba(255,255,255,.85);
+  pointer-events:none;
+}
+.s91-pricing-page .s94-spark-one{left:8%;top:23px;font-size:20px}
+.s91-pricing-page .s94-spark-two{left:4%;top:42px;font-size:12px}
+@media(max-width:360px){
+  .s91-pricing-page .s91-pricing-head{margin-left:-11px;margin-right:-11px;padding-top:16px;padding-bottom:11px}
+  .s91-pricing-page .s94-pricing-subtitle{padding:7px 11px;margin-top:9px}
+}
