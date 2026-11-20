@@ -296,28 +296,19 @@ function s13Welcome(){
  if(s13Step===5) foot=`<div class="s13-option-grid"><button data-action="start-personal" class="selected">${s13Icon('chat')} Личная переписка</button></div>`;
  return `${s13Header(s13Step===5?'close':'back')}<div class="s13-onboard"><div class="s13-progress">${slides.map((_,i)=>`<span class="${i<=s13Step?'active':''}"></span>`).join('')}</div><div class="s13-onboard-visual">${s13Face(img)}</div><h1>${title}</h1><p>${detail}</p>${foot}<div class="s13-onboard-actions"><button class="s13-btn" data-action="next-onboarding" ${s13Step===0&&!s13Accepted?'disabled':''}>${s13Step===5?'Перейти к подключению':'Далее'}</button><button class="s13-subtle" data-action="skip-onboarding">${s13Step===0?'Посмотреть приложение':'Позже'}</button></div></div>`;
 }
-function s96ProfileSubscriptionStatus(){
- // Matches the card state, including the explicitly enabled temporary preview.
- // A missing server status must not be presented as an active subscription.
+function s98ProfileAvatarState(){
  const state=s60CardState();
- const options={
-  paid:{tone:'active',label:'Подписка активна',icon:ico('crown')},
-  'trial-3':{tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')},
-  'trial-2':{tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')},
-  'trial-1':{tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')},
-  disconnected:{tone:'inactive',label:'Нет подписки',icon:ico('lock')},
-  expired:{tone:'inactive',label:'Нет подписки',icon:ico('lock')},
-  unverified:{tone:'inactive',label:'Статус уточняется',icon:ico('info')}
- };
- const info=options[state]||options.unverified;
- return `<span class="s96-profile-subscription s96-profile-subscription--${info.tone}">${info.icon}<span>${esc(info.label)}</span></span>`;
+ if(state==='paid')return {tone:'paid',label:'Подписка активна',icon:ico('crown')};
+ if(state==='trial-3'||state==='trial-2'||state==='trial-1')return {tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')};
+ return {tone:'inactive',label:'Нет подписки',icon:ico('lock')};
 }
 function s14ProfileBlock(){
  const u=tg?.initDataUnsafe?.user||{};
  const name=[u.first_name,u.last_name].filter(Boolean).join(' ')||'Мой профиль';
  const handle=u.username?'@'+u.username:'Аккаунт Telegram';
  const photo=typeof u.photo_url==='string'&&/^https:\/\//i.test(u.photo_url)?`<img class="s14-user-photo" src="${esc(u.photo_url)}" alt="Аватар Telegram" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${avatar(name)}</span>`:avatar(name);
- return `<button class="s25-profile s96-status-profile" data-go="settings" aria-label="Профиль и настройки пользователя"><span class="s25-profile-identity">${photo}<span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small>${s96ProfileSubscriptionStatus()}</span></span><span class="s25-profile-arrow" aria-hidden="true">${s13Icon('chevron')}</span></button>`;
+ const status=s98ProfileAvatarState();
+ return `<button class="s25-profile s98-status-profile" data-go="settings" aria-label="Профиль и настройки пользователя"><span class="s25-profile-identity"><span class="s98-avatar-ring s98-avatar-ring--${status.tone}" aria-label="${esc(status.label)}"><span class="s98-avatar-photo">${photo}</span><span class="s98-avatar-medal" aria-hidden="true">${status.icon}</span></span><span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small></span></span><span class="s25-profile-arrow" aria-hidden="true">${s13Icon('chevron')}</span></button>`;
 }
 function s25Count(n,forms){const value=Math.max(0,Math.floor(Number(n)||0));const mod10=value%10,mod100=value%100;return `${value} ${mod10===1&&mod100!==11?forms[0]:mod10>=2&&mod10<=4&&(mod100<12||mod100>14)?forms[1]:forms[2]}`;}
 function s60CardState(){

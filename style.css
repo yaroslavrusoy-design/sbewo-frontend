@@ -2646,3 +2646,87 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 .app.s13-app.s13-no-bottom .s91-pricing-page .s91-checkout{
   max-width:100%;min-width:0;
 }
+
+
+/* v98 — Avatar subscription ring on Home, without a status text badge. */
+.s13-app .s14-home .s25-profile.s98-status-profile{
+  min-height:66px;
+  padding-top:8px;
+  padding-bottom:8px;
+}
+.s98-status-profile .s25-profile-identity{gap:11px}
+.s98-status-profile .s25-profile-identity .s98-avatar-ring{
+  --ring-color:#c7d2e2;
+  position:relative;
+  display:grid;
+  place-items:center;
+  flex:none;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  padding:3px;
+  background:var(--ring-color);
+  box-shadow:0 0 0 1px #fff, 0 2px 7px rgba(49,95,152,.12);
+  box-sizing:border-box;
+}
+.s98-status-profile .s98-avatar-ring--paid{
+  --ring-color:#f6c83f;
+  background:conic-gradient(from 20deg,#ffe88b,#eaa800,#ffdb50,#f5b500,#ffe88b);
+}
+.s98-status-profile .s98-avatar-ring--trial{
+  --ring-color:#1689ff;
+  background:conic-gradient(from 20deg,#57bdff,#0668e9,#298aff,#0574ea,#57bdff);
+}
+.s98-status-profile .s98-avatar-ring--inactive{
+  background:#c9d3df;
+}
+.s98-status-profile .s98-avatar-photo{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  border-radius:50%;
+  border:2px solid #fff;
+  box-sizing:border-box;
+  background:#e6f3ff;
+}
+.s98-status-profile .s98-avatar-photo .s14-user-photo,
+.s98-status-profile .s98-avatar-photo .avatar{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  margin:0;
+}
+.s98-status-profile .s98-avatar-photo [hidden]{display:none!important}
+.s98-status-profile .s98-avatar-medal{
+  position:absolute;
+  z-index:2;
+  right:-5px;
+  bottom:-3px;
+  display:grid;
+  place-items:center;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:2px solid #fff;
+  color:#fff;
+  background:#97a8be;
+  box-shadow:0 2px 5px rgba(11,56,114,.16);
+  box-sizing:content-box;
+}
+.s98-status-profile .s98-avatar-ring--paid .s98-avatar-medal{background:#147efa;color:#ffda45}
+.s98-status-profile .s98-avatar-ring--trial .s98-avatar-medal{background:#147efa;color:#fff}
+.s98-status-profile .s98-avatar-ring--inactive .s98-avatar-medal{background:#94a3b8;color:#fff}
+.s98-status-profile .s98-avatar-medal svg{width:14px;height:14px;display:block}
+.s98-status-profile .s14-profile-info{gap:4px}
+@media(max-width:360px){
+ .s13-app .s14-home .s25-profile.s98-status-profile{min-height:60px}
+ .s98-status-profile .s25-profile-identity .s98-avatar-ring{width:49px;height:49px}
+ .s98-status-profile .s98-avatar-medal{width:19px;height:19px}
+ .s98-status-profile .s98-avatar-medal svg{width:12px;height:12px}
+}
