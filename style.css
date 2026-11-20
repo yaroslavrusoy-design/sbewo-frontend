@@ -1826,3 +1826,68 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .s65-card-actions button{height:42px;font-size:12px;border-radius:14px;padding:0 7px;}
   .s65-card-primary svg{width:16px;height:16px;}
 }
+
+
+/* v68 — ONLY the disconnected status card. Reference: deep-blue card and laptop Kyu. */
+.s65-card.s65-card--disconnected{
+  background:linear-gradient(132deg,#2065c1 0%,#1753ae 49%,#0c3587 100%);
+  color:#fff;
+  box-shadow:0 12px 25px rgba(18,75,157,.17),inset 0 1px 0 rgba(255,255,255,.30);
+}
+.s65-card.s65-card--disconnected::before{
+  background:radial-gradient(ellipse at 77% 22%,rgba(85,161,255,.27),transparent 59%);
+}
+.s65-card.s65-card--disconnected .s65-card-badge{
+  background:rgba(255,255,255,.17);
+  border:1px solid rgba(255,255,255,.14);
+  color:#fff;
+}
+.s65-card.s65-card--disconnected .s65-card-copy{
+  max-width:59%;
+}
+.s65-card.s65-card--disconnected .s65-card-copy h2{
+  max-width:145px;
+  margin-top:10px;
+  margin-bottom:6px;
+  font-weight:850;
+  font-size:22px;
+  line-height:1.04;
+  letter-spacing:-.65px;
+}
+.s65-card.s65-card--disconnected .s65-card-copy p{
+  max-width:180px;
+  font-size:10.7px;
+  line-height:1.2;
+  color:#f5f9ff;
+}
+.s65-card.s65-card--disconnected .s65-card-mascot{
+  top:5px;
+  right:-4px;
+  width:57%;
+  height:208px;
+  overflow:visible;
+}
+.s65-card.s65-card--disconnected .s65-card-mascot img{
+  object-fit:contain;
+  object-position:right bottom;
+  filter:drop-shadow(0 6px 10px rgba(0,31,89,.16));
+}
+.s65-card.s65-card--disconnected .s65-card-actions-single{
+  width:55%;
+  max-width:55%;
+}
+.s65-card.s65-card--disconnected .s65-card-primary{
+  background:#fff;
+  color:#1268dc;
+}
+@media(min-width:390px){
+  .s65-card.s65-card--disconnected .s65-card-copy h2{font-size:24px;max-width:165px;}
+  .s65-card.s65-card--disconnected .s65-card-copy p{font-size:11.5px;max-width:196px;}
+  .s65-card.s65-card--disconnected .s65-card-mascot{width:58%;height:211px;right:-4px;}
+}
+@media(max-width:359px){
+  .s65-card.s65-card--disconnected .s65-card-copy h2{font-size:20px;max-width:135px;}
+  .s65-card.s65-card--disconnected .s65-card-copy p{font-size:10px;max-width:156px;}
+  .s65-card.s65-card--disconnected .s65-card-mascot{width:56%;height:198px;right:-5px;top:8px;}
+  .s65-card.s65-card--disconnected .s65-card-actions-single{width:57%;max-width:57%;}
+}
