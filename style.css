@@ -2746,3 +2746,33 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   content:none!important;
   display:none!important;
 }
+
+
+/* v100: Home avatar ring follows the status card (including trial countdown).
+   The original avatar and profile layout remain untouched. */
+.s98-status-profile .s98-avatar-ring--trial-3{
+  --ring-color:#1689ff;
+  background:conic-gradient(from 20deg,#60c5ff,#0873ef,#2b98ff,#0c77ee,#60c5ff);
+}
+.s98-status-profile .s98-avatar-ring--trial-2{
+  --ring-color:#f5be24;
+  background:conic-gradient(from 20deg,#ffe789,#e9a30b,#ffd54c,#efb30f,#ffe789);
+}
+.s98-status-profile .s98-avatar-ring--trial-1,
+.s98-status-profile .s98-avatar-ring--expired{
+  --ring-color:#f35770;
+  background:conic-gradient(from 20deg,#ff9aab,#ec3c5b,#ff7187,#e9425b,#ff9aab);
+}
+.s98-status-profile .s98-avatar-ring--trial-3 .s98-avatar-medal{
+  background:#147efa;color:#fff;
+}
+.s98-status-profile .s98-avatar-ring--trial-2 .s98-avatar-medal{
+  background:#efb622;color:#fff;
+}
+.s98-status-profile .s98-avatar-ring--trial-1 .s98-avatar-medal,
+.s98-status-profile .s98-avatar-ring--expired .s98-avatar-medal{
+  background:#ec4d66;color:#fff;
+}
+.s98-status-profile .s98-avatar-ring--paid .s98-avatar-medal{
+  background:#e5ae11;color:#fff;
+}

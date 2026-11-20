@@ -296,10 +296,18 @@ function s13Welcome(){
  return `${s13Header(s13Step===5?'close':'back')}<div class="s13-onboard"><div class="s13-progress">${slides.map((_,i)=>`<span class="${i<=s13Step?'active':''}"></span>`).join('')}</div><div class="s13-onboard-visual">${s13Face(img)}</div><h1>${title}</h1><p>${detail}</p>${foot}<div class="s13-onboard-actions"><button class="s13-btn" data-action="next-onboarding" ${s13Step===0&&!s13Accepted?'disabled':''}>${s13Step===5?'Перейти к подключению':'Далее'}</button><button class="s13-subtle" data-action="skip-onboarding">${s13Step===0?'Посмотреть приложение':'Позже'}</button></div></div>`;
 }
 function s98ProfileAvatarState(){
+ // Exactly the same state as the status card, including temporary card previews.
  const state=s60CardState();
- if(state==='paid')return {tone:'paid',label:'Подписка активна',icon:ico('crown')};
- if(state==='trial-3'||state==='trial-2'||state==='trial-1')return {tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')};
- return {tone:'inactive',label:'Нет подписки',icon:ico('lock')};
+ const variants={
+  paid:{tone:'paid',label:'Подписка активна',icon:ico('crown')},
+  'trial-3':{tone:'trial-3',label:'Пробный период · 3 дня',icon:s65BadgeIcon('clock')},
+  'trial-2':{tone:'trial-2',label:'Пробный период · осталось 2 дня',icon:s65BadgeIcon('clock')},
+  'trial-1':{tone:'trial-1',label:'Пробный период · остался 1 день',icon:s65BadgeIcon('alert')},
+  disconnected:{tone:'inactive',label:'Не подключён',icon:ico('lock')},
+  expired:{tone:'expired',label:'Доступ закончился',icon:ico('lock')},
+  unverified:{tone:'inactive',label:'Статус подписки не подтверждён',icon:ico('lock')}
+ };
+ return variants[state]||variants.unverified;
 }
 function s14ProfileBlock(){
  const u=tg?.initDataUnsafe?.user||{};
