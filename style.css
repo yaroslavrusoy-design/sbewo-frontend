@@ -1423,3 +1423,14 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
       transparent calc(100% - 63px - env(safe-area-inset-bottom, 0px)),transparent 100%)!important;
   }
 }
+
+/* v58 — eliminate the pale full-width strip beneath the floating capsule.
+   The main scroll view was masked above the bottom edge, exposing a different
+   background from its parent. Give the parent the same continuous page background
+   and let the scroll view itself be transparent. No extra overlay is added. */
+.app.s13-app.s13-has-bottom {
+  background:linear-gradient(145deg,#f1f9ff 0%,#e8f5ff 65%,#e3f2ff 100%)!important;
+}
+.app.s13-app.s13-has-bottom > .s13-main {
+  background:transparent!important;
+}
