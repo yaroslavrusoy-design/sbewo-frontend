@@ -2000,3 +2000,25 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary:active{
   background:linear-gradient(135deg,#27dd82 0%,#0fc56d 100%);
 }
+
+/* v72 — tighten vertical composition without changing the mascot or buttons. */
+.s65-card.s65-card--trial-3 .s65-card-copy{transform:translateY(16px)}
+.s65-card.s65-card--trial-2 .s65-card-copy{transform:translateY(10px)}
+.s65-card.s65-card--trial-1 .s65-card-copy{transform:translateY(9px)}
+.s65-card.s65-card--paid .s65-card-copy,
+.s65-card.s65-card--unverified .s65-card-copy{transform:translateY(16px)}
+/* Longer disconnected/expired copy already sits near the primary action. */
+.s65-card.s65-card--disconnected .s65-card-copy,
+.s65-card.s65-card--expired .s65-card-copy{transform:none}
+/* White title and arrow on green trial activation button. */
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary,
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary svg{
+  color:#fff;
+}
+@media(max-width:359px){
+  .s65-card.s65-card--trial-3 .s65-card-copy,
+  .s65-card.s65-card--paid .s65-card-copy,
+  .s65-card.s65-card--unverified .s65-card-copy{transform:translateY(12px)}
+  .s65-card.s65-card--trial-2 .s65-card-copy,
+  .s65-card.s65-card--trial-1 .s65-card-copy{transform:translateY(6px)}
+}
