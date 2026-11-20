@@ -2144,3 +2144,83 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
  .s19-settings-page .s77-tariffs-card .s52-sub-cta{font-size:10.5px;min-height:39px;height:39px;padding:0 8px}
  .s19-settings-page .s77-tariffs-card .s52-sub-visual{width:55%;right:-8px}
 }
+
+/* v79 — Settings groups aligned to the supplied Sbewo reference.
+   The existing .s77-tariffs-card is deliberately untouched. */
+.s13-mainpage.s19-page.s78-settings-page{
+  padding:8px 16px 24px !important;
+}
+.s78-settings-page .s77-tariffs-card{
+  margin-bottom:16px;
+}
+.s78-settings-groups{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding:0 0 10px;
+}
+.s78-settings-group{
+  position:relative;
+  border:1px solid rgba(255,255,255,.96);
+  border-radius:23px;
+  padding:1px 13px;
+  background:linear-gradient(130deg,rgba(255,255,255,.92),rgba(249,250,255,.93));
+  box-shadow:0 8px 22px rgba(63,102,162,.075), inset 0 1px 0 rgba(255,255,255,.98);
+}
+.s78-row{
+  width:100%;min-height:68px;padding:9px 3px;
+  display:flex;align-items:center;gap:13px;
+  background:transparent;border:0;color:#152044;
+  text-align:left;position:relative;
+}
+.s78-row + .s78-row{border-top:1px solid #dce3f0;}
+.s78-row-icon{
+  flex:none;display:grid;place-items:center;width:47px;height:47px;
+  border-radius:15px;
+}
+.s78-row-icon i{display:grid;place-items:center;width:100%;height:100%;font-size:25px;font-style:normal;line-height:1;}
+.s78-row-icon i svg{width:26px;height:26px;stroke-width:1.9;}
+html.remix-ready .s78-row-icon i[class^="ri-"]::before{display:inline-block!important;}
+html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
+.s78-tone-blue{background:linear-gradient(135deg,#e1f3ff,#a9d9ff);color:#0087ef;}
+.s78-tone-purple{background:linear-gradient(135deg,#f0e8ff,#d3b9ff);color:#833df3;}
+.s78-tone-pink{background:linear-gradient(135deg,#ffe9f4,#ffc1e0);color:#ed2382;}
+.s78-tone-green{background:linear-gradient(135deg,#e5fff2,#baecd5);color:#10ab65;}
+.s78-tone-violet{background:linear-gradient(135deg,#f2e9ff,#dcc5ff);color:#8a3cf8;}
+.s78-tone-amber{background:linear-gradient(135deg,#fff6df,#ffe5ac);color:#e4a000;}
+.s78-tone-sky{background:linear-gradient(135deg,#e5f6ff,#b5ddff);color:#119cdd;}
+.s78-row-text{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px;}
+.s78-row-text strong{font-size:15px;line-height:1.15;font-weight:800;color:#151e42;letter-spacing:-.35px;}
+.s78-row-text small{font-size:11.5px;line-height:1.3;font-weight:450;color:#657294;}
+.s78-chevron{flex:none;color:#71809c;display:flex;align-items:center;margin-left:auto;}
+.s78-chevron svg{width:18px;height:18px;stroke-width:2;}
+.s78-group-float{
+  position:absolute;left:19px;top:-16px;z-index:1;
+  width:39px;height:28px;border-radius:17px;
+  display:grid;place-items:center;
+  color:#4b93ff;
+  background:linear-gradient(155deg,#fff,#ddebff);
+  border:1px solid #fff;
+  pointer-events:none;
+}
+.s78-group-float svg{width:19px;height:19px;}
+.s78-float-gift{color:#5599f5;}
+.s78-float-shield{color:#5991ff;}
+.s78-saving-page .s19-settings-group{margin-top:12px;padding:0 13px;}
+.s78-info-page{min-height:46vh;}
+.s78-info-page>p{font-size:14px;line-height:1.5;max-width:350px;}
+.s78-info-icon{display:grid;place-items:center;width:60px;height:60px;border-radius:19px;margin:15px 0;}
+.s78-info-icon svg{width:32px;height:32px;}
+@media(min-width:390px){
+  .s78-settings-page .s78-row{min-height:76px;gap:14px;}
+  .s78-settings-page .s78-row-icon{width:51px;height:51px;border-radius:16px;}
+  .s78-settings-page .s78-row-text strong{font-size:16px;}
+  .s78-settings-page .s78-row-text small{font-size:12px;}
+  .s78-settings-page .s78-settings-group{padding-inline:14px;}
+}
+@media(max-width:350px){
+  .s78-settings-page .s78-row{gap:10px;min-height:64px;}
+  .s78-settings-page .s78-row-icon{height:43px;width:43px;border-radius:13px;}
+  .s78-settings-page .s78-row-text strong{font-size:13.5px;}
+  .s78-settings-page .s78-row-text small{font-size:10.5px;}
+}
