@@ -487,12 +487,10 @@ ${s78SettingsRow('connections','Подключения','Управление д
 ${s78SettingsRow('bell','Уведомления','Сообщения об удалениях и правках','notifications','pink')}
 </section>
 <section class="s78-settings-group" aria-label="Безопасность и помощь">
-<span class="s78-group-float s78-float-shield" aria-hidden="true">${ico('shield')}</span>
 ${s78SettingsRow('shield','Безопасность и данные','Архив, доступы и конфиденциальность','privacy','green')}
 ${s78SettingsRow('support','Поддержка','Помощь и ответы на вопросы','help','violet')}
 </section>
 <section class="s78-settings-group" aria-label="Сообщество Sbewo">
-<span class="s78-group-float s78-float-gift" aria-hidden="true">${ico('star')}</span>
 ${s78SettingsRow('partners','Партнёрская программа','Приглашай друзей и получай бонусы','partner-program','amber')}
 ${s78SettingsRow('telegram','Наш Telegram-канал','Новости, обновления и полезные советы','telegram-channel','sky')}
 </section>

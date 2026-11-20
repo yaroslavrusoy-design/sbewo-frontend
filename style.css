@@ -2242,3 +2242,24 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom {border-radius:26px!important;}
   .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button {border-radius:21px!important;}
 }
+
+/* v82 — Compact settings icons/labels; other cards and nav unchanged. */
+.s78-settings-page .s78-row{min-height:65px;gap:11px}
+.s78-settings-page .s78-row-icon{width:42px;height:42px;border-radius:13px}
+.s78-settings-page .s78-row-icon i{font-size:21px}
+.s78-settings-page .s78-row-icon i svg{width:21px;height:21px}
+.s78-settings-page .s78-row-text strong{font-size:14px;line-height:1.18}
+.s78-settings-page .s78-row-text small{font-size:11px}
+.s78-settings-page .s78-group-float{display:none}
+@media(min-width:390px){
+.s78-settings-page .s78-row{min-height:69px;gap:12px}
+.s78-settings-page .s78-row-icon{width:44px;height:44px;border-radius:14px}
+.s78-settings-page .s78-row-text strong{font-size:14.5px}
+.s78-settings-page .s78-row-text small{font-size:11.5px}
+}
+@media(max-width:350px){
+.s78-settings-page .s78-row{min-height:61px;gap:9px}
+.s78-settings-page .s78-row-icon{width:40px;height:40px;border-radius:12px}
+.s78-settings-page .s78-row-text strong{font-size:13px}
+.s78-settings-page .s78-row-text small{font-size:10px}
+}
