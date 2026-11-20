@@ -2076,3 +2076,71 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .s65-card.s65-card--trial-3 .s65-card-badge svg,
 .s65-card.s65-card--trial-3 .s65-card-badge span,
 .s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary svg{color:#fff;}
+
+
+/* v78 — Settings: tariff banner based on supplied reference. Only this card. */
+.s19-settings-page .s52-sub-card.s77-tariffs-card{
+ position:relative;display:block;isolation:isolate;overflow:hidden;box-sizing:border-box;
+ width:100%;height:242px;min-height:242px;margin:4px 0 17px;
+ padding:16px 15px 14px;border-radius:27px;
+ border:1px solid rgba(176,228,255,.85);
+ background:linear-gradient(124deg,#245cfa 0%,#267fff 38%,#12bdf0 69%,#8650ec 100%);
+ box-shadow:0 12px 24px rgba(35,102,204,.15),inset 0 1px 0 rgba(255,255,255,.25);
+ color:#fff;
+}
+.s19-settings-page .s52-sub-card.s77-tariffs-card::before{
+ content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:radial-gradient(ellipse at 18% 44%,rgba(58,51,210,.33),transparent 62%),
+ radial-gradient(ellipse at 91% 88%,rgba(116,56,228,.61),transparent 38%);
+}
+.s19-settings-page .s52-sub-card.s77-tariffs-card::after{display:none}
+.s19-settings-page .s77-tariffs-card .s52-sub-copy{
+ position:relative;z-index:2;display:flex;align-items:flex-start;flex-direction:column;
+ width:59%;height:100%;min-width:0;box-sizing:border-box;
+}
+.s19-settings-page .s77-tariffs-card .s52-sub-label{
+ display:inline-flex;align-items:center;gap:7px;box-sizing:border-box;
+ padding:7px 13px;min-height:31px;border-radius:999px;
+ background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.23);
+ color:#fff;font-size:12px;font-weight:800;line-height:1;white-space:nowrap;
+}
+.s19-settings-page .s77-tariffs-card .s52-sub-star{
+ color:#ffdb5d;font-size:19px;line-height:.85;text-shadow:0 1px 4px rgba(255,200,60,.22);
+}
+.s19-settings-page .s77-tariffs-card .s52-sub-copy h2{
+ margin:12px 0 9px;font-weight:900;font-size:clamp(24px,7.1vw,30px);
+ line-height:.99;letter-spacing:-.95px;color:#fff;
+}
+.s19-settings-page .s77-tariffs-card .s52-sub-copy p{
+ margin:0;max-width:100%;color:rgba(255,255,255,.96);
+ font-size:clamp(10.5px,2.8vw,12.5px);line-height:1.28;font-weight:500;
+}
+.s19-settings-page .s77-tariffs-card .s52-sub-cta{
+ margin-top:auto;position:relative;z-index:4;align-self:stretch;display:flex;
+ align-items:center;justify-content:space-between;gap:6px;min-height:42px;height:42px;
+ padding:0 10px;border:0;border-radius:16px;box-shadow:0 7px 12px rgba(12,56,160,.12);
+ background:#fff;color:#0958dd;font-size:clamp(11px,2.8vw,13px);font-weight:850;white-space:nowrap;
+}
+.s19-settings-page .s77-tariffs-card .s52-sub-cta span{font-size:23px;line-height:1;font-weight:700}
+.s19-settings-page .s77-tariffs-card .s52-sub-visual{
+ position:absolute;z-index:1;top:8px;right:-8px;bottom:0;width:57%;min-width:0;display:block;pointer-events:none;
+}
+.s19-settings-page .s77-tariffs-card .s52-sub-visual img{
+ position:absolute;right:0;bottom:0;display:block;width:100%;height:98%;max-width:none;max-height:none;
+ object-fit:contain;object-position:right bottom;filter:drop-shadow(0 7px 9px rgba(33,46,132,.14));
+}
+@media(min-width:430px){
+ .s19-settings-page .s52-sub-card.s77-tariffs-card{height:262px;min-height:262px;padding:19px 19px 17px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-copy h2{font-size:32px;margin-top:17px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-copy p{font-size:13px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-cta{height:45px;min-height:45px;font-size:14px;padding:0 13px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-visual{width:56%}
+}
+@media(max-width:359px){
+ .s19-settings-page .s52-sub-card.s77-tariffs-card{height:237px;min-height:237px;padding:13px 11px 12px;border-radius:24px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-label{font-size:11px;min-height:29px;padding:6px 10px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-copy h2{font-size:23px;margin:11px 0 8px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-copy p{font-size:10.2px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-cta{font-size:10.5px;min-height:39px;height:39px;padding:0 8px}
+ .s19-settings-page .s77-tariffs-card .s52-sub-visual{width:55%;right:-8px}
+}
