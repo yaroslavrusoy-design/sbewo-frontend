@@ -2776,3 +2776,22 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 .s98-status-profile .s98-avatar-ring--paid .s98-avatar-medal{
   background:#e5ae11;color:#fff;
 }
+
+/* v101 — The outer ring background must win over the generic grey avatar ring.
+   Explicit matching specificity fixes the grey ring for every state. */
+.s98-status-profile .s25-profile-identity .s98-avatar-ring.s98-avatar-ring--paid{
+  background:conic-gradient(from 20deg,#ffe88b,#eaa800,#ffdb50,#f5b500,#ffe88b);
+}
+.s98-status-profile .s25-profile-identity .s98-avatar-ring.s98-avatar-ring--trial-3{
+  background:conic-gradient(from 20deg,#60c5ff,#0873ef,#2b98ff,#0c77ee,#60c5ff);
+}
+.s98-status-profile .s25-profile-identity .s98-avatar-ring.s98-avatar-ring--trial-2{
+  background:conic-gradient(from 20deg,#ffe789,#e9a30b,#ffd54c,#efb30f,#ffe789);
+}
+.s98-status-profile .s25-profile-identity .s98-avatar-ring.s98-avatar-ring--trial-1,
+.s98-status-profile .s25-profile-identity .s98-avatar-ring.s98-avatar-ring--expired{
+  background:conic-gradient(from 20deg,#ff9aab,#ec3c5b,#ff7187,#e9425b,#ff9aab);
+}
+.s98-status-profile .s25-profile-identity .s98-avatar-ring.s98-avatar-ring--inactive{
+  background:#c9d3df;
+}
