@@ -971,3 +971,11 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s37-mascot .s37-sparks{top:48px;right:0}
 @media(min-width:410px){.s37-mascot{top:19px;right:10px;width:164px;height:142px}.s37-mascot .s37-check{top:17px;right:3px}.s37-mascot .s37-sparks{top:51px}}
 @media(max-width:359px){.s37-mascot{top:23px;right:1px;width:123px;height:127px}.s37-mascot .s37-check{top:13px;right:3px}.s37-mascot .s37-sparks{top:45px}}
+
+/* Date separators for event history: same soft-blue pill style as Sbewo. */
+.s39-day-heading{display:flex;align-items:center;margin:12px 0 2px;min-height:32px}
+.s39-day-heading:first-child{margin-top:0}
+.s39-day-pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 13px;background:#dfeeff;color:#344873;border:1px solid rgba(177,205,244,.35);font-size:12px;font-weight:750;line-height:1.15;white-space:nowrap}
+.s39-day-pill svg{width:16px;height:16px;flex:none}
+.s19-events .s39-day-heading{margin-top:14px}
+.s19-events .s39-day-heading:first-child{margin-top:0}
