@@ -282,8 +282,25 @@ document.querySelectorAll('[data-s19-filter]').forEach(b=>b.onclick=()=>{s19Chat
 document.querySelectorAll('[data-s19-view]').forEach(b=>b.onclick=()=>{s19ChatView=b.dataset.s19View;render()});
 document.querySelectorAll('[data-s19-note-cancel]').forEach(b=>b.onclick=()=>{s19NoteEditor=false;render()});
 document.querySelectorAll('[data-s19-note-save]').forEach(b=>b.onclick=async()=>{const m=db.items.find(x=>String(x.key)===String(selectedKey));if(!m)return;const val=$('#s19-note-input')?.value.slice(0,600)||'';b.disabled=true;try{if(!demo)await call('/api/note',{message_key:m.key,note:val});m.note=val;s19NoteEditor=false;error='';render()}catch(e){error=e.message;render()}});
-document.querySelectorAll('[data-s19-download]').forEach(b=>b.onclick=()=>{const key=b.dataset.s19Download;const d=s19MediaPreview;if(!d||d.key!==key||!d.base64)return;const m=db.items.find(x=>String(x.key)===key);const name=m?.file_name||d.file_name||'sbewo-file';const bytes=atob(d.base64);const chunks=[];for(let i=0;i<bytes.length;i+=65536){const piece=bytes.slice(i,i+65536);const arr=new Uint8Array(piece.length);for(let j=0;j<piece.length;j++)arr[j]=piece.charCodeAt(j);chunks.push(arr)}const url=URL.createObjectURL(new Blob(chunks,{type:'application/octet-stream'}));const a=document.createElement('a');a.href=url;a.download=name.replace(/[\\/\x00-\x1f]/g,'_');document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)});
- document.querySelectorAll('[data-s19-media]').forEach(b=>b.onclick=async()=>{b.disabled=true;const key=b.dataset.s19Media;try{const data=await call('/api/media',{message_key:key});if(!['image/jpeg','image/webp','image/png','video/mp4','video/webm','audio/ogg','audio/mpeg','application/x-tgsticker'].includes(data.mime)&&db.items.find(x=>String(x.key)===key)?.kind!=='document')throw Error('Неподдерживаемый формат');s19MediaPreview={key,data:`data:${data.mime};base64,${data.base64}`,mime:data.mime,base64:data.base64,file_name:data.file_name};s19MediaError='';render()}catch(e){s19MediaError=e.message||'Файл недоступен';s19MediaPreview={key};render()}});
+document.querySelectorAll('[data-s19-download]').forEach(b=>b.onclick=()=>{
+ const d=s19MediaPreview;
+ if(!d||String(d.key)!==String(b.dataset.s19Download)||!d.url)return;
+ // A real user click opens the binary HTTP response; no large Base64 or Blob in WebView.
+ try{if(tg?.openLink)tg.openLink(d.url,{try_instant_view:false});else window.open(d.url,'_blank','noopener,noreferrer')}
+ catch(e){window.open(d.url,'_blank','noopener,noreferrer')}
+});
+document.querySelectorAll('[data-s19-media]').forEach(b=>b.onclick=async()=>{
+ const key=String(b.dataset.s19Media);
+ b.disabled=true;b.textContent='Подготавливаем файл…';
+ try{
+  // This endpoint sends metadata and a short-lived link, not the binary/base64 body.
+  const data=await call('/api/media-link',{message_key:key});
+  const url=new URL(data.url,API+'/').href;
+  const mime=String(data.mime||'application/octet-stream');
+  s19MediaPreview={key,url,data:url,mime,file_name:data.file_name,bytes:data.bytes};
+  s19MediaError='';render();
+ }catch(e){s19MediaError=e.message||'Не удалось подготовить файл';s19MediaPreview={key};render()}
+});
 document.querySelectorAll('[data-s19-archive]').forEach(b=>b.onclick=async()=>{const next=!s19FullArchive;b.disabled=true;try{if(!demo){const data=await call('/api/archive-settings',{full_archive:next});s19FullArchive=!!data.full_archive;await refresh()}else{s19FullArchive=next;render()}}catch(e){error=e.message;render()}});
 document.querySelectorAll('[data-s13-scope]').forEach(b=>b.onclick=()=>{s13EventScope=b.dataset.s13Scope;render()});document.querySelectorAll('[data-s13-archive]').forEach(b=>b.onclick=()=>{s13ArchiveTab=b.dataset.s13Archive;query='';render()});document.querySelectorAll('[data-s13-chat-tab]').forEach(b=>b.onclick=()=>{s13ChatTab=b.dataset.s13ChatTab;render()});document.querySelectorAll('[data-chat-manage]').forEach(b=>b.onclick=()=>{selectedChat=b.dataset.chatManage;goto('chat-manage')});document.querySelectorAll('[data-action]').forEach(b=>b.onclick=async()=>{switch(b.dataset.action){case 'next-onboarding':if(s13Step===0&&!s13Accepted)return;if(s13Step===5){goto('connect-personal');return}s13Step++;render();break;case 'skip-onboarding':pref('sbewo-v8-onboarded','yes');page='home';render();break;case 'start-personal':goto('connect-personal');break;case 'start-group':goto('connect-group');break;case 'check-connection':try{await refresh();}catch(e){error=e.message}goto('connection-check');break;case 'clear-archive':if(!s13Confirm){s13Confirm=true;b.textContent='Подтвердить удаление';return}try{if(!demo)await call('/api/clear');db.items=[];s13Confirm=false;goto('archive')}catch(e){error=e.message;render()}break;}});const terms=$('#accept-terms');if(terms)terms.onchange=()=>{s13Accepted=terms.checked;render()};};
 const s13OldGoto=goto;
