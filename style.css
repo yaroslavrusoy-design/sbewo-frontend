@@ -2445,3 +2445,15 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 .s91-peek img{width:292px;max-width:none;flex-shrink:0;height:auto;transform:translateY(0)}
 @media(max-width:360px){.s91-peek{height:108px;margin:2px -4px -9px}.s91-peek img{width:268px}}
 @media(min-width:430px){.s91-peek{height:133px;margin:4px -4px -14px}.s91-peek img{width:335px}}
+
+/* v92: pricing-only — slightly smaller Kyu, paws resting on features panel. */
+.s91-pricing-page .s91-peek{height:118px;margin-bottom:-10px;align-items:flex-end;overflow:hidden}
+.s91-pricing-page .s91-peek img{width:270px;max-width:none;height:auto;flex-shrink:0;transform:translateY(0);object-fit:contain}
+@media(max-width:360px){
+ .s91-pricing-page .s91-peek{height:108px;margin-bottom:-9px}
+ .s91-pricing-page .s91-peek img{width:247px}
+}
+@media(min-width:430px){
+ .s91-pricing-page .s91-peek{height:133px;margin-bottom:-14px}
+ .s91-pricing-page .s91-peek img{width:309px}
+}
