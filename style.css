@@ -1451,3 +1451,6 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 /* v61: more rectangular floating navigation; no extra background panels. */
 .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom{border-radius:15px!important}
 .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button{border-radius:11px!important}
+
+/* Restricted media labels inherit the existing event design. */
+.s19-media-missing{overflow-wrap:anywhere}
