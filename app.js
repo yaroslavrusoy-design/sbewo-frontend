@@ -656,23 +656,37 @@ function s95FitPricing(){
  const main=document.querySelector('.s13-no-bottom > .s13-main');
  const card=main?.querySelector('.s91-pricing-page');
  if(!card)return;
+ // Reset the previous fit before measuring: old zoom+width:calc(100% / zoom)
+ // produced horizontal overflow and shifted the entire interface off screen.
+ card.style.removeProperty('width');
+ card.style.removeProperty('transform');
+ card.style.zoom='1';
  main.scrollTop=0;
- const measure=(factor)=>{
-  card.style.zoom=String(factor);
-  card.style.width=`calc(100% / ${factor})`;
-  return card.getBoundingClientRect().bottom;
- };
- const limit=main.getBoundingClientRect().bottom-3;
- if(measure(1)<=limit)return;
- let low=.42, high=1;
- for(let i=0;i<15;i++){
-  const mid=(low+high)/2;
-  if(measure(mid)<=limit)low=mid;
-  else high=mid;
+ main.scrollLeft=0;
+ const available=main.clientHeight-2;
+ const contentHeight=()=>Math.ceil(card.getBoundingClientRect().bottom-main.getBoundingClientRect().top);
+ if(contentHeight()>available){
+   let low=.60,high=1;
+   for(let i=0;i<14;i++){
+     const mid=(low+high)/2;
+     card.style.zoom=String(mid);
+     if(contentHeight()<=available)low=mid;
+     else high=mid;
+   }
+   card.style.zoom=String(low);
  }
- measure(low);
+ // Zoom shrinks the box, but must never expand the outer width.
+ card.style.width='100%';
  main.scrollTop=0;
+ main.scrollLeft=0;
 }
+// Prevent iOS WebView bounce/drag on the tariff screen only.
+// Buttons remain clickable because only a moving touch gesture is cancelled.
+document.addEventListener('touchmove',function(event){
+ if(document.querySelector('.s13-no-bottom > .s13-main > .s91-pricing-page')){
+   event.preventDefault();
+ }
+},{passive:false,capture:true});
 window.addEventListener('resize',()=>{if(document.querySelector('.s91-pricing-page'))s95FitPricing()},{passive:true});
 try{tg?.onEvent?.('viewportChanged',()=>{if(document.querySelector('.s91-pricing-page'))s95FitPricing()})}catch{}
 // Re-entry after onboarding goes to the Events page.

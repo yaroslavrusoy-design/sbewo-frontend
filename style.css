@@ -2613,3 +2613,36 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   .s13-app .s14-home .s25-profile.s96-status-profile{min-height:77px}
   .s96-status-profile .s96-profile-subscription{font-size:10px;padding:3px 7px}
 }
+
+/* v97: Pricing fits a fixed viewport and cannot be shifted horizontally.
+   Previous width:calc(100% / zoom) caused off-screen horizontal overflow. */
+.app.s13-app.s13-no-bottom:has(.s91-pricing-page){
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  touch-action:none!important;
+}
+.app.s13-app.s13-no-bottom > .s13-main:has(> .s91-pricing-page){
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  touch-action:none!important;
+  padding:0!important;
+  margin:0!important;
+}
+.app.s13-app.s13-no-bottom > .s13-main > .s91-pricing-page{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  touch-action:none!important;
+  box-sizing:border-box!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+.app.s13-app.s13-no-bottom .s91-pricing-page .s91-pricing-columns,
+.app.s13-app.s13-no-bottom .s91-pricing-page .s91-plan-switch,
+.app.s13-app.s13-no-bottom .s91-pricing-page .s91-checkout{
+  max-width:100%;min-width:0;
+}
