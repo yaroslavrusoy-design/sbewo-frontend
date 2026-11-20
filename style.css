@@ -2457,3 +2457,13 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
  .s91-pricing-page .s91-peek{height:133px;margin-bottom:-14px}
  .s91-pricing-page .s91-peek img{width:309px}
 }
+
+/* v93: the selected plan and the mascot must not cause layout reflow. */
+.s91-pricing-page .s91-plan{border:2px solid transparent;transition:background-color .15s ease,box-shadow .15s ease,border-color .15s ease}
+.s91-pricing-page .s91-plan.selected{border-width:2px}
+/* The supplied Kyu PNG is already positioned correctly. Its paws now render
+   above the feature list rather than behind its background. */
+.s91-pricing-page .s91-feature-column{isolation:isolate}
+.s91-pricing-page .s91-peek{z-index:5;overflow:visible}
+.s91-pricing-page .s91-peek img{position:relative;z-index:6}
+.s91-pricing-page .s91-feature-list{z-index:2}

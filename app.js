@@ -556,7 +556,23 @@ document.querySelectorAll('[data-message]').forEach(b=>{const original=b.onclick
    error='';
   }catch(e){error=e.message||'Не удалось скачать историю'}finally{s50Exporting=false;render()}
  };
- document.querySelectorAll('[data-s91-mode]').forEach(b=>b.onclick=()=>{s91TariffMode=b.dataset.s91Mode;render()}); document.querySelectorAll('[data-s51-plan]').forEach(b=>b.onclick=()=>{s51Plan=b.dataset.s51Plan;render()});
+ document.querySelectorAll('[data-s91-mode]').forEach(b=>b.onclick=()=>{s91TariffMode=b.dataset.s91Mode;render()}); document.querySelectorAll('[data-s51-plan]').forEach(b=>b.onclick=()=>{
+  const next=b.dataset.s51Plan;
+  if(next===s51Plan)return;
+  s51Plan=next;
+  // Update the tariff selection in place: avoid replacing the entire page,
+  // which resets the scroll position and causes a visible jump on iOS.
+  const plans={'1m':'299 ₽','6m':'1 190 ₽','12m':'1 790 ₽'};
+  document.querySelectorAll('[data-s51-plan]').forEach(el=>{
+   const active=el.dataset.s51Plan===next;
+   el.classList.toggle('selected',active);
+   el.setAttribute('aria-checked',String(active));
+   const radio=el.querySelector('.s91-plan-radio');
+   if(radio)radio.innerHTML=active?ico('check'):'';
+  });
+  const label=document.querySelector('.s91-checkout > span:first-child');
+  if(label)label.textContent=`Подключить за ${plans[next]||'1 790 ₽'}`;
+ });
  const checkoutBtn=$('[data-s51-checkout]');if(checkoutBtn)checkoutBtn.onclick=()=>{const planMap={'1m':'1 месяц · 299 ₽','6m':'6 месяцев · 1 190 ₽','12m':'12 месяцев · 1 790 ₽'};try{tg?.showAlert?.(`Выбран тариф: ${planMap[s51Plan]||'Подписка Sbewo'}. Подключение оплаты добавим следующим этапом.`)}catch{alert(`Выбран тариф: ${planMap[s51Plan]||'Подписка Sbewo'}. Подключение оплаты добавим следующим этапом.`)}};
 document.querySelectorAll('[data-clear-choice]').forEach(btn=>btn.onclick=()=>{
  const id=btn.dataset.clearChoice;
