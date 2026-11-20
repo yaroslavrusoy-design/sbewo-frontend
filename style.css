@@ -1744,3 +1744,85 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .s65-card-actions{left:12px;right:12px;bottom:14px;gap:8px;}
   .s65-card-actions button{height:50px;font-size:16px;border-radius:18px;}
 }
+
+/* v67: fit status typography and actions inside a fixed-size mobile card. */
+.s65-card{
+  height:226px;
+  min-height:226px;
+  max-height:226px;
+  padding:16px 16px 14px;
+}
+.s65-card-badge{
+  min-height:30px;
+  height:30px;
+  padding:0 12px;
+  gap:7px;
+  font-size:11px;
+  line-height:1;
+  max-width:calc(100% - 106px);
+}
+.s65-card-badge svg{width:14px;height:14px;}
+.s65-dot{width:11px;height:11px;}
+.s65-card-copy{max-width:61%;}
+.s65-card-copy h2{
+  margin:12px 0 7px;
+  font-size:21px;
+  line-height:1.08;
+  letter-spacing:-.55px;
+  font-weight:840;
+}
+.s65-card-copy p{
+  font-size:11px;
+  line-height:1.25;
+  font-weight:500;
+  max-width:100%;
+}
+.s65-card-mascot{top:25px;right:2px;width:43%;height:140px;}
+.s65-card--disconnected .s65-card-mascot,
+.s65-card--trial-2 .s65-card-mascot,
+.s65-card--trial-1 .s65-card-mascot,
+.s65-card--paid .s65-card-mascot,
+.s65-card--unverified .s65-card-mascot,
+.s65-card--expired .s65-card-mascot{top:25px;right:2px;width:43%;height:140px;}
+.s65-card-actions{
+  left:16px;
+  right:16px;
+  bottom:14px;
+  gap:9px;
+}
+.s65-card-actions-single{right:auto;width:58%;max-width:58%;}
+.s65-card-actions button{
+  height:44px;
+  border-radius:15px;
+  padding:0 9px;
+  font-size:13px;
+  line-height:1;
+  gap:7px;
+}
+.s65-card-primary svg{width:18px;height:18px;flex:none;}
+.s65-card-secondary{border-width:1.5px;}
+@media (min-width:390px){
+  .s65-card{padding:16px 18px 14px;}
+  .s65-card-badge{font-size:11.5px;padding:0 13px;}
+  .s65-card-copy h2{font-size:23px;}
+  .s65-card-copy p{font-size:11.5px;}
+  .s65-card-actions{left:18px;right:18px;}
+  .s65-card-actions button{height:46px;font-size:13.5px;}
+}
+@media (max-width:359px){
+  .s65-card{height:226px;min-height:226px;max-height:226px;padding:16px 12px 12px;border-radius:26px;}
+  .s65-card-badge{height:28px;min-height:28px;font-size:10px;padding:0 10px;max-width:calc(100% - 97px);}
+  .s65-card-copy{max-width:62%;}
+  .s65-card-copy h2{font-size:19px;margin:11px 0 6px;}
+  .s65-card-copy p{font-size:10.5px;line-height:1.23;}
+  .s65-card-mascot,
+  .s65-card--disconnected .s65-card-mascot,
+  .s65-card--trial-2 .s65-card-mascot,
+  .s65-card--trial-1 .s65-card-mascot,
+  .s65-card--paid .s65-card-mascot,
+  .s65-card--unverified .s65-card-mascot,
+  .s65-card--expired .s65-card-mascot{top:26px;right:0;width:42%;height:136px;}
+  .s65-card-actions{left:12px;right:12px;bottom:12px;gap:7px;}
+  .s65-card-actions button{height:42px;font-size:12px;border-radius:14px;padding:0 7px;}
+  .s65-card-primary svg{width:16px;height:16px;}
+}
