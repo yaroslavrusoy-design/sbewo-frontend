@@ -182,7 +182,7 @@ function pro(){
  ];
  const groupMode=s91TariffMode==='groups';
  return `${s13Header()}<section class="s91-pricing-page" aria-label="Тарифы и подписка">
- <div class="s91-pricing-head"><h1>Тарифы <span class="s91-gold-crown" aria-hidden="true">${ico('crown')}</span></h1><p>Выбери подходящий период<br>и пользуйся всеми возможностями</p></div>
+ <div class="s91-pricing-head"><span class="s94-head-spark s94-spark-one" aria-hidden="true">✦</span><span class="s94-head-spark s94-spark-two" aria-hidden="true">✧</span><h1>Тарифы</h1><div class="s94-pricing-subtitle"><span class="s94-bolt" aria-hidden="true">ϟ</span><p>Выбери подходящий период<br>и пользуйся всеми возможностями</p></div></div>
  <div class="s91-plan-switch" role="tablist" aria-label="Вид подписки">
   <button type="button" role="tab" aria-selected="${!groupMode}" data-s91-mode="personal" class="${!groupMode?'active':''}">${ico('person')} Личный</button>
   <button type="button" role="tab" aria-selected="${groupMode}" data-s91-mode="groups" class="${groupMode?'active':''}">${ico('group')} Группы</button>
@@ -296,12 +296,28 @@ function s13Welcome(){
  if(s13Step===5) foot=`<div class="s13-option-grid"><button data-action="start-personal" class="selected">${s13Icon('chat')} Личная переписка</button></div>`;
  return `${s13Header(s13Step===5?'close':'back')}<div class="s13-onboard"><div class="s13-progress">${slides.map((_,i)=>`<span class="${i<=s13Step?'active':''}"></span>`).join('')}</div><div class="s13-onboard-visual">${s13Face(img)}</div><h1>${title}</h1><p>${detail}</p>${foot}<div class="s13-onboard-actions"><button class="s13-btn" data-action="next-onboarding" ${s13Step===0&&!s13Accepted?'disabled':''}>${s13Step===5?'Перейти к подключению':'Далее'}</button><button class="s13-subtle" data-action="skip-onboarding">${s13Step===0?'Посмотреть приложение':'Позже'}</button></div></div>`;
 }
+function s96ProfileSubscriptionStatus(){
+ // Matches the card state, including the explicitly enabled temporary preview.
+ // A missing server status must not be presented as an active subscription.
+ const state=s60CardState();
+ const options={
+  paid:{tone:'active',label:'Подписка активна',icon:ico('crown')},
+  'trial-3':{tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')},
+  'trial-2':{tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')},
+  'trial-1':{tone:'trial',label:'Пробный период',icon:s65BadgeIcon('clock')},
+  disconnected:{tone:'inactive',label:'Нет подписки',icon:ico('lock')},
+  expired:{tone:'inactive',label:'Нет подписки',icon:ico('lock')},
+  unverified:{tone:'inactive',label:'Статус уточняется',icon:ico('info')}
+ };
+ const info=options[state]||options.unverified;
+ return `<span class="s96-profile-subscription s96-profile-subscription--${info.tone}">${info.icon}<span>${esc(info.label)}</span></span>`;
+}
 function s14ProfileBlock(){
  const u=tg?.initDataUnsafe?.user||{};
  const name=[u.first_name,u.last_name].filter(Boolean).join(' ')||'Мой профиль';
  const handle=u.username?'@'+u.username:'Аккаунт Telegram';
  const photo=typeof u.photo_url==='string'&&/^https:\/\//i.test(u.photo_url)?`<img class="s14-user-photo" src="${esc(u.photo_url)}" alt="Аватар Telegram" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${avatar(name)}</span>`:avatar(name);
- return `<button class="s25-profile" data-go="settings" aria-label="Профиль и настройки пользователя"><span class="s25-profile-identity">${photo}<span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small></span></span><span class="s25-profile-arrow" aria-hidden="true">${s13Icon('chevron')}</span></button>`;
+ return `<button class="s25-profile s96-status-profile" data-go="settings" aria-label="Профиль и настройки пользователя"><span class="s25-profile-identity">${photo}<span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small>${s96ProfileSubscriptionStatus()}</span></span><span class="s25-profile-arrow" aria-hidden="true">${s13Icon('chevron')}</span></button>`;
 }
 function s25Count(n,forms){const value=Math.max(0,Math.floor(Number(n)||0));const mod10=value%10,mod100=value%100;return `${value} ${mod10===1&&mod100!==11?forms[0]:mod10>=2&&mod10<=4&&(mod100<12||mod100>14)?forms[1]:forms[2]}`;}
 function s60CardState(){
@@ -631,8 +647,34 @@ document.querySelectorAll('[data-s13-scope]').forEach(b=>b.onclick=()=>{s13Event
 const s13OldGoto=goto;
 goto=function(to){if(to==='back'){back();return}if(['connect-list','connect-group','connection-check'].includes(to))to='connect-personal';if(to==='star-action'){starAction();return}if(to==='note-action'){noteAction();return}if(to==='history'||to==='deleted'||to==='edited'){flt=to==='deleted'?'deleted':to==='edited'?'edited':'all';to='home'}if(to==='archive')to='chats';if(to==='media'){s19ChatView='media';to='chats'}if(to==='services')to='catalog';if(to==='connection')to='connect-personal';if(to==='notifications'||to==='storage'||to==='filters'||to==='about'||to==='pro'){ /* Existing functional secondary pages */ }if(to==='chat'){s19ChatView='events';s50FilterOpen=false;}if(to==='chat-clear'){s48ClearSelection.clear();s48Clearing=false;}if(to==='settings')s13Return=page;if(to==='eventdetail'){s13Return=page;s19MediaPreview=null;s19MediaError='';s19NoteEditor=false;}if(to==='welcome')s13Step=0;if(to==='home'||to==='archive'||to==='chats'){if(to==='home')flt='all';if(to==='archive')query=''}previous=page;page=to;error='';render();const main=$('#main');if(main)main.scrollTop=0;};
 back=function(){if(page==='welcome'){if(s13Step>0){s13Step--;render()}else goto('home');return}const mappings={eventdetail:s13Return,revision:'eventdetail',chat:'chats','archive-view':'home','chat-manage':'chats','chat-clear':'chat','chat-saving':'settings','partner-program':'settings','telegram-channel':'settings','connect-personal':'home',catalog:'settings',access:'settings',privacy:'settings','confirm-clear':'privacy',help:'settings',notifications:'settings',storage:'privacy',filters:'settings'};goto(mappings[page]||'home');};
-render=function(){let intro=page==='welcome';let selected=s13Pages[page];const oldPages={notifications,storage,filters,about,pro};if(!selected&&!oldPages[page]){page='home';selected=s13Home}const root=$('#app');root.className=`app s13-app ${intro?'s13-intro':''} ${s13Main.has(page)?'s13-has-bottom':'s13-no-bottom'}`;root.innerHTML=`<main id="main" class="main s13-main">${error?`<div class="error-msg">${esc(error)}</div>`:''}${demo?'<div class="s13-demo">ДЕМО · вымышленные данные</div>':''}${selected?selected():oldPages[page]()}</main>${s13Main.has(page)?s13Bottom():''}`;bind();try{tg?.BackButton?.[intro||s13Main.has(page)?'hide':'show']()}catch{}};
+render=function(){let intro=page==='welcome';let selected=s13Pages[page];const oldPages={notifications,storage,filters,about,pro};if(!selected&&!oldPages[page]){page='home';selected=s13Home}const root=$('#app');root.className=`app s13-app ${intro?'s13-intro':''} ${s13Main.has(page)?'s13-has-bottom':'s13-no-bottom'}`;root.innerHTML=`<main id="main" class="main s13-main">${error?`<div class="error-msg">${esc(error)}</div>`:''}${demo?'<div class="s13-demo">ДЕМО · вымышленные данные</div>':''}${selected?selected():oldPages[page]()}</main>${s13Main.has(page)?s13Bottom():''}`;bind();s95FitPricing();try{tg?.BackButton?.[intro||s13Main.has(page)?'hide':'show']()}catch{}};
 window.SbewoDev={demo:demoStart,resetIntro:()=>{pref('sbewo-v6-onboarded','no');pref('sbewo-v8-onboarded','no');page='welcome';s13Step=0;render()},goto};
+// Pricing page fits in the available Telegram viewport without scrolling.
+// Use measured content dimensions (not an assumed iPhone screen height), because
+// Telegram's WebView header/safe areas differ across devices.
+function s95FitPricing(){
+ const main=document.querySelector('.s13-no-bottom > .s13-main');
+ const card=main?.querySelector('.s91-pricing-page');
+ if(!card)return;
+ main.scrollTop=0;
+ const measure=(factor)=>{
+  card.style.zoom=String(factor);
+  card.style.width=`calc(100% / ${factor})`;
+  return card.getBoundingClientRect().bottom;
+ };
+ const limit=main.getBoundingClientRect().bottom-3;
+ if(measure(1)<=limit)return;
+ let low=.42, high=1;
+ for(let i=0;i<15;i++){
+  const mid=(low+high)/2;
+  if(measure(mid)<=limit)low=mid;
+  else high=mid;
+ }
+ measure(low);
+ main.scrollTop=0;
+}
+window.addEventListener('resize',()=>{if(document.querySelector('.s91-pricing-page'))s95FitPricing()},{passive:true});
+try{tg?.onEvent?.('viewportChanged',()=>{if(document.querySelector('.s91-pricing-page'))s95FitPricing()})}catch{}
 // Re-entry after onboarding goes to the Events page.
 if(page==='services')page='home';
 
