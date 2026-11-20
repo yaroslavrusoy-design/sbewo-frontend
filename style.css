@@ -2730,3 +2730,19 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
  .s98-status-profile .s98-avatar-medal{width:19px;height:19px}
  .s98-status-profile .s98-avatar-medal svg{width:12px;height:12px}
 }
+
+/* v99: Pricing uses the SAME page background as the rest of Sbewo.
+   No title, wave, stars, extra panel or color behind the pricing controls. */
+.app.s13-app.s13-no-bottom > .s13-main:has(> .s91-pricing-page),
+.s13-no-bottom .s13-main:has(.s91-pricing-page){
+  background:linear-gradient(145deg,#f1f9ff,#e8f5ff 65%,#e3f2ff)!important;
+}
+.app.s13-app.s13-no-bottom > .s13-main > .s91-pricing-page{
+  background:transparent!important;
+  padding-top:16px;
+}
+.s91-pricing-page::before,
+.s91-pricing-page::after{
+  content:none!important;
+  display:none!important;
+}

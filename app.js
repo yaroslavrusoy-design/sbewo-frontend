@@ -182,7 +182,6 @@ function pro(){
  ];
  const groupMode=s91TariffMode==='groups';
  return `${s13Header()}<section class="s91-pricing-page" aria-label="Тарифы и подписка">
- <div class="s91-pricing-head"><span class="s94-head-spark s94-spark-one" aria-hidden="true">✦</span><span class="s94-head-spark s94-spark-two" aria-hidden="true">✧</span><h1>Тарифы</h1><div class="s94-pricing-subtitle"><span class="s94-bolt" aria-hidden="true">ϟ</span><p>Выбери подходящий период<br>и пользуйся всеми возможностями</p></div></div>
  <div class="s91-plan-switch" role="tablist" aria-label="Вид подписки">
   <button type="button" role="tab" aria-selected="${!groupMode}" data-s91-mode="personal" class="${!groupMode?'active':''}">${ico('person')} Личный</button>
   <button type="button" role="tab" aria-selected="${groupMode}" data-s91-mode="groups" class="${groupMode?'active':''}">${ico('group')} Группы</button>
