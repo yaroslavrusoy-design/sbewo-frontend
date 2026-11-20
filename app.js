@@ -293,22 +293,22 @@ function s60Date(value){
 function s14HomeConnectCard(){
  const state=s60CardState();
  const a=db.access||{};
+ const paidDate=s60Date(a.paid_until);
  const configs={
-  disconnected:{status:'Не подключено',title:'Подключи Sbewo<br>к чатам',desc:'Кью начнёт сохранять новые события после подключения.',primary:'Подключить',pgo:'connect-personal',secondary:'Как работает',sgo:'welcome'},
-  'trial-3':{status:'3 дня бесплатно',title:'Кью на связи!',desc:'Твой пробный период начался. Новые события уже под присмотром.',primary:'События',scroll:true,secondary:'Мой тариф',sgo:'pro'},
-  'trial-2':{status:'Осталось 2 дня',title:'Ещё 2 дня<br>с Кью',desc:'Пробный период скоро завершится. Выбери тариф заранее.',primary:'Выбрать тариф',pgo:'pro',secondary:'События',scrollSecondary:true},
-  'trial-1':{status:'Остался 1 день',title:'Всего 1 день!',desc:'Последний день бесплатного доступа. Кью предупреждает!',primary:'Продлить доступ',pgo:'pro',secondary:'События',scrollSecondary:true},
-  paid:{status:'Подписка активна',title:'Sbewo следит<br>за чатами',desc:`${a.auto_renew?'Следующий платёж':'Доступ активен до'}: ${s60Date(a.paid_until)||'—'}`,primary:'События',scroll:true,secondary:'Подписка',sgo:'pro'},
-  expired:{status:'Пробный период завершён',title:'Продолжим<br>с Кью?',desc:'Пробные 3 дня прошли. Выбери тариф для дальнейшего доступа.',primary:'Выбрать тариф',pgo:'pro',secondary:'Подключения',sgo:'connect-list'},
-  unverified:{status:'Бот активен',title:'Sbewo следит<br>за чатами',desc:'Новые события из выбранных чатов появятся здесь.',primary:'События',scroll:true,secondary:'Управление',sgo:'connect-list'}
+  disconnected:{badge:'Не подключен',symbol:'○',title:'Подключи Sbewo',desc:'Начни отслеживать удаления и изменения в Telegram.',primary:'Подключить',pgo:'connect-personal'},
+  'trial-3':{badge:'Пробный период',symbol:'🎁',title:'3 дня работы',desc:'Бесплатный доступ ко всем функциям Sbewo.',primary:'Подробнее',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
+  'trial-2':{badge:'Осталось 2 дня',symbol:'◷',title:'Осталось 2 дня',desc:'Твоё пробное использование заканчивается. Успей оформить подписку!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
+  'trial-1':{badge:'Остался 1 день',symbol:'!',title:'Остался 1 день!',desc:'Пробный период заканчивается завтра. Не потеряй доступ к функциям Sbewo!',primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
+  paid:{badge:'Подписка активна',symbol:'●',title:'Sbewo работает',desc:`Твоя подписка активна.<br>${a.auto_renew?'Следующий платёж':'Доступ до'}: <strong>${esc(paidDate||'—')}</strong>`,html:true,primary:'Продлить',pgo:'pro',secondary:'Управление',sgo:'pro'},
+  expired:{badge:'Пробный период завершён',symbol:'!',title:'Доступ закончился',desc:'Три бесплатных дня прошли. Выбери тариф, чтобы продолжить работу с Sbewo.',primary:'Выбрать тариф',pgo:'pro',secondary:'Управление',sgo:'connect-list'},
+  unverified:{badge:'Бот активен',symbol:'●',title:'Sbewo следит за чатами',desc:'Новые события из выбранных чатов появятся здесь.',primary:'События',scroll:true,secondary:'Управление',sgo:'connect-list'}
  };
  const c=configs[state];
- const src=state==='unverified'?'./kyu-active-transparent.png':`./kyu-status-${state}.png`;
- const check='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5.1 12.3 4.1 4.1 9.7-10" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
- const arrow='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ const mascot=state==='unverified'?'./kyu-active-transparent.png':`./kyu-status-${state}.png`;
+ const arrow='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  const primaryAttr=c.scroll?'data-s37-scroll="events"':`data-go="${c.pgo}"`;
  const secondaryAttr=c.scrollSecondary?'data-s37-scroll="events"':`data-go="${c.sgo}"`;
- return `<section class="s37-hero s60-status-card s60-${state}" aria-label="${esc(c.status)}"><div class="s37-status"><i></i>${esc(c.status)}</div><h2>${c.title}</h2><p>${esc(c.desc)}</p><div class="s37-mascot" aria-hidden="true"><img src="${src}" alt="" loading="eager" decoding="async"><span class="s37-check">${state==='trial-1'?'!':check}</span><span class="s37-sparks"><b></b><b></b><b></b></span></div><div class="s37-actions"><button class="s37-events" ${primaryAttr}>${esc(c.primary)} ${arrow}</button><button class="s37-manage" ${secondaryAttr}>${esc(c.secondary)}</button></div></section>`;
+ return `<section class="s37-hero s60-status-card s65-status-card s60-${state}" aria-label="${esc(c.badge)}"><div class="s37-status"><span class="s65-badge-icon" aria-hidden="true">${c.symbol}</span>${esc(c.badge)}</div><h2>${esc(c.title)}</h2><p>${c.html?c.desc:esc(c.desc)}</p><div class="s37-mascot" aria-hidden="true"><img src="${mascot}" alt="" loading="eager" decoding="async"></div><div class="s37-actions ${c.secondary?'':'s65-single-action'}"><button class="s37-events" ${primaryAttr}>${esc(c.primary)} ${arrow}</button>${c.secondary?`<button class="s37-manage" ${secondaryAttr}>${esc(c.secondary)}</button>`:''}</div></section>`;
 }
 // Group event cards by the actual event date (edited/deleted timestamp), not today's date.
 // Use local calendar days: midnight boundaries must not be calculated in UTC.
