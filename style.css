@@ -2054,3 +2054,25 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   background:#57B72B;
   background-image:none;
 }
+
+/* v75: Both activation CTA and trial badge use the exact same solid brand lime. */
+:root{--s65-trial-lime:#64C936;}
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary,
+.s65-card.s65-card--trial-3 .s65-card-badge{
+  background-color:var(--s65-trial-lime);
+  background-image:none;
+  background:var(--s65-trial-lime);
+  border-color:var(--s65-trial-lime);
+  color:#fff;
+  opacity:1;
+  box-shadow:none;
+  filter:none;
+}
+.s65-card.s65-card--trial-3 .s65-card-badge{
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  text-shadow:none;
+}
+.s65-card.s65-card--trial-3 .s65-card-badge svg,
+.s65-card.s65-card--trial-3 .s65-card-badge span,
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary svg{color:#fff;}
