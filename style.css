@@ -2022,3 +2022,15 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .s65-card.s65-card--trial-2 .s65-card-copy,
   .s65-card.s65-card--trial-1 .s65-card-copy{transform:translateY(6px)}
 }
+
+/* v73: calmer, deeper emerald CTA for disconnected state only. */
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary{
+ background:linear-gradient(115deg,#15965e 0%,#0d804f 55%,#08673f 100%);
+ color:#fff;
+ border:1px solid rgba(188,246,216,.34);
+ box-shadow:0 5px 12px rgba(1,36,34,.16),inset 0 1px 0 rgba(255,255,255,.14);
+}
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary svg{color:#fff;}
+.s65-card.s65-card--disconnected .s65-card-actions .s65-card-primary:active{
+ background:linear-gradient(115deg,#10784c 0%,#075535 100%);
+}
