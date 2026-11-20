@@ -1267,7 +1267,12 @@ html.remix-ready .s14-settings-card i[class^="ri-"] svg{display:none!important}
 .s52-actions{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;margin-top:15px}
 .s52-actions button{min-height:54px;border-radius:15px;border:1px solid #dce9f9;background:#fff;box-shadow:none;display:flex;align-items:center;justify-content:center;gap:10px;color:#136be0;font-size:14px;font-weight:750}
 .s52-actions svg{width:22px;height:22px}
-.s52-actions .s52-star.is-starred{background:#fff8df;border-color:#f5df9f;color:#e0a316}
+.s52-actions .s52-star.is-starred{background:#fff;border-color:#dce9f9;color:#d89c00}
 .s52-actions .s52-star.is-starred svg{fill:#ffca36;stroke:#d89c00}
 .s52-edited-detail .s52-open-chat{margin-top:12px;min-height:50px;box-shadow:none}
 @media(max-width:350px){.s52-history{padding:15px 11px}.s52-revision{grid-template-columns:44px minmax(0,1fr);gap:8px}.s52-revision-body{padding-left:9px}.s52-revision-body p{font-size:14px;padding:12px 9px}}
+
+/* v55: only the favorite star changes color, never its square button. */
+.s52-actions .s52-star,.s52-actions .s52-star.is-starred{background:#fff!important;border-color:#dce9f9!important;box-shadow:none!important}
+.s52-actions .s52-star:not(.is-starred) svg{fill:none;stroke:#136be0}
+.s52-actions .s52-star.is-starred svg{fill:#ffca36;stroke:#d89c00}
