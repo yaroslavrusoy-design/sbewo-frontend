@@ -3555,3 +3555,57 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
  .s117-features .s117-commands-grid .s112-tool{height:51px}
  .s117-features .s117-commands-header{margin-bottom:6px}
 }
+
+
+/* v120 — Notifications: match the settings group sizing and spacing. */
+.s13-app .s102-notifications-page {
+  padding: 8px 16px 24px;
+  width: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+.s13-app .s102-notifications-page::before { display: none; }
+.s13-app .s102-group {
+  padding: 1px 13px;
+  margin: 0 0 20px;
+  border: 1px solid rgba(255,255,255,.96);
+  border-radius: 23px;
+  background: linear-gradient(130deg,rgba(255,255,255,.92),rgba(249,250,255,.93));
+  box-shadow: 0 8px 22px rgba(63,102,162,.075), inset 0 1px 0 rgba(255,255,255,.98);
+}
+.s13-app .s102-group-title {
+  margin: 11px 3px 2px;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+.s13-app .s102-group-title svg { width: 18px; height: 18px; }
+.s13-app .s102-notify-row {
+  min-height: 68px;
+  padding: 9px 3px;
+  gap: 13px;
+}
+.s13-app .s102-notify-row + .s102-notify-row::before { left: 0; background: #dce3f0; }
+.s13-app .s102-iconbox { width: 47px; height: 47px; border-radius: 15px; }
+.s13-app .s102-iconbox svg { width: 25px; height: 25px; }
+.s13-app .s102-notify-copy { gap: 3px; }
+.s13-app .s102-notify-copy strong { font-size: 15px; line-height: 1.15; font-weight: 800; letter-spacing: -.3px; }
+.s13-app .s102-notify-copy small { font-size: 11.5px; line-height: 1.3; }
+.s13-app .s102-notify-note { margin: 12px 0 14px; }
+@media (min-width: 390px) {
+  .s13-app .s102-group { padding-inline: 14px; }
+  .s13-app .s102-notify-row { min-height: 76px; gap: 14px; }
+  .s13-app .s102-iconbox { width: 51px; height: 51px; border-radius: 16px; }
+  .s13-app .s102-notify-copy strong { font-size: 16px; }
+  .s13-app .s102-notify-copy small { font-size: 12px; }
+}
+@media (max-width: 359px) {
+  .s13-app .s102-notifications-page { padding: 8px 12px 24px; }
+  .s13-app .s102-group { padding-inline: 11px; margin-bottom: 14px; }
+  .s13-app .s102-notify-row { min-height: 61px; gap: 9px; }
+  .s13-app .s102-iconbox { width: 40px; height: 40px; border-radius: 12px; }
+  .s13-app .s102-iconbox svg { width: 21px; height: 21px; }
+  .s13-app .s102-notify-copy strong { font-size: 13px; }
+  .s13-app .s102-notify-copy small { font-size: 10px; }
+}
