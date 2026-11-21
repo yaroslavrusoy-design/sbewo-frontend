@@ -579,7 +579,27 @@ function s13Privacy(){
 function s13ConfirmClear(){return `${s13Header()}<section class="s13-detail-page"><div class="s13-sheet"><div class="s13-danger-icon">${s13Icon('trash')}</div><h2>Очистить все данные чатов?</h2><p>Все сохранённые сообщения, удалённые и изменённые записи, версии, медиа и их ключи будут удалены из активной базы Sbewo. Это действие необратимо.</p><button type="button" class="s13-btn danger" data-action="clear-archive">${s13Confirm?'Подтвердить удаление':'Удалить данные чатов'}</button>${s13Btn('Отмена','privacy','secondary')}</div></section>`;}
 function s13Access(){return `${s13Header()}<section class="s13-detail-page"><h1>Обработка данных</h1>${s13White('',`<p style="font-size:13px;line-height:1.65">Sbewo получает новые сообщения только из чатов, к которым ты разрешил доступ через Telegram Business. Переписка до подключения бота недоступна.</p><p style="font-size:13px;line-height:1.65;margin-top:12px">Для обнаружения будущих удалений и редактирования исходные сообщения временно хранятся до 30 дней. Обнаруженные события и их содержимое доступны до 7 дней после последнего события по соответствующей записи.</p><p style="font-size:13px;line-height:1.65;margin-top:12px">Содержимое шифруется. При очистке удаляются записи и соответствующие ключи из активной базы. Резервные копии и копии уведомлений в Telegram могут сохраняться по отдельным срокам; необратимость их удаления не гарантируется.</p><p style="font-size:13px;line-height:1.65;margin-top:12px">Данные обрабатываются на инфраструктуре Sbewo и у технических провайдеров хостинга. Сервис не продаёт содержимое сообщений рекламодателям. Доступ можно отозвать в Telegram.</p>`)}<p class="s13-footnote">Перед публичным запуском опубликуй полноценную политику конфиденциальности и проверь фактические сроки хранения резервных копий.</p></section>`;}
 
-function s13Help(){return `${s13Header()}<section class="s13-detail-page"><div class="s13-centered-hero">${s13Face('help')}<h1>Помощь</h1></div>${faqs.map(([q,a],i)=>`<button type="button" class="s13-faq" aria-expanded="${faqOpen===i}" data-faq="${i}"><strong>${esc(q)}</strong>${s13Icon('chevron')}${faqOpen===i?`<p>${esc(a)}</p>`:''}</button>`).join('')}<p class="s13-footnote">Если что-то не работает, проверь подключение Telegram Business и ответ сервера.</p></section>`;}
+function s13Help(){
+ const questions=[
+  ['ri-telegram-2-line','Как работает Sbewo?','Sbewo получает новые события только из чатов, к которым ты разрешил доступ через Telegram Business. Обнаруженные удаления и изменения можно посмотреть в приложении.'],
+  ['ri-delete-bin-6-line','Можно увидеть старые удаления?','Sbewo не получает историю переписки до подключения. Для отображения удалённого текста бот должен был получить исходное сообщение, пока оно ещё было доступно.'],
+  ['ri-stack-line','Что сохраняется?','Для обнаружения удалений и изменений временно сохраняются исходные сообщения. Обнаруженные события доступны 7 дней; полный архив переписки скачать нельзя.'],
+  ['ri-user-3-line','Нужно входить в аккаунт?','Отдельно вводить номер телефона, пароль и код Telegram не нужно. Подключение выполняется через настройки Telegram Business.'],
+  ['ri-group-line','Работает ли в группах?','Поддержка групп пока готовится. Сейчас функции отслеживания рассчитаны на доступные личные чаты Telegram Business.'],
+  ['ri-shield-check-line','Как удалить данные?','Открой «Настройки» → «Безопасность и данные» → «Очистить мои данные». После подтверждения Sbewo очистит сохранённые данные чатов из активной базы.']
+ ];
+ return `${s13Header()}<section class="s133-help-page" aria-label="Помощь и поддержка">
+   <div class="s133-help-hero">
+    <div class="s133-help-hero-copy"><span class="s133-help-pill"><i class="ri-question-fill" aria-hidden="true"></i> Помощь и поддержка</span>
+     <h1>Чем можем<br>помочь?<i class="ri-sparkling-line" aria-hidden="true"></i></h1>
+     <p>Ответы на популярные вопросы о работе Sbewo и безопасности твоих данных.</p>
+    </div>
+    <img class="s133-help-kitty" src="./kyu-support-question.png" alt="Кью с большим голубым знаком вопроса" loading="eager" decoding="async">
+   </div>
+   <div class="s133-help-faq-panel">${questions.map(([icon,q,a],i)=>`<button type="button" class="s133-help-faq ${faqOpen===i?'is-open':''}" data-faq="${i}" aria-expanded="${faqOpen===i}" aria-controls="s133-answer-${i}"><span class="s133-help-faq-icon"><i class="${icon}" aria-hidden="true"></i></span><span class="s133-help-faq-content"><strong>${esc(q)}</strong><span class="s133-help-faq-answer" id="s133-answer-${i}" ${faqOpen===i?'':'hidden'}>${esc(a)}</span></span><i class="ri-arrow-right-s-line s133-help-arrow" aria-hidden="true"></i></button>`).join('')}</div>
+   <aside class="s133-help-note"><span><i class="ri-information-line" aria-hidden="true"></i></span><p>Если что-то не работает, проверь подключение Telegram Business и доступность сервиса.</p></aside>
+  </section>`;
+}
 function s78SettingsRow(icon,title,subtitle,target,tone='blue',tag=''){
  const fallback={archive:'archive',connections:'group',bell:'bell',shield:'shield',support:'help',partners:'group',telegram:'send'};
  const iconClasses={archive:'ri-archive-2-line',connections:'ri-equalizer-3-line',bell:'ri-notification-3-line',shield:'ri-shield-check-line',support:'ri-customer-service-2-line',partners:'ri-group-line',telegram:'ri-telegram-2-line'};
