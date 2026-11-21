@@ -2226,14 +2226,18 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 }
 
 
-/* v81 — soft floating capsule: a subtle white halo, no extra underlay. */
+/* v81 — floating capsule with subtle black depth.
+   A light top shadow separates the menu from content above,
+   while a deeper lower/corner shadow grounds the capsule. */
 .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom {
   border-radius:28px!important;
   border-color:rgba(206,226,246,.94)!important;
   box-shadow:
-    0 -5px 15px rgba(255,255,255,.62),
-    0 4px 12px rgba(255,255,255,.35),
-    0 9px 25px rgba(35,91,165,.17)!important;
+    0 -3px 10px rgba(0,0,0,.09),
+    0 14px 28px rgba(0,0,0,.12),
+    0 18px 36px -8px rgba(0,0,0,.10),
+    -12px 18px 24px -16px rgba(0,0,0,.11),
+    12px 18px 24px -16px rgba(0,0,0,.11)!important;
 }
 .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button {
   border-radius:23px!important;
@@ -2265,39 +2269,27 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 }
 
 
-/* v83 — hard, straight cut-off above floating navigation.
-   Removes visible rounded feed-card corners on both sides of the capsule.
-   We clip the scrolling content only: no white overlay, no extra backing panel,
-   and no changes to the floating navigation's border, glow or geometry. */
+/* v105 — smooth edge-to-edge scroll fade behind the floating capsule.
+   Avoids the sharp full-width cut-off and adds no backing panel or overlay.
+   The menu remains opaque and above the scrolling content. */
 .app.s13-app.s13-has-bottom > .s13-main {
   -webkit-mask-image: linear-gradient(to bottom,
     #000 0,
-    #000 calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
-    transparent calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
+    #000 calc(100% - 130px - env(safe-area-inset-bottom, 0px)),
+    rgba(0,0,0,.72) calc(100% - 100px - env(safe-area-inset-bottom, 0px)),
+    rgba(0,0,0,.30) calc(100% - 65px - env(safe-area-inset-bottom, 0px)),
+    transparent calc(100% - 28px - env(safe-area-inset-bottom, 0px)),
     transparent 100%) !important;
   mask-image: linear-gradient(to bottom,
     #000 0,
-    #000 calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
-    transparent calc(100% - 84px - env(safe-area-inset-bottom, 0px)),
+    #000 calc(100% - 130px - env(safe-area-inset-bottom, 0px)),
+    rgba(0,0,0,.72) calc(100% - 100px - env(safe-area-inset-bottom, 0px)),
+    rgba(0,0,0,.30) calc(100% - 65px - env(safe-area-inset-bottom, 0px)),
+    transparent calc(100% - 28px - env(safe-area-inset-bottom, 0px)),
     transparent 100%) !important;
-  -webkit-mask-repeat: no-repeat !important;
-  mask-repeat: no-repeat !important;
+  -webkit-mask-repeat:no-repeat !important;
+  mask-repeat:no-repeat !important;
 }
-@media (max-width:360px) {
-  .app.s13-app.s13-has-bottom > .s13-main {
-    -webkit-mask-image: linear-gradient(to bottom,
-      #000 0,
-      #000 calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
-      transparent calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
-      transparent 100%) !important;
-    mask-image: linear-gradient(to bottom,
-      #000 0,
-      #000 calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
-      transparent calc(100% - 80px - env(safe-area-inset-bottom, 0px)),
-      transparent 100%) !important;
-  }
-}
-
 
 /* v84 — unified empty Groups state on Home and Chats. */
 .s13-app .s84-groups-empty {
