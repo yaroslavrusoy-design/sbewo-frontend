@@ -282,3 +282,136 @@ html[data-sbewo-theme="dark"] .s13-app :is(.s19-event-card,.s39-event-card,.s14-
 }
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-info em{color:var(--sbewo-dark-muted)!important}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-info small{color:var(--sbewo-dark-cyan)!important}
+
+/* Deep Midnight Blue — contrast and nested-surface corrections (v2).
+   Scoped entirely to dark appearance: original light theme remains untouched. */
+html[data-sbewo-theme="dark"] {
+ --sbewo-dark-background:#0b1120;
+ --sbewo-dark-surface:#1a253b;
+ --sbewo-dark-surface-raised:#23324d;
+ --sbewo-dark-text:#f8fafc;
+ --sbewo-dark-muted:#b8c5da;
+ --sbewo-dark-border:#334766;
+}
+/* No rectangular or light backing behind event date headers or selected chat heading. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s14-home .s39-day-heading,.s50-chat-page .s39-day-heading,
+ .s50-chat-header,.s19-chat-detailhead,.s49-chat-identity,
+ .s50-chat-page .s19-events,.s14-event-stack,.s39-day-heading,
+ .s50-export-row,.s19-page .s49-clear-row
+){background:transparent!important;background-image:none!important;box-shadow:none!important;}
+html[data-sbewo-theme="dark"] .s13-app :is(.s39-day-pill,.s39-day-heading .s39-day-pill){
+ background:#1a2942!important;background-image:none!important;
+ color:#e9f2ff!important;border:1px solid #385477!important;
+}
+/* Individual chat history: the original light event card was never covered. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s19-event-card,.s19-event-detail,.s19-saved-note,.s52-edited-card,
+ .s56-edited-card,.s50-chat-header,.s19-chat-list .s19-event-card,
+ .s19-actions button,.s48-clear-choice,.s48-clear-card,
+ .s19-chat-detailhead .s19-saved-note
+){background:#1a253b!important;background-image:none!important;border-color:#334766!important;color:#f8fafc!important;}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s19-event-card,.s19-event-detail,.s19-saved-note,.s52-edited-card,
+ .s56-edited-card,.s56-deleted-card,.s56-saved-copy,
+ .s48-clear-choice,.s19-event-body,.s39-day-pill,
+ .s91-feature-list,.s91-feature-column,.s91-plan
+) :is(strong,h1,h2,h3,.s19-event-body strong,.s91-feature-name,.s91-plan-title,.s91-plan strong){color:#f8fafc!important;}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s19-event-card,.s19-event-detail,.s19-saved-note,.s52-edited-card,
+ .s56-edited-card,.s56-deleted-card,.s56-saved-copy,.s48-clear-choice,
+ .s19-event-body,.s91-plan
+) :is(p,small,em,.s19-event-body small,.s91-per){color:#b8c5da!important;}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s19-event-card,.s19-event-detail,.s52-edited-card,
+ .s56-edited-card,.s56-deleted-card,.s56-saved-copy
+) :is(time,.s19-event-body em){color:#9ccaff!important;}
+/* Status pills remain readable and semantically colored, not pale blue text on pink. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s39-event-status,.s39-status,.s13-event-kind,.s19-event-kind,
+ .s39-event-card .status,.s13-event .status
+){color:#d7eaff!important;}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s39-event-card,.s14-event-stack .s13-event,.s19-event-card
+) :is(p,small,em,.preview,.event-preview){color:#b8c5da!important;}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s39-event-card,.s14-event-stack .s13-event,.s19-event-card
+) :is(strong,.event-author,.s39-event-title){color:#f8fafc!important;}
+/* Event time chips and status labels use subdued dark backgrounds. */
+html[data-sbewo-theme="dark"] .s13-app :is(.s39-time,.s39-event-time,.s13-event time,.s39-event-card time){
+ background:#283a56!important;color:#e5f0ff!important;border-color:#395374!important;
+}
+/* Pricing benefit panel: dark background and full-strength text contrast. */
+html[data-sbewo-theme="dark"] .s13-app :is(.s91-feature-column,.s91-feature-list){
+ background:#1a253b!important;background-image:none!important;border-color:#334766!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s91-feature-list .s91-feature{
+ border-bottom-color:#334766!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s91-feature-name{
+ color:#f8fafc!important;opacity:1!important;filter:none!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s91-feature-icon{
+ background:#153c67!important;color:#70c6ff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s91-feature-check{color:#38bdf8!important;}
+html[data-sbewo-theme="dark"] .s13-app .s91-per{color:#b8c5da!important;}
+html[data-sbewo-theme="dark"] .s13-app .s91-payment-note,
+html[data-sbewo-theme="dark"] .s13-app .s91-setup-note{color:#b8c5da!important;}
+html[data-sbewo-theme="dark"] .s13-app .s91-plan.selected{background:#143b73!important;color:#fff!important;}
+html[data-sbewo-theme="dark"] .s13-app .s91-plan-radio:not(.selected){border-color:#7083a1!important;}
+/* Archive and detail controls, headings, link labels. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s50-filter-trigger,.s50-clear-btn,.s50-export,.s49-chat-username,
+ .s13-event-arrow,.s19-event-card>svg
+){color:#a8d5ff!important;}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s50-chat-page .s50-archive-description small,
+ .s50-chat-page .s61-history-hint,
+ .s50-chat-page .s61-history-hint-text,
+ .s50-chat-page .s19-event-body small,
+ .s50-chat-page .s19-event-body em
+){color:#b8c5da!important;}
+html[data-sbewo-theme="dark"] .s13-app .s50-export{
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s50-filter-menu button.active{
+ background:#164577!important;color:#fff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s50-toggle:not(.on){background:#50617d!important;}
+/* Avoid global muted-p rule affecting subscription banner and active CTA. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s65-status-card,.s60-status-card,.s37-hero,.s52-sub-card,.s77-tariffs-card
+) :is(p,small,em,strong,h1,h2,h3){color:#fff!important;}
+/* The only permitted gradients are deliberate blue call-to-action surfaces. */
+html[data-sbewo-theme="dark"] .s13-app :is(.s91-plan-switch,.s91-feature-column,.s91-feature-list){background-image:none!important;}
+/* Home feed: enforce accessible text contrast and semantic event chips. */
+html[data-sbewo-theme="dark"] .s13-app .s13-event{
+ background:#1a253b!important;border-color:#334766!important;
+ box-shadow:0 4px 12px rgba(0,0,0,.16)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s13-event-title{color:#f8fafc!important}
+html[data-sbewo-theme="dark"] .s13-app .s13-event-preview{
+ color:#cbd6e8!important;opacity:1!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s13-event-time{
+ background:#293a56!important;color:#f0f6ff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s13-status.red{
+ background:#532537!important;color:#ffbac9!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s13-status.blue{
+ background:#153b67!important;color:#a3ddff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s13-event>svg{color:#9db6d4!important}
+/* Saved/edited message rows remain dark and readable even in deeply nested views. */
+html[data-sbewo-theme="dark"] .s13-app .s19-event-body strong{color:#f8fafc!important;opacity:1!important}
+html[data-sbewo-theme="dark"] .s13-app .s19-event-body small{color:#cbd6e8!important;opacity:1!important}
+html[data-sbewo-theme="dark"] .s13-app .s19-event-body em{color:#83cafa!important}
+html[data-sbewo-theme="dark"] .s13-app .s19-event-card time{color:#a9bad3!important}
+html[data-sbewo-theme="dark"] .s13-app .s19-event-icon.red{
+ background:#51263c!important;color:#ff8ba5!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s19-event-icon.blue{
+ background:#183e69!important;color:#7bc5ff!important;
+}
