@@ -3611,6 +3611,9 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
 }
 
 
+/* v132: notification groups without visible section headings. */
+.s13-app .s102-group { padding-block: 3px; }
+
 /* v124: concise security page and prominent destructive action. */
 .s13-app .s124-privacy-page{padding-top:12px;}
 .s13-app .s124-delete-all{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;margin-top:16px;padding:13px 16px;border:0;border-radius:15px;background:#e3293a!important;color:#fff!important;font-size:15px;font-weight:800;line-height:1.3;box-shadow:0 5px 0 rgba(15,15,18,.85),0 9px 19px rgba(0,0,0,.27);transition:transform .15s ease,box-shadow .15s ease;}
