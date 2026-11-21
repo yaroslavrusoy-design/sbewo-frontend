@@ -3647,3 +3647,41 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
   box-shadow:0 2px 5px rgba(0,0,0,.10)!important;
 }
 .s13-app .s48-clear-submit:disabled{opacity:.55;box-shadow:none!important;}
+
+
+/* v127: Security page reference layout — scoped to privacy only. */
+.s13-app .s127-privacy-page{padding:0 16px 26px!important;max-width:570px;margin:0 auto;}
+.s13-app .s127-privacy-hero{position:relative;min-height:196px;display:flex;align-items:center;isolation:isolate;margin:0 -6px 4px;}
+.s13-app .s127-privacy-hero::before{content:"";position:absolute;right:0;bottom:0;width:63%;height:80%;border-radius:53% 47% 38% 42%;background:radial-gradient(ellipse at center,#c7daffb0 0%,#dce9ff75 58%,transparent 76%);z-index:-1;pointer-events:none;}
+.s13-app .s127-privacy-hero-text{position:relative;z-index:1;width:58%;padding:10px 0 8px 6px;}
+.s13-app .s127-privacy-hero h1{font-size:clamp(26px,7.1vw,37px);font-weight:850;line-height:1.09;letter-spacing:-1.1px;margin:0 0 12px;color:#101b49;}
+.s13-app .s127-privacy-hero p{font-size:clamp(12px,3.1vw,15px);line-height:1.4;color:#576682;margin:0;max-width:235px;}
+.s13-app .s127-privacy-hero img{position:absolute;right:-9px;bottom:0;width:57%;height:100%;object-fit:contain;object-position:center bottom;pointer-events:none;filter:drop-shadow(0 6px 8px #5673a51a);}
+.s13-app .s127-security-panel{background:rgba(255,255,255,.93);border:1px solid #fff;border-radius:22px;padding:13px 15px 8px;box-shadow:0 7px 21px rgba(69,112,171,.09);}
+.s13-app .s127-security-row{display:flex;align-items:flex-start;gap:13px;padding:14px 1px 15px;border-bottom:1px solid #e1e8f3;}
+.s13-app .s127-security-icon{display:grid;place-items:center;flex:none;width:41px;height:41px;border-radius:12px;background:linear-gradient(135deg,#f1f5ff,#e8effd);color:#1675e7;}
+.s13-app .s127-security-icon i{font-size:22px;line-height:1;}
+.s13-app .s127-security-copy{flex:1;min-width:0;}
+.s13-app .s127-security-copy strong{display:block;font-size:15px;line-height:1.3;font-weight:800;color:#101a43;}
+.s13-app .s127-security-copy p{margin:5px 0 0;font-size:12.8px;line-height:1.42;color:#63708b;overflow-wrap:break-word;}
+.s13-app .s127-security-note{display:flex;align-items:flex-start;gap:11px;padding:14px 0 12px;}
+.s13-app .s127-security-note-icon{display:grid;place-items:center;flex:none;width:33px;height:33px;border-radius:11px;background:#e7f0ff;color:#1575e7;}
+.s13-app .s127-security-note-icon i{font-size:20px;}
+.s13-app .s127-security-note p{margin:0;font-size:12.5px;line-height:1.45;color:#647491;}
+.s13-app .s127-privacy-delete{min-height:58px;margin-top:20px;border-radius:20px;font-size:17px;box-shadow:0 3px 9px rgba(0,0,0,.13)!important;}
+.s13-app .s127-privacy-delete svg{width:22px;height:22px;}
+@media(max-width:375px){
+ .s13-app .s127-privacy-page{padding-inline:13px!important;}
+ .s13-app .s127-privacy-hero{min-height:176px;}
+ .s13-app .s127-privacy-hero-text{width:61%;}
+ .s13-app .s127-privacy-hero img{width:55%;right:-8px;}
+ .s13-app .s127-security-panel{padding:9px 12px 7px;}
+ .s13-app .s127-security-row{gap:10px;padding:12px 0;}
+ .s13-app .s127-security-icon{height:38px;width:38px;}
+ .s13-app .s127-security-copy strong{font-size:14px;}
+ .s13-app .s127-security-copy p{font-size:12px;}
+}
+@media(min-width:490px){
+ .s13-app .s127-privacy-hero{min-height:220px;}
+ .s13-app .s127-privacy-hero img{width:49%;}
+}
