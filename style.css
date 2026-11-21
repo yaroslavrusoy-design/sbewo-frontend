@@ -3769,3 +3769,7 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
 .s13-app .s133-help-note p{margin:0;color:#3e517a;font-size:12px;line-height:1.45}
 @media(max-width:365px){.s13-app .s133-help-page{padding-inline:10px}.s13-app .s133-help-hero{height:195px}.s13-app .s133-help-kitty{height:190px}.s13-app .s133-help-hero-copy{width:65%;padding-left:8px}.s13-app .s133-help-hero h1{font-size:26px}.s13-app .s133-help-hero p{font-size:11px}.s13-app .s133-help-faq-content strong{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.s13-app .s133-help-arrow{transition:none}}
+
+/* v134: Support page without icons and lower information note. */
+.s13-app .s133-help-faq{padding-inline:17px;min-height:53px}
+.s13-app .s133-help-faq-panel{margin-bottom:0}

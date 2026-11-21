@@ -590,14 +590,13 @@ function s13Help(){
  ];
  return `${s13Header()}<section class="s133-help-page" aria-label="Помощь и поддержка">
    <div class="s133-help-hero">
-    <div class="s133-help-hero-copy"><span class="s133-help-pill"><i class="ri-question-fill" aria-hidden="true"></i> Помощь и поддержка</span>
-     <h1>Чем можем<br>помочь?<i class="ri-sparkling-line" aria-hidden="true"></i></h1>
+    <div class="s133-help-hero-copy"><span class="s133-help-pill">Помощь и поддержка</span>
+     <h1>Чем можем<br>помочь?</h1>
      <p>Ответы на популярные вопросы о работе Sbewo и безопасности твоих данных.</p>
     </div>
     <img class="s133-help-kitty" src="./kyu-support-question.png" alt="Кью с большим голубым знаком вопроса" loading="eager" decoding="async">
    </div>
-   <div class="s133-help-faq-panel">${questions.map(([icon,q,a],i)=>`<button type="button" class="s133-help-faq ${faqOpen===i?'is-open':''}" data-faq="${i}" aria-expanded="${faqOpen===i}" aria-controls="s133-answer-${i}"><span class="s133-help-faq-icon"><i class="${icon}" aria-hidden="true"></i></span><span class="s133-help-faq-content"><strong>${esc(q)}</strong><span class="s133-help-faq-answer" id="s133-answer-${i}" ${faqOpen===i?'':'hidden'}>${esc(a)}</span></span><i class="ri-arrow-right-s-line s133-help-arrow" aria-hidden="true"></i></button>`).join('')}</div>
-   <aside class="s133-help-note"><span><i class="ri-information-line" aria-hidden="true"></i></span><p>Если что-то не работает, проверь подключение Telegram Business и доступность сервиса.</p></aside>
+   <div class="s133-help-faq-panel">${questions.map(([,q,a],i)=>`<button type="button" class="s133-help-faq ${faqOpen===i?'is-open':''}" data-faq="${i}" aria-expanded="${faqOpen===i}" aria-controls="s133-answer-${i}"><span class="s133-help-faq-content"><strong>${esc(q)}</strong><span class="s133-help-faq-answer" id="s133-answer-${i}" ${faqOpen===i?'':'hidden'}>${esc(a)}</span></span></button>`).join('')}</div>
   </section>`;
 }
 function s78SettingsRow(icon,title,subtitle,target,tone='blue',tag=''){
