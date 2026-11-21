@@ -643,7 +643,30 @@ async function s106LoadInbox(markOnOpen=false){
   }
  }catch(e){s106Inbox.loading=false;s106Inbox.error=e.message||'Не удалось получить уведомления';if(page==='inbox')render()}
 }
-const s13Features=()=>`<section class="s13-mainpage s13-features-page"><h1>Функции</h1><div class="s13-features-empty"><span class="s13-features-icon"><i class="ri-gallery-view-2" aria-hidden="true">${s16NavIcon('ri-gallery-view-2')}</i></span><strong>Скоро здесь появятся функции Sbewo</strong><p>Новые инструменты добавим в этот раздел.</p></div></section>`;
+// The Services reference is a catalogue, not a claim that the commands are available.
+// Keep group expansion state across renders and expose descriptions without fake actions.
+const s112FeaturesOpen={media:true,messages:true,automation:true};
+const s112FeatureIcons={
+ media:'ri-play-circle-fill',messages:'ri-chat-smile-3-fill',automation:'ri-flashlight-fill',
+ repeat:'ri-repeat-2-line',text:'ri-chat-3-fill',mute:'ri-volume-mute-fill',bot:'ri-robot-2-line'
+};
+const s112FeatureIcon=(name)=>`<i class="${s112FeatureIcons[name]}" aria-hidden="true"></i>`;
+const s112FeatureCard=(kind,title,description,command,icon)=>`<button type="button" class="s112-tool s112-tool-${kind}" data-s112-tool="${kind}" aria-label="${title}: ${description}"><span class="s112-tool-icon">${s112FeatureIcon(icon)}</span><span class="s112-tool-copy"><strong>${title}</strong><small>${description}</small></span><span class="s112-command">${command}</span></button>`;
+const s13Features=()=>`<section class="s13-mainpage s13-features-page s112-features" aria-label="Сервисы Sbewo">
+ <div class="s112-group s112-media-group">
+  <button type="button" class="s112-group-head" data-s112-toggle="media" aria-expanded="${s112FeaturesOpen.media}"><span class="s112-group-icon media">${s112FeatureIcon('media')}</span><span class="s112-group-title"><strong>Медиа</strong><small>Работа с фото и видео</small></span><i class="ri-arrow-down-s-line s112-chevron ${s112FeaturesOpen.media?'':'closed'}" aria-hidden="true"></i></button>
+  ${s112FeaturesOpen.media?`<button type="button" class="s112-media-feature" data-s112-tool="save" aria-label="Сохранение одноразового фото и видео"><img src="./kyu-feature-media.png" alt="Кью с камерой" loading="eager" decoding="async"/><span class="s112-media-text"><span class="s112-feature-badge">⭐ Популярно</span><strong>Сохранение одноразового фото и видео</strong><small>Не отправляйте одноразовое фото или видео. Просто ответьте на него любым сообщением, и бот сохранит вложение.</small></span><span class="s112-command">/sv</span></button>`:''}
+ </div>
+ <div class="s112-group s112-message-group">
+  <button type="button" class="s112-group-head" data-s112-toggle="messages" aria-expanded="${s112FeaturesOpen.messages}"><span class="s112-group-icon messages">${s112FeatureIcon('messages')}</span><span class="s112-group-title"><strong>Сообщения</strong><small>Инструменты для работы с текстом</small></span><i class="ri-arrow-down-s-line s112-chevron ${s112FeaturesOpen.messages?'':'closed'}" aria-hidden="true"></i></button>
+  ${s112FeaturesOpen.messages?`<div class="s112-two-columns"><button type="button" class="s112-circle-feature" data-s112-tool="circle" aria-label="Видео в кружок"><img src="./kyu-feature-circle.png" alt="Кью в кружочке с иконкой видео" loading="eager" decoding="async"/><span class="s112-command">/vc</span><span class="s112-circle-info"><strong>Видео в кружок</strong><small>Преобразует обычное видео в видеоcообщение (кружок) в пару кликов.</small></span></button><div class="s112-side-tools">${s112FeatureCard('repeat','Повтор сообщений','Автосообщение возродит ваш текст нужное количество раз.','/rp','repeat')}${s112FeatureCard('text','Постепенная отправка текста','Отправляет текст по частям, создавая эффект набора.','/tx','text')}</div></div>`:''}
+ </div>
+ <div class="s112-group s112-automation-group">
+  <button type="button" class="s112-group-head" data-s112-toggle="automation" aria-expanded="${s112FeaturesOpen.automation}"><span class="s112-group-icon automation">${s112FeatureIcon('automation')}</span><span class="s112-group-title"><strong>Автоматизация</strong><small>Умные сценарии для комфортного общения</small></span><i class="ri-arrow-down-s-line s112-chevron ${s112FeaturesOpen.automation?'':'closed'}" aria-hidden="true"></i></button>
+  ${s112FeaturesOpen.automation?`<div class="s112-two-columns"><button type="button" class="s112-clone-feature" data-s112-tool="clone" aria-label="Режим клонирования"><img src="./kyu-feature-clone.png" alt="Кью и его полупрозрачный клон" loading="eager" decoding="async"/><span class="s112-feature-badge">⭐ Рекомендовано</span><span class="s112-command">/mir</span><span class="s112-clone-info"><strong>Режим клонирования</strong><small>Создаёт вашего слоупарня — Кью будет отвечать за вас в чате.</small></span></button><div class="s112-side-tools">${s112FeatureCard('mute','Мут собеседника','Временное скрытие сообщений от пользователя.','/mu','mute')}${s112FeatureCard('bot','Автоответчик','Автоответчик отвечает собеседникам заданным текстом.','/ar','bot')}</div></div>`:''}
+ </div>
+ <div class="s112-info" id="s112-info" hidden role="status"></div>
+ </section>`;
 
 const s13Pages={welcome:s13Welcome,home:s13Home,features:s13Features,archive:s13Archive,'archive-view':s13Archive,chats:s13Chats,'connect-personal':s13ConnectionPersonal,eventdetail:s13EventDetail,revision:s13Revision,chat:s13Chat,'chat-clear':s48ClearPage,settings:s19Settings,'chat-saving':s78ChatSaving,'partner-program':s78Partner,'telegram-channel':s78TelegramChannel,catalog:s13Catalog,inbox:s106InboxPage,'inbox-news':s106NewsDetail,privacy:s13Privacy,'confirm-clear':s13ConfirmClear,access:s13Access,help:s13Help};
 noteAction=async function(){s19NoteEditor=!s19NoteEditor;render()};
@@ -816,6 +839,16 @@ bind=function(){
  });
  document.querySelectorAll('[data-inbox-news]').forEach(el=>el.onclick=()=>{s106NewsSelected=el.dataset.inboxNews;goto('inbox-news')});
  const retry=$('[data-inbox-retry]');if(retry)retry.onclick=()=>void s106LoadInbox(true);
+};
+const s112OriginalBind=bind;
+bind=function(){
+ s112OriginalBind();
+ document.querySelectorAll('[data-s112-toggle]').forEach(el=>el.onclick=()=>{const key=el.dataset.s112Toggle;s112FeaturesOpen[key]=!s112FeaturesOpen[key];render()});
+ document.querySelectorAll('[data-s112-tool]').forEach(el=>el.onclick=()=>{
+  const info=document.getElementById('s112-info');if(!info)return;
+  info.textContent='Инструмент пока представлен в каталоге. Подключение команды появится после реализации на стороне бота.';
+  info.hidden=false;
+ });
 };
 const s106BaseGoto=goto;
 goto=function(to){s106BaseGoto(to);if(to==='inbox')void s106LoadInbox(true)};
