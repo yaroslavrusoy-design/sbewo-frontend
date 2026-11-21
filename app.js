@@ -874,4 +874,159 @@ goto=function(to){s106BaseGoto(to);if(to==='inbox')void s106LoadInbox(true)};
 // Refresh the badge while app is open. The backend owns read state across devices.
 setInterval(()=>{if(initData&&!demo&&!document.hidden&&!isIntro())void s106LoadInbox(page==='inbox')},60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&initData&&!demo&&!isIntro())void s106LoadInbox(page==='inbox')});
+// Native-feeling navigation layer (v135). It wraps existing routes without replacing API or UI handlers.
+const s135BaseRender=render;
+const s135BaseGoto=goto;
+const s135Routes=new Map();
+let s135Navigating=false;
+let s135Restoring=false;
+let s135Sequence=0;
+let s135CurrentRoute=0;
+let s135TransitionPending=false;
+const s135ReducedMotion=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
+function s135Snapshot(){
+ const main=document.getElementById('main');
+ return {page,scroll:main?.scrollTop||0,selectedChat,selectedKey,s13Return,
+  s19ChatView,s13ArchiveTab,s13EventScope,flt,query,s106NewsSelected,
+  faqOpen,s13Step,servicesMode,mediaFilter};
+}
+function s135Restore(snapshot){
+ if(!snapshot)return;
+ page=snapshot.page;
+ selectedChat=snapshot.selectedChat;
+ selectedKey=snapshot.selectedKey;
+ s13Return=snapshot.s13Return;
+ s19ChatView=snapshot.s19ChatView;
+ s13ArchiveTab=snapshot.s13ArchiveTab;
+ s13EventScope=snapshot.s13EventScope;
+ flt=snapshot.flt;
+ query=snapshot.query;
+ s106NewsSelected=snapshot.s106NewsSelected;
+ faqOpen=snapshot.faqOpen;
+ s13Step=snapshot.s13Step;
+ servicesMode=snapshot.servicesMode;
+ mediaFilter=snapshot.mediaFilter;
+}
+function s135SyncNavigation(){
+ try{tg?.BackButton?.[s13Main.has(page)||page==='welcome'?'hide':'show']()}catch{}
+}
+function s135Viewport(){
+ const height=Number(tg?.viewportStableHeight)||window.innerHeight;
+ if(Number.isFinite(height)&&height>300){document.documentElement.style.setProperty('--sbewo-viewport-height',`${Math.round(height)}px`)}
+ const bottom=Number(tg?.safeAreaInset?.bottom)||0;
+ if(bottom>=0&&bottom<150)document.documentElement.style.setProperty('--sbewo-tg-bottom',`${bottom}px`);
+}
+// Maintain scroll position when polling or changing a toggle re-renders the current screen.
+render=function(){
+ const before=document.getElementById('main');
+ const oldPage=before?.dataset?.sbewoRoute;
+ const samePage=oldPage===page&&!s135Navigating;
+ const scroll=samePage?before.scrollTop:0;
+ const active=document.activeElement;
+ const activeId=samePage&&active?.id?active.id:null;
+ const selection=activeId&&typeof active.selectionStart==='number'?active.selectionStart:null;
+ s135BaseRender();
+ const main=document.getElementById('main');
+ if(main){
+  main.dataset.sbewoRoute=page;
+  if(samePage)main.scrollTop=scroll;
+  else if(s135Navigating||oldPage!==page)main.scrollTop=0;
+  if(s135TransitionPending){
+   if(!s135ReducedMotion())main.classList.add('sbewo-enter');
+   s135TransitionPending=false;
+  }
+ }
+ if(activeId){
+  const field=document.getElementById(activeId);
+  if(field&&field.matches('input,textarea')){
+   field.focus({preventScroll:true});
+   if(selection!==null)try{field.setSelectionRange(selection,selection)}catch{}
+  }
+ }
+ s135SyncNavigation();
+};
+try{
+ history.replaceState({sbewo:true,route:0},'');
+ s135Routes.set(0,s135Snapshot());
+}catch{}
+function s135SavePosition(){
+ s135Routes.set(s135CurrentRoute,s135Snapshot());
+}
+goto=function(target){
+ if(target==='back'){back();return}
+ const before=page;
+ s135SavePosition();
+ s135Navigating=true;
+ s135TransitionPending=true;
+ try{s135BaseGoto(target)}finally{s135Navigating=false}
+ if(page!==before){
+  s135CurrentRoute=++s135Sequence;
+  s135Routes.set(s135CurrentRoute,s135Snapshot());
+  try{history.pushState({sbewo:true,route:s135CurrentRoute},'')}catch{}
+ }else s135TransitionPending=false;
+ s135SyncNavigation();
+};
+const s135LegacyBack=back;
+back=function(){
+ if(page==='welcome'&&s13Step>0){s135LegacyBack();return}
+ if(s135CurrentRoute>0&&history.state?.sbewo){
+  s135SavePosition();
+  history.back();
+ }else s135LegacyBack();
+};
+window.addEventListener('popstate',event=>{
+ if(!event.state?.sbewo)return;
+ const dest=s135Routes.get(event.state.route);
+ if(!dest)return;
+ s135Restoring=true;
+ s135TransitionPending=true;
+ s135CurrentRoute=event.state.route;
+ s135Restore(dest);
+ s135Navigating=true;
+ try{render()}finally{s135Navigating=false;s135Restoring=false}
+ const main=document.getElementById('main');if(main)main.scrollTop=dest.scroll||0;
+});
+// Haptic feedback is optional: in browsers outside Telegram these calls are no-ops.
+document.addEventListener('click',event=>{
+ const element=event.target.closest?.('button,[role="button"],[data-go],[data-back]');
+ if(!element||element.disabled)return;
+ try{
+  if(element.matches('[data-clear-submit],[data-action="clear-archive"],.danger'))tg?.HapticFeedback?.notificationOccurred?.('warning');
+  else if(element.matches('[data-notify],input[type="checkbox"]'))tg?.HapticFeedback?.selectionChanged?.();
+  else tg?.HapticFeedback?.impactOccurred?.('light');
+ }catch{}
+}, {capture:true,passive:true});
+// Avoid sequential image warming on low-bandwidth devices; essential assets come first.
+const s135Assets=[
+ './kyu-feature-media.png','./kyu-feature-circle.png','./kyu-feature-autoreply.png',
+ './kyu-security-shield-v129.png','./kyu-support-question.png',
+ './kyu-settings-tariffs.png', './kyu-home.webp'
+];
+function s135Prewarm(){
+ const connection=navigator.connection;
+ if(connection?.saveData)return;
+ const assets=[...new Set(s135Assets)];
+ const idle=window.requestIdleCallback||((callback)=>setTimeout(callback,200));
+ idle(()=>{
+  // Small bounded batches avoid competing with initial route data fetch.
+  Promise.all(assets.slice(0,3).map(sWarmMascot)).finally(()=>{
+   idle(()=>{assets.slice(3).forEach(url=>{void sWarmMascot(url)})});
+  });
+ });
+}
+window.addEventListener('load',s135Prewarm,{once:true});
+try{
+ tg?.onEvent?.('viewportChanged',s135Viewport);
+ tg?.onEvent?.('safeAreaChanged',s135Viewport);
+ tg?.onEvent?.('contentSafeAreaChanged',s135Viewport);
+ tg?.onEvent?.('themeChanged',()=>{
+  const color=theme==='dark'?'#172332':'#eaf5ff';
+  try{tg?.setHeaderColor?.(color);tg?.setBackgroundColor?.(color)}catch{}
+ });
+}catch{}
+window.addEventListener('resize',s135Viewport,{passive:true});
+s135Viewport();
+// Introspection and functional smoke checks without exposing private Telegram data.
+window.SbewoNavigation={current:()=>page,depth:()=>s135CurrentRoute,back:()=>back()};
+
 render();if(initData&&!isIntro())refresh();
