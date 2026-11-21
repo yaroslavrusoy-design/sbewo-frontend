@@ -279,7 +279,7 @@ window.SbewoDev={demo:demoStart,resetIntro:()=>{pref('sbewo-v6-onboarded','no');
 try{tg?.BackButton?.onClick(()=>back())}catch{}
 /* Sbewo Telegram Blue 13.0: original 27-state navigation. Uses existing server API and mascot assets. */
 let s13Step=0, s13Accepted=false, s13Scope='personal', s13ArchiveTab='chats', s13ChatTab='messages', s13EventScope='personal', s13Return='home', s13Confirm=false;
-const s13Main=new Set(['home','chats','settings']);
+const s13Main=new Set(['home','chats','features','settings']);
 const s13Icon=(name)=>ico(name);
 const s13Btn=(label,route,extra='')=>`<button class="s13-btn ${extra}" data-go="${route}">${label}</button>`;
 const s13White=(title,body,cls='')=>`<section class="s13-panel ${cls}">${title?`<h2>${title}</h2>`:''}${body}</section>`;
