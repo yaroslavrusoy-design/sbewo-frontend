@@ -3335,3 +3335,43 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
 /* v114 — show feature cards directly, without expandable section headers. */
 .s13-app .s112-features .s112-group{padding:9px;border-radius:24px}
 .s13-app .s112-features{gap:10px}
+
+/* v115: compact services cards, no extra descriptions in secondary cards. */
+.s13-app .s112-features{gap:10px;padding-bottom:125px}
+.s13-app .s112-features .s112-group{padding:9px;border-radius:23px}
+.s112-media-feature{height:156px;padding:11px 14px 11px 0;gap:4px}
+.s112-media-feature>img{width:44%;height:114%;margin-left:-7px;object-position:center bottom}
+.s112-media-text{flex:1;gap:6px;padding-right:3px}
+.s112-media-text strong{font-size:clamp(13px,3.9vw,16px);line-height:1.08}
+.s112-media-text small{font-size:clamp(10px,2.8vw,12px);line-height:1.22}
+.s112-two-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;align-items:stretch}
+.s112-circle-feature,.s112-clone-feature{width:100%;height:auto;aspect-ratio:1 / 1;min-height:0;border-radius:19px}
+.s112-side-tools{display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:9px;height:100%;min-height:0}
+.s112-side-tools .s112-tool{width:100%;height:100%;min-height:0;padding:14px 8px 9px 48px;display:flex;align-items:center;border-radius:16px}
+.s112-tool-icon{left:9px;top:50%;transform:translateY(-50%);width:31px;height:31px;border-radius:11px}
+.s112-tool-icon i{font-size:21px}
+.s112-tool-copy{gap:0;justify-content:center;min-height:30px}
+.s112-tool-copy strong{max-width:none;padding:0 22px 0 0;min-height:0;font-size:clamp(11px,3.2vw,13px);line-height:1.12;overflow-wrap:anywhere}
+.s112-tool-copy small{display:none}
+.s112-tool>.s112-command{top:6px;right:6px;padding:3px 6px;font-size:10px}
+.s112-circle-feature>img{top:0;left:6%;width:88%;height:63%;object-fit:contain}
+.s112-circle-feature>.s112-command{top:52%;right:7px}
+.s112-circle-info{left:9px;right:8px;bottom:9px;gap:4px}
+.s112-circle-info strong,.s112-clone-info strong{font-size:clamp(12px,3.8vw,15px);line-height:1.08}
+.s112-circle-info small,.s112-clone-info small{font-size:clamp(9px,2.6vw,10.5px);line-height:1.16}
+.s112-clone-feature>img{top:1px;left:2%;height:61%;width:96%;object-fit:contain}
+.s112-clone-feature>.s112-command{top:52%;right:7px}
+.s112-clone-info{left:9px;right:8px;bottom:9px;top:auto;gap:4px}
+.s112-media-feature>.s112-command,.s112-clone-feature>.s112-feature-badge{display:none}
+@media(max-width:360px){
+ .s13-app .s112-features{padding-left:5px;padding-right:5px;gap:8px}
+ .s13-app .s112-features .s112-group{padding:7px}
+ .s112-two-columns,.s112-side-tools{gap:6px}
+ .s112-side-tools .s112-tool{padding:19px 5px 6px 39px}
+ .s112-tool-icon{left:5px;width:29px;height:29px}
+ .s112-tool-copy strong{font-size:11px;padding-right:18px}
+ .s112-tool>.s112-command{font-size:9px;padding:2px 4px;top:4px;right:4px}
+ .s112-circle-info strong,.s112-clone-info strong{font-size:12px}
+ .s112-circle-info small,.s112-clone-info small{font-size:9px}
+ .s112-media-feature{height:148px}
+}
