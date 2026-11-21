@@ -3041,3 +3041,39 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   .s102-notify-note{font-size:9.4px;margin:1px 0 6px;padding:7px 9px}
   .s102-open-bot{min-height:37px;padding:6px;font-size:11px}
 }
+
+
+/* Sbewo UI kit: shared interaction rules for all current screens.
+   Scoped to the active s13 interface; branded hero, mascot and tariff art stay intact. */
+.s13-app {
+  --ui-primary:var(--s13-blue,#126af5);
+  --ui-ink:var(--s13-text,#111d47);
+  --ui-secondary:var(--s13-muted,#64759b);
+  --ui-hairline:var(--s13-border,#d8e8fa);
+  --ui-control-radius:13px;
+  --ui-card-radius:20px;
+  --ui-focus-ring:0 0 0 3px rgba(18,106,245,.26);
+}
+/* Predictable shrinking in row layouts prevents clipped names on narrow phones. */
+.s13-app :where(.s78-row-text,.s13-row-copy,.s102-notify-copy,.s19-chat-info,.s13-event-main) { min-width:0; }
+.s13-app :where(.s78-row-text,.s13-row-copy,.s102-notify-copy,.s19-chat-info) :where(strong,small) { overflow-wrap:anywhere; }
+/* Shared keyboard and assistive-technology interaction states, without changing touch design. */
+.s13-app :where(button,input,textarea,select):focus-visible {
+  outline:2px solid var(--ui-primary);
+  outline-offset:2px;
+  box-shadow:var(--ui-focus-ring);
+}
+.s13-app :where(button,input,textarea,select):disabled { cursor:not-allowed; opacity:.56; }
+.s13-app :where(.s13-btn,.s13-list-row,.s78-row,.s102-open-bot,.s13-bottom button,.s19-chat-card,.s13-chat-row) { -webkit-tap-highlight-color:transparent; }
+/* Keep anchored elements clear of Telegram chrome when navigating by keyboard. */
+.s13-app :where(button,input,textarea,[tabindex]):focus-visible { scroll-margin-block:12px 100px; }
+/* One visual vocabulary for minor (not hero) utility text and dividers. */
+.s13-app :where(.s13-footnote,.s19-footnote,.s19-setting-info) { line-height:1.5; }
+.s13-app :where(.s13-list-row,.s78-row,.s102-notify-row) { box-sizing:border-box; }
+@media(max-width:350px) {
+  .s13-app :where(.s78-row,.s13-list-row,.s19-chat-card) { min-width:0; }
+  .s13-app :where(.s78-row-text,.s13-row-copy,.s102-notify-copy) { flex-basis:0; flex-grow:1; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .s13-app :where(button,.s102-knob,.s19-switch) { transition-duration:0.01ms!important; animation-duration:0.01ms!important; }
+}
