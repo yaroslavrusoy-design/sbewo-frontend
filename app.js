@@ -599,16 +599,14 @@ document.addEventListener('click',event=>{
 });
 function s19Settings(){return `<section class="s13-mainpage s19-page s19-settings-page s78-settings-page"><div class="s52-sub-card s77-tariffs-card" aria-label="Тарифы и подписка Sbewo"><div class="s52-sub-copy"><span class="s52-sub-label"><span class="s52-sub-star" aria-hidden="true">♛</span> Тарифы</span><h2>Тарифы<br>и подписка</h2><p>Выбери подходящий тариф, сравни планы и управляй подпиской в одном месте.</p><button data-go="pro" class="s52-sub-cta" aria-label="Открыть тарифы и подписку">Тарифы и подписка <span aria-hidden="true">→</span></button></div><div class="s52-sub-visual" aria-hidden="true"><img src="./kyu-settings-tariffs.png" alt="" loading="eager" decoding="async"></div></div>
 <div class="s78-settings-groups">
-<section class="s78-settings-group" aria-label="Управление приложением">
+<section class="s78-settings-group" aria-label="Сообщество и уведомления">
+${s78SettingsRow('telegram','Наш Telegram-канал','Новости, обновления и полезные советы','telegram-channel','sky')}
+${s78SettingsRow('partners','Партнёрская программа','Приглашай друзей и получай бонусы','partner-program','amber')}
 ${s78SettingsRow('bell','Уведомления','Сообщения об удалениях и правках','notifications','pink')}
 </section>
 <section class="s78-settings-group" aria-label="Безопасность и помощь">
 ${s78SettingsRow('shield','Безопасность и данные','Архив, доступы и конфиденциальность','privacy','green')}
 ${s78SettingsRow('support','Поддержка','Помощь и ответы на вопросы','help','violet')}
-</section>
-<section class="s78-settings-group" aria-label="Сообщество Sbewo">
-${s78SettingsRow('partners','Партнёрская программа','Приглашай друзей и получай бонусы','partner-program','amber')}
-${s78SettingsRow('telegram','Наш Telegram-канал','Новости, обновления и полезные советы','telegram-channel','sky')}
 </section>
 </div></section>`;}
 function s78Partner(){return `${s13Header()}<section class="s13-detail-page s78-info-page"><span class="s78-info-icon s78-tone-amber">${ico('group')}</span><h1>Партнёрская программа</h1><p>Программа приглашений и бонусов готовится. Пока начисление бонусов и реферальные ссылки недоступны.</p></section>`;}

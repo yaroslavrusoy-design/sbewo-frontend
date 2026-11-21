@@ -3714,3 +3714,26 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
  .s13-app .s130-security-eyebrow{font-size:9px;padding:4px 7px;}
  .s13-app .s130-privacy-page .s127-security-row{padding:8px 0;}
 }
+
+/* v131 — two compact Settings sections; tariffs and other pages unchanged. */
+.s78-settings-page .s78-settings-groups{gap:16px;padding-bottom:10px}
+.s78-settings-page .s78-settings-group{padding:2px 12px;border-radius:21px}
+.s78-settings-page .s78-row{min-height:62px;padding:8px 2px;gap:10px}
+.s78-settings-page .s78-row-icon{height:39px;width:39px;border-radius:12px}
+.s78-settings-page .s78-row-icon i{font-size:19px}
+.s78-settings-page .s78-row-icon i svg{height:19px;width:19px}
+.s78-settings-page .s78-row-text strong{font-size:13.5px;line-height:1.2}
+.s78-settings-page .s78-row-text small{font-size:10.5px;line-height:1.25}
+.s78-settings-page .s78-chevron svg{height:16px;width:16px}
+@media (min-width:390px){
+ .s78-settings-page .s78-row{min-height:64px;gap:11px}
+ .s78-settings-page .s78-row-icon{width:40px;height:40px}
+ .s78-settings-page .s78-row-text strong{font-size:14px}
+ .s78-settings-page .s78-row-text small{font-size:11px}
+}
+@media (max-width:350px){
+ .s78-settings-page .s78-row{min-height:60px;gap:9px}
+ .s78-settings-page .s78-row-icon{width:38px;height:38px}
+ .s78-settings-page .s78-row-text strong{font-size:13px}
+ .s78-settings-page .s78-row-text small{font-size:10px}
+}
