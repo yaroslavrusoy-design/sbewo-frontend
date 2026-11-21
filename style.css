@@ -3069,3 +3069,73 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 @media(prefers-reduced-motion:reduce) {
   .s13-app :where(button,.s102-knob,.s19-switch) { transition-duration:0.01ms!important; animation-duration:0.01ms!important; }
 }
+
+/* v105 — two explicit profile actions: avatar opens tariffs, bell opens notifications.
+   Preserve the current light theme, avatar status ring and original card geometry. */
+.s13-app .s14-home .s25-profile.s105-profile-notifications {
+  cursor:default;
+}
+.s105-profile-notifications .s105-profile-avatar-link {
+  appearance:none;
+  -webkit-appearance:none;
+  display:grid;
+  place-items:center;
+  flex:none;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.s105-profile-notifications .s105-profile-avatar-link:focus-visible,
+.s105-profile-notifications .s105-profile-notification-link:focus-visible {
+  outline:2px solid #1685ff;
+  outline-offset:3px;
+}
+.s105-profile-notifications .s105-profile-notification-link {
+  appearance:none;
+  -webkit-appearance:none;
+  position:relative;
+  display:grid;
+  place-items:center;
+  flex:0 0 48px;
+  width:48px;
+  height:48px;
+  padding:0;
+  margin:0;
+  border:1px solid #d7e6fb;
+  border-radius:16px;
+  background:linear-gradient(145deg,#f1f7ff,#e1efff);
+  color:#142452;
+  box-shadow:0 3px 9px rgba(45,95,160,.12);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.s105-profile-notifications .s105-profile-notification-link svg {
+  display:block;
+  width:23px;
+  height:23px;
+}
+.s105-profile-notifications .s105-notification-dot {
+  position:absolute;
+  top:-3px;
+  right:-3px;
+  width:10px;
+  height:10px;
+  border:2px solid #fff;
+  border-radius:50%;
+  background:#f43f5e;
+  box-sizing:content-box;
+}
+@media(max-width:360px) {
+  .s105-profile-notifications .s105-profile-notification-link {
+    width:44px;
+    height:44px;
+    flex-basis:44px;
+    border-radius:14px;
+  }
+  .s105-profile-notifications .s105-profile-notification-link svg {width:21px;height:21px}
+}
