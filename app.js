@@ -645,23 +645,28 @@ async function s106LoadInbox(markOnOpen=false){
 }
 // The Services reference is a catalogue, not a claim that the commands are available.
 // Keep group expansion state across renders and expose descriptions without fake actions.
-const s112FeatureIcons={
- media:'ri-play-circle-fill',messages:'ri-chat-smile-3-fill',automation:'ri-flashlight-fill',
- repeat:'ri-chat-upload-line',text:'ri-chat-3-fill',mute:'ri-volume-mute-fill',bot:'ri-robot-2-line'
-};
+const s112FeatureIcons={repeat:'ri-chat-3-line',text:'ri-chat-3-fill',mute:'ri-volume-mute-fill',clone:'ri-file-copy-2-line'};
 const s112FeatureIcon=(name)=>`<i class="${s112FeatureIcons[name]}" aria-hidden="true"></i>`;
 const s112FeatureCard=(kind,title,description,command,icon)=>`<button type="button" class="s112-tool s112-tool-${kind}" data-s112-tool="${kind}" aria-label="${title}: ${description}"><span class="s112-tool-icon">${s112FeatureIcon(icon)}</span><span class="s112-tool-copy"><strong>${title}</strong></span><span class="s112-command">${command}</span></button>`;
-const s13Features=()=>`<section class="s13-mainpage s13-features-page s112-features" aria-label="Сервисы Sbewo">
+const s13Features=()=>`<section class="s13-mainpage s13-features-page s112-features s117-features" aria-label="Функции Sbewo">
  <div class="s112-group s112-media-group">
-  <button type="button" class="s112-media-feature" data-s112-tool="save" aria-label="Сохранение одноразового фото и видео"><img src="./kyu-feature-media.png" alt="Кью с камерой" loading="eager" decoding="async"/><span class="s112-media-text"><span class="s112-feature-badge">⭐ Популярно</span><strong>Сохранение одноразового фото и видео</strong><small>Ответьте на одноразовое фото или видео любым сообщением — бот автоматически сохранит вложение.</small></span></button>
+  <button type="button" class="s112-media-feature" data-s112-tool="save" aria-label="Сохранение одноразового фото и видео"><img src="./kyu-feature-media.png" alt="Кью с камерой" loading="eager" decoding="async"/><span class="s112-media-text"><span class="s112-feature-badge"><i class="ri-star-fill" aria-hidden="true"></i> Популярно</span><strong>Сохранение одноразового фото и видео</strong><small>Ответьте на одноразовое фото или видео любым сообщением — бот автоматически сохранит вложение.</small></span></button>
  </div>
- <div class="s112-group s112-message-group">
-  <div class="s112-two-columns"><button type="button" class="s112-circle-feature" data-s112-tool="circle" aria-label="Видео в кружок"><img src="./kyu-feature-circle.png" alt="Кью в кружочке с иконкой видео" loading="eager" decoding="async"/><span class="s112-command">/vc</span><span class="s112-circle-info"><strong>Видео в кружок</strong><small>Преобразует обычное видео в видеоcообщение (кружок) в пару кликов.</small></span></button><div class="s112-side-tools">${s112FeatureCard('repeat','Массовая отправка','Удаляет команду и отправляет указанный текст отдельными сообщениями. За один запуск — от 1 до 20 сообщений.','/spam','repeat')}${s112FeatureCard('text','Постепенная отправка текста','Отправляет текст по частям, создавая эффект набора.','/tx','text')}</div></div>
+ <div class="s117-hero-grid">
+  <button type="button" class="s117-hero s117-video" data-s112-tool="circle" aria-label="Видео в кружок"><span class="s117-hero-art"><img src="./kyu-feature-circle.png" alt="Кью в круге с символом видео" loading="eager" decoding="async"/></span><span class="s117-hero-copy"><strong>Видео в кружок</strong><small>Преобразует обычное видео в видеосообщение (кружок) в пару кликов.</small></span></button>
+  <button type="button" class="s117-hero s117-auto" data-s112-tool="bot" aria-label="Автоответчик"><span class="s117-hero-art"><img src="./kyu-feature-autoreply.png" alt="Кью за ноутбуком" loading="eager" decoding="async"/></span><span class="s117-hero-copy"><strong>Автоответчик</strong><small>Автоматически отвечает на сообщения, когда вы не в сети.</small></span></button>
  </div>
- <div class="s112-group s112-automation-group">
-  <div class="s112-two-columns"><button type="button" class="s112-clone-feature" data-s112-tool="clone" aria-label="Режим клонирования"><img src="./kyu-feature-clone.png" alt="Кью и его полупрозрачный клон" loading="eager" decoding="async"/><span class="s112-command">/mir</span><span class="s112-clone-info"><strong>Режим клонирования</strong><small>Создаёт вашего клона — Кью будет отвечать за вас в чате.</small></span></button><div class="s112-side-tools">${s112FeatureCard('mute','Мут собеседника','Временное скрытие сообщений от пользователя.','/mu','mute')}${s112FeatureCard('bot','Автоответчик','Автоответчик отвечает собеседникам заданным текстом.','/ar','bot')}</div></div>
+ <div class="s112-group s117-commands-group">
+  <header class="s117-commands-header"><span class="s117-terminal" aria-hidden="true"><i class="ri-terminal-box-line"></i></span><h2>Полезные команды</h2><button type="button" class="s117-all-commands" data-s117-all="true">Все команды <i class="ri-arrow-right-s-line" aria-hidden="true"></i></button></header>
+  <div class="s117-commands-grid">
+   ${s112FeatureCard('repeat','Массовая отправка','Удаляет команду и отправляет указанный текст отдельными сообщениями. За один запуск — от 1 до 20 сообщений.','/spam','repeat')}
+   ${s112FeatureCard('text','Постепенная отправка текста','Отправляет текст по частям, создавая эффект набора.','/tx','text')}
+   ${s112FeatureCard('mute','Мут собеседника','Временное скрытие сообщений от пользователя.','/mu','mute')}
+   ${s112FeatureCard('clone','Режим клонирования','Создаёт вашего клона — Кью будет отвечать за вас в чате.','/mir','clone')}
+  </div>
  </div>
  <div class="s112-info" id="s112-info" hidden role="status"></div>
+ <dialog class="s117-dialog" id="s117-dialog" aria-label="Все команды"><div class="s117-dialog-inner"><div class="s117-dialog-head"><strong>Все команды</strong><button type="button" data-s117-close aria-label="Закрыть"><i class="ri-close-line"></i></button></div><p>Команды и действия Sbewo</p><dl><dt>/vc</dt><dd>Видео в кружок</dd><dt>/spam</dt><dd>Массовая отправка (1–20 сообщений)</dd><dt>/tx</dt><dd>Постепенная отправка текста</dd><dt>/mu</dt><dd>Мут собеседника</dd><dt>/mir</dt><dd>Режим клонирования</dd><dt>/ar</dt><dd>Автоответчик</dd></dl><p>Для сохранения одноразового фото или видео достаточно ответить на него сообщением.</p></div></dialog>
  </section>`;
 
 const s13Pages={welcome:s13Welcome,home:s13Home,features:s13Features,archive:s13Archive,'archive-view':s13Archive,chats:s13Chats,'connect-personal':s13ConnectionPersonal,eventdetail:s13EventDetail,revision:s13Revision,chat:s13Chat,'chat-clear':s48ClearPage,settings:s19Settings,'chat-saving':s78ChatSaving,'partner-program':s78Partner,'telegram-channel':s78TelegramChannel,catalog:s13Catalog,inbox:s106InboxPage,'inbox-news':s106NewsDetail,privacy:s13Privacy,'confirm-clear':s13ConfirmClear,access:s13Access,help:s13Help};
@@ -844,6 +849,10 @@ bind=function(){
   info.textContent='Инструмент пока представлен в каталоге. Подключение команды появится после реализации на стороне бота.';
   info.hidden=false;
  });
+ const dlg=document.getElementById('s117-dialog');
+ const all=document.querySelector('[data-s117-all]');if(all&&dlg)all.onclick=()=>dlg.showModal();
+ const close=document.querySelector('[data-s117-close]');if(close&&dlg)close.onclick=()=>dlg.close();
+ if(dlg)dlg.onclick=(e)=>{if(e.target===dlg)dlg.close()};
 };
 const s106BaseGoto=goto;
 goto=function(to){s106BaseGoto(to);if(to==='inbox')void s106LoadInbox(true)};

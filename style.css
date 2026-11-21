@@ -3375,3 +3375,66 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
  .s112-circle-info small,.s112-clone-info small{font-size:9px}
  .s112-media-feature{height:148px}
 }
+
+/* v117 — dedicated Functions layout, matched to supplied 2-hero reference.
+   Scoped to .s117-features: existing pages and fixed bottom navigation are untouched. */
+.s13-app .s117-features{box-sizing:border-box;width:100%;max-width:570px;margin:0 auto;padding:10px 10px 124px;display:flex;flex-direction:column;gap:12px;color:#091537}
+.s13-app .s117-features .s112-group{padding:9px;border-radius:24px;background:linear-gradient(150deg,rgba(255,255,255,.83),rgba(242,248,255,.91));border:1px solid rgba(255,255,255,.9);box-shadow:0 8px 24px rgba(55,105,190,.10)}
+.s117-features .s112-media-feature{height:auto;min-height:176px;padding:12px 15px 12px 0;gap:0;border-radius:20px;background:radial-gradient(circle at 16% 63%,#dceeff 0,#bfdcff 49%,#a7ceff 100%)}
+.s117-features .s112-media-feature>img{width:45%;height:176px;margin-left:-6px;align-self:center;object-fit:contain;object-position:center center;flex:none}
+.s117-features .s112-media-text{flex:1;min-width:0;gap:7px;padding-right:0}
+.s117-features .s112-media-text strong{font-size:clamp(16px,4.7vw,22px);line-height:1.04;letter-spacing:-.6px;font-weight:850}
+.s117-features .s112-media-text small{font-size:clamp(11px,3.2vw,14px);line-height:1.2;color:#273c66}
+.s117-features .s112-feature-badge{padding:5px 11px;font-size:clamp(10px,2.8vw,12px);color:#b96a04;display:inline-flex;gap:4px;align-items:center;background:linear-gradient(90deg,#ffeb93,#ffd766)}
+.s117-features .s112-feature-badge i{font-size:13px;color:#ffad00}
+.s117-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:11px;min-width:0}
+.s117-hero{appearance:none;min-width:0;position:relative;border:9px solid rgba(255,255,255,.83);border-radius:25px;overflow:hidden;background:linear-gradient(150deg,#edf6ff,#d9eaff);text-align:left;color:#091537;font-family:inherit;display:flex;flex-direction:column;padding:0;aspect-ratio: .94;box-shadow:0 7px 20px rgba(58,114,203,.10);cursor:pointer}
+.s117-hero:active{filter:brightness(.98)}
+.s117-hero-art{height:61%;width:100%;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;flex:none}
+.s117-hero-art>img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 4px #498ddb35)}
+.s117-video .s117-hero-art>img{width:96%;height:101%}
+.s117-auto .s117-hero-art>img{width:113%;max-width:none;height:107%;object-fit:contain}
+.s117-hero-copy{flex:1;min-height:0;display:flex;flex-direction:column;gap:5px;padding:0 11px 12px;justify-content:flex-start}
+.s117-hero-copy strong{font-size:clamp(15px,4.4vw,21px);line-height:1.08;letter-spacing:-.5px;font-weight:850}
+.s117-hero-copy small{font-size:clamp(11px,3.05vw,13.5px);line-height:1.18;color:#243858}
+.s13-app .s117-features .s117-commands-group{padding:13px 11px 12px;border-radius:25px}
+.s117-commands-header{display:flex;align-items:center;gap:10px;margin:0 0 12px 2px;min-width:0}
+.s117-terminal{width:35px;height:35px;flex:0 0 35px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,#a4c3fc,#779de9);color:#fff}
+.s117-terminal i{font-size:24px}
+.s117-commands-header h2{margin:0;flex:1;min-width:0;font-size:clamp(15px,4.1vw,20px);letter-spacing:-.4px;line-height:1.1;font-weight:850;color:#0b173e}
+.s117-all-commands{border:1px solid rgba(255,255,255,.95);border-radius:999px;box-shadow:0 3px 9px #6688c52c;background:linear-gradient(125deg,#f9fcff,#edf4ff);color:#4a618e;padding:8px 8px 8px 11px;display:inline-flex;align-items:center;gap:2px;font-family:inherit;font-size:clamp(10px,2.7vw,12px);font-weight:750;white-space:nowrap;cursor:pointer}
+.s117-all-commands i{font-size:15px;color:#82a5ed}
+.s117-commands-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}
+.s117-features .s117-commands-grid .s112-tool{box-sizing:border-box;position:relative;width:100%;height:65px;min-height:0;padding:12px 6px 9px 52px;display:flex;align-items:center;border:1px solid #fff;border-radius:18px;background:linear-gradient(115deg,#edf6ff,#e2efff);box-shadow:0 3px 9px rgba(91,134,205,.09)}
+.s117-features .s117-commands-grid .s112-tool-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:37px;height:37px;border-radius:12px;background:#d5edff;color:#098fe8;display:grid;place-items:center}
+.s117-features .s117-commands-grid .s112-tool-icon i{font-size:25px}
+.s117-features .s117-commands-grid .s112-tool-text .s112-tool-icon{background:#e6ddff;color:#9463ed}
+.s117-features .s117-commands-grid .s112-tool-copy{min-width:0;display:flex;align-items:flex-start;justify-content:center}
+.s117-features .s117-commands-grid .s112-tool-copy strong{font-size:clamp(11px,3vw,14px);line-height:1.1;font-weight:800;padding:0 9px 0 0;max-width:none;overflow-wrap:anywhere}
+.s117-features .s117-commands-grid .s112-command{position:absolute;right:4px;top:3px;padding:3px 6px;font-size:10px;line-height:1.1;color:#126ce3}
+.s117-dialog{max-width:min(360px,calc(100vw - 35px));border:1px solid #d8e7fd;border-radius:22px;padding:0;box-shadow:0 16px 60px #1a3f7c55;background:#f4f9ff;color:#0d214c}
+.s117-dialog::backdrop{background:#04132c80}
+.s117-dialog-inner{padding:20px}
+.s117-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:15px;font-size:20px}
+.s117-dialog-head button{border:0;border-radius:50%;background:#ddebff;width:32px;height:32px;color:#194f9e;font-size:20px;cursor:pointer}
+.s117-dialog p{font-size:13px;color:#475e84;line-height:1.35}
+.s117-dialog dl{display:grid;grid-template-columns:auto 1fr;gap:12px 16px;font-size:13px}
+.s117-dialog dt{font-weight:800;color:#126ce3}.s117-dialog dd{margin:0}
+@media(max-width:370px){
+ .s13-app .s117-features{padding-left:6px;padding-right:6px;gap:9px}
+ .s117-hero-grid{gap:7px}
+ .s117-hero{border-width:7px;border-radius:21px;aspect-ratio:.88}
+ .s117-hero-art{height:57%}
+ .s117-hero-copy{padding:0 8px 9px;gap:4px}
+ .s117-hero-copy strong{font-size:14px}.s117-hero-copy small{font-size:10.5px}
+ .s117-features .s112-media-feature{min-height:162px}
+ .s117-features .s112-media-feature>img{height:162px}
+ .s117-features .s117-commands-grid .s112-tool{height:63px;padding-left:42px}
+ .s117-features .s117-commands-grid .s112-tool-icon{left:5px;width:31px;height:31px}
+ .s117-features .s117-commands-grid .s112-tool-icon i{font-size:21px}
+ .s117-features .s117-commands-grid .s112-tool-copy strong{font-size:11px}
+ .s117-commands-grid{gap:7px}
+ .s117-commands-header{gap:7px}
+ .s117-commands-header h2{font-size:15px}
+ .s117-all-commands{padding:7px 5px;font-size:10px}
+}
