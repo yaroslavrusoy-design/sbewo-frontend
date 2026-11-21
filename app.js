@@ -66,6 +66,8 @@ const pref=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStor
 let page=(pref('sbewo-v8-onboarded')==='yes'||pref('sbewo-v6-onboarded')==='yes')?'home':'welcome',previous='home',onboard=0,flt='all',mediaFilter='all',query='',selectedChat='',selectedKey='',demo=false,busy=false,error='',theme=pref('sbewo-v5-theme')||'light';
 let s65PreviewState=pref('sbewo-status-preview')||'';
 let notify={delete:false,edit:false,group:false,own_delete:false,own_edit:false,bot_started:false};
+let s106Inbox={items:[],unread_count:0,loaded:false,loading:false,error:''};
+let s106NewsSelected='',s106MarkOnOpen=false;
 let excludedChats=JSON.parse(pref('sbewo-hidden-chats')||'[]');
 let db={connected:false,connections:0,items:[],limits:{media_download:false,group_deletions:false,push_notifications:false,payments:false},retention_days:30};
 const now=Math.floor(Date.now()/1000),demoMessages=[{key:'d1',chat:'Анна',sender:'Анна',text:'Давай позже, не жди',kind:'text',deleted:true,edited:false,time:now-4700,updated:now-1000,versions:[{text:'Давай позже, не жди',time:now-4700}]},{key:'d2',chat:'Анна',sender:'Анна',text:'Встречаемся в 20:00',kind:'text',deleted:false,edited:true,time:now-4000,updated:now-900,versions:[{text:'Встречаемся в 19:00',time:now-4000},{text:'Встречаемся в 20:00',time:now-900}]},{key:'d3',chat:'Брат',sender:'Брат',text:'Фото было отправлено',kind:'photo',deleted:false,edited:false,time:now-3200,updated:now-3200,versions:[]}];
@@ -255,7 +257,7 @@ let faqOpen=-1;function help(){return `${header('Помощь')}<section class="
 function about(){return `${header('О приложении')}<div class="intro" style="height:auto;min-height:380px;border-radius:20px"><span class="mark" style="width:52px;height:52px;border-radius:13px">${ico('layers')}</span><h1>Sbewo</h1>${kyu('welcome','')}<p>Личный архив доступных событий Telegram.</p><p>Версия 1.0 · Новый проект</p></div>`}
 function render(){let html={welcome,intro2:welcome,intro3:welcome,home,services,history,archive,media,chats,chat,deleted,edited,eventdetail:eventDetail,revision,groups,connection,settings,notifications,filters,storage,privacy,pro,help,about}[page];if(!html){page='home';html=home}let intro=isIntro();let root=$('#app');root.className=`app ${intro?'onboarding':''} ${theme==='dark'?'theme-dark':''}`;root.innerHTML=`<main id="main" class="main">${!intro&&error?`<div class="error-msg" role="alert">${esc(error)}</div>`:''}${!intro&&demo?'<div class="empty-meta">ДЕМО-РЕЖИМ · вымышленные примеры</div>':''}${!intro?'<div id="api-state"></div>':''}${html()}</main>${intro||['eventdetail','revision','help','connection','deleted','edited','chat','chats','filters','storage','privacy','about'].includes(page)?'':tabbar()}`;bind();try{tg?.BackButton?.[intro||isMain()?'hide':'show']()}catch{}}
 async function call(endpoint,payload={}){if(!API)throw Error('Бэкенд ещё не подключён: добавь URL Render в config.js');if(!initData)throw Error('Для настоящих данных открой Mini App внутри Telegram');let res=await fetch(`${API}${endpoint}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({init_data:initData,...payload})});if(!res.ok){let txt='Сервер недоступен';try{txt=(await res.json()).detail||txt}catch{}throw Error(String(txt))}return res.json()}
-async function refresh(){if(demo)return;busy=true;try{const payload=await call('/api/overview');db={...db,...payload};notify=payload.notifications||notify;error=''}catch(e){error=e.message}finally{busy=false;render()}}
+async function refresh(){if(demo)return;busy=true;try{const payload=await call('/api/overview');db={...db,...payload};notify=payload.notifications||notify;error=''}catch(e){error=e.message}finally{busy=false;render();if(initData&&!demo)void s106LoadInbox(false)}}
 function goto(to){
  if(to==='history'||to==='deleted'||to==='edited'){
    servicesMode='events';
@@ -366,7 +368,7 @@ function s14ProfileBlock(){
  const handle=u.username?'@'+u.username:'Аккаунт Telegram';
  const photo=typeof u.photo_url==='string'&&/^https:\/\//i.test(u.photo_url)?`<img class="s14-user-photo" src="${esc(u.photo_url)}" alt="Аватар Telegram" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>${avatar(name)}</span>`:avatar(name);
  const status=s98ProfileAvatarState();
- return `<div class="s25-profile s98-status-profile s105-profile-notifications"><span class="s25-profile-identity"><button type="button" class="s105-profile-avatar-link" data-go="pro" aria-label="Открыть тарифы и подписку"><span class="s98-avatar-ring s98-avatar-ring--${status.tone}" aria-label="${esc(status.label)}"><span class="s98-avatar-photo">${photo}</span><span class="s98-avatar-medal" aria-hidden="true">${status.icon}</span></span></button><span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small></span></span><button type="button" class="s105-profile-notification-link" data-go="notifications" aria-label="Открыть уведомления">${ico('bell')}<span class="s105-notification-dot" aria-hidden="true"></span></button></div>`;
+ return `<div class="s25-profile s98-status-profile s105-profile-notifications"><span class="s25-profile-identity"><button type="button" class="s105-profile-avatar-link" data-go="pro" aria-label="Открыть тарифы и подписку"><span class="s98-avatar-ring s98-avatar-ring--${status.tone}" aria-label="${esc(status.label)}"><span class="s98-avatar-photo">${photo}</span><span class="s98-avatar-medal" aria-hidden="true">${status.icon}</span></span></button><span class="s14-profile-info"><strong>${esc(name)}</strong><small>${esc(handle)}</small></span></span><button type="button" class="s105-profile-notification-link" data-go="inbox" aria-label="Входящие уведомления${s106Inbox.unread_count?`, непрочитанных: ${s106Inbox.unread_count}`:''}">${ico('bell')}${s106Inbox.unread_count?`<span class="s105-notification-dot" aria-hidden="true"></span>`:''}</button></div>`;
 }
 function s25Count(n,forms){const value=Math.max(0,Math.floor(Number(n)||0));const mod10=value%10,mod100=value%100;return `${value} ${mod10===1&&mod100!==11?forms[0]:mod10>=2&&mod10<=4&&(mod100<12||mod100>14)?forms[1]:forms[2]}`;}
 function s60CardState(){
@@ -593,7 +595,54 @@ function s78ChatSaving(){return `${s13Header()}<section class="s13-detail-page s
 function s78Partner(){return `${s13Header()}<section class="s13-detail-page s78-info-page"><span class="s78-info-icon s78-tone-amber">${ico('group')}</span><h1>Партнёрская программа</h1><p>Программа приглашений и бонусов готовится. Пока начисление бонусов и реферальные ссылки недоступны.</p></section>`;}
 function s78TelegramChannel(){return `${s13Header()}<section class="s13-detail-page s78-info-page"><span class="s78-info-icon s78-tone-sky">${ico('send')}</span><h1>Наш Telegram-канал</h1><p>Ссылка на официальный канал Sbewo появится здесь после его подключения. Пока переход не настроен.</p></section>`;}
 
-const s13Pages={welcome:s13Welcome,home:s13Home,archive:s13Archive,'archive-view':s13Archive,chats:s13Chats,'connect-personal':s13ConnectionPersonal,eventdetail:s13EventDetail,revision:s13Revision,chat:s13Chat,'chat-clear':s48ClearPage,settings:s19Settings,'chat-saving':s78ChatSaving,'partner-program':s78Partner,'telegram-channel':s78TelegramChannel,catalog:s13Catalog,privacy:s13Privacy,'confirm-clear':s13ConfirmClear,access:s13Access,help:s13Help};
+// Real notification inbox: events from the authenticated API, never a decorative red dot.
+function s106InboxPage(){
+ const xs=s106Inbox.items;
+ const entry=(a)=>{
+  const news=a.category==='news';
+  const glyph=news?'send':a.category==='delete'?'trash':a.category==='edit'?'edit':'image';
+  const when=new Date(Number(a.time||0)*1000).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  return `<button type="button" class="s106-entry ${a.unread?'s106-unread':''}" ${news?'data-inbox-news="'+esc(a.id)+'"':'data-inbox-event="'+esc(a.message_key||'')+'"'}>
+    <span class="s106-entry-icon s106-tone-${esc(a.category)}">${ico(glyph)}</span>
+    <span class="s106-entry-body"><strong>${esc(a.title)}</strong><small>${esc(a.body)}</small><time>${esc(when)}</time></span>
+    ${!news?ico('chevron'):''}
+  </button>`;
+ };
+ return `<section class="s13-detail-page s106-inbox-page" aria-label="Входящие уведомления">
+  <div class="s106-inbox-head"><h1>Уведомления</h1><p>Новости Sbewo, удаления, изменения и сохранённые медиа</p></div>
+  ${s106Inbox.loading&&!s106Inbox.loaded?'<p class="s106-inbox-note" role="status">Загружаем уведомления…</p>':
+  s106Inbox.error?`<p class="s106-inbox-note" role="alert">${esc(s106Inbox.error)}</p><button class="s106-retry" data-inbox-retry="1">Повторить</button>`:
+  xs.length?`<div class="s106-inbox-list">${xs.map(entry).join('')}</div>`:
+  `<div class="s106-inbox-empty">${ico('bell')}<strong>Новых уведомлений нет</strong><p>Новости и события из чатов будут появляться здесь, когда поступят.</p></div>`}
+  <button class="s106-inbox-settings" data-go="notifications">${ico('settings')} Настроить уведомления</button>
+ </section>`;
+}
+function s106NewsDetail(){
+ const item=s106Inbox.items.find(a=>a.id===s106NewsSelected&&a.category==='news');
+ return `<section class="s13-detail-page s106-inbox-page"><div class="s106-inbox-head"><h1>${esc(item?.title||'Новость недоступна')}</h1></div>${item?`<article class="s106-news-body"><p>${esc(item.body)}</p><time>${esc(new Date(item.time*1000).toLocaleString('ru-RU'))}</time></article>`:'<p class="s106-inbox-note">Эта новость больше не опубликована.</p>'}</section>`;
+}
+async function s106LoadInbox(markOnOpen=false){
+ if(markOnOpen)s106MarkOnOpen=true;
+ if(!initData||demo){s106Inbox={items:[],unread_count:0,loaded:true,loading:false,error:''};if(page==='inbox')render();return;}
+ if(s106Inbox.loading)return;
+ s106Inbox.loading=true;
+ if(page==='inbox')render();
+ try{
+  const data=await call('/api/inbox');
+  s106Inbox={items:Array.isArray(data.items)?data.items:[],unread_count:Number(data.unread_count)||0,loaded:true,loading:false,error:''};
+  if(page==='inbox')render();
+  if(s106MarkOnOpen&&page==='inbox'){s106MarkOnOpen=false;
+   const ids=s106Inbox.items.filter(a=>a.unread).map(a=>a.id);
+   if(ids.length){
+    await call('/api/inbox/read',{ids});
+    s106Inbox.items.forEach(a=>{if(ids.includes(a.id))a.unread=false});
+    s106Inbox.unread_count=s106Inbox.items.filter(a=>a.unread).length;
+    if(page==='inbox')render();
+   }
+  }
+ }catch(e){s106Inbox.loading=false;s106Inbox.error=e.message||'Не удалось получить уведомления';if(page==='inbox')render()}
+}
+const s13Pages={welcome:s13Welcome,home:s13Home,archive:s13Archive,'archive-view':s13Archive,chats:s13Chats,'connect-personal':s13ConnectionPersonal,eventdetail:s13EventDetail,revision:s13Revision,chat:s13Chat,'chat-clear':s48ClearPage,settings:s19Settings,'chat-saving':s78ChatSaving,'partner-program':s78Partner,'telegram-channel':s78TelegramChannel,catalog:s13Catalog,inbox:s106InboxPage,'inbox-news':s106NewsDetail,privacy:s13Privacy,'confirm-clear':s13ConfirmClear,access:s13Access,help:s13Help};
 noteAction=async function(){s19NoteEditor=!s19NoteEditor;render()};
 const s19BaseRefresh=refresh;
 refresh=async function(){await s19BaseRefresh();s19ChatAliasCache=db.aliases||{};s19FullArchive=!!db.full_archive;await s19LoadAvatars();};
@@ -696,7 +745,7 @@ document.querySelectorAll('[data-s19-archive]').forEach(b=>b.onclick=async()=>{c
 document.querySelectorAll('[data-s13-scope]').forEach(b=>b.onclick=()=>{s13EventScope=b.dataset.s13Scope;render()});document.querySelectorAll('[data-s13-archive]').forEach(b=>b.onclick=()=>{s13ArchiveTab=b.dataset.s13Archive;query='';render()});document.querySelectorAll('[data-s13-chat-tab]').forEach(b=>b.onclick=()=>{s13ChatTab=b.dataset.s13ChatTab;render()});document.querySelectorAll('[data-s65-preview]').forEach(b=>b.onclick=()=>{s65PreviewState=b.dataset.s65Preview||'';pref('sbewo-status-preview',s65PreviewState);render()});document.querySelectorAll('[data-action]').forEach(b=>b.onclick=async()=>{switch(b.dataset.action){case 'next-onboarding':if(s13Step===0&&!s13Accepted)return;if(s13Step===5){goto('connect-personal');return}s13Step++;render();break;case 'skip-onboarding':pref('sbewo-v8-onboarded','yes');page='home';render();break;case 'start-personal':goto('connect-personal');break;case 'check-connection':try{await refresh();s82ConnectionCheck=db.connected?'Sbewo подключён. Доступ подтверждён.':'Пока не подключён. Проверь разрешения Telegram Business.';}catch(e){s82ConnectionCheck='Не удалось проверить подключение.';}render();break;case 'clear-archive':if(!s13Confirm){s13Confirm=true;b.textContent='Подтвердить удаление';return}try{if(!demo)await call('/api/clear');db.items=[];s13Confirm=false;goto('archive')}catch(e){error=e.message;render()}break;}});const terms=$('#accept-terms');if(terms)terms.onchange=()=>{s13Accepted=terms.checked;render()};};
 const s13OldGoto=goto;
 goto=function(to){if(to==='back'){back();return}if(['connect-list','connect-group','connection-check'].includes(to))to='connect-personal';if(to==='star-action'){starAction();return}if(to==='note-action'){noteAction();return}if(to==='history'||to==='deleted'||to==='edited'){flt=to==='deleted'?'deleted':to==='edited'?'edited':'all';to='home'}if(to==='archive')to='chats';if(to==='media'){s19ChatView='media';to='chats'}if(to==='services')to='catalog';if(to==='connection')to='connect-personal';if(to==='notifications'||to==='storage'||to==='filters'||to==='about'||to==='pro'){ /* Existing functional secondary pages */ }if(to==='chat'){s19ChatView='events';s50FilterOpen=false;}if(to==='chat-clear'){s48ClearSelection.clear();s48Clearing=false;}if(to==='settings')s13Return=page;if(to==='eventdetail'){s13Return=page;s19MediaPreview=null;s19MediaError='';s19NoteEditor=false;}if(to==='welcome')s13Step=0;if(to==='home'||to==='archive'||to==='chats'){if(to==='home')flt='all';if(to==='archive')query=''}previous=page;page=to;error='';render();const main=$('#main');if(main)main.scrollTop=0;};
-back=function(){if(page==='welcome'){if(s13Step>0){s13Step--;render()}else goto('home');return}const mappings={eventdetail:s13Return,revision:'eventdetail',chat:'chats','archive-view':'home','chat-manage':'chats','chat-clear':'chat','chat-saving':'settings','partner-program':'settings','telegram-channel':'settings','connect-personal':'home',catalog:'settings',access:'settings',privacy:'settings','confirm-clear':'privacy',help:'settings',notifications:'settings',storage:'privacy',filters:'settings'};goto(mappings[page]||'home');};
+back=function(){if(page==='welcome'){if(s13Step>0){s13Step--;render()}else goto('home');return}const mappings={eventdetail:s13Return,revision:'eventdetail',chat:'chats','archive-view':'home','chat-manage':'chats','chat-clear':'chat','chat-saving':'settings','partner-program':'settings','telegram-channel':'settings','connect-personal':'home',catalog:'settings',access:'settings',privacy:'settings','confirm-clear':'privacy',help:'settings',notifications:'settings',inbox:'home','inbox-news':'inbox',storage:'privacy',filters:'settings'};goto(mappings[page]||'home');};
 render=function(){let intro=page==='welcome';let selected=s13Pages[page];const oldPages={notifications,storage,filters,about,pro};if(!selected&&!oldPages[page]){page='home';selected=s13Home}const root=$('#app');root.className=`app s13-app ${intro?'s13-intro':''} ${s13Main.has(page)?'s13-has-bottom':'s13-no-bottom'}`;root.innerHTML=`<main id="main" class="main s13-main">${error?`<div class="error-msg" role="alert">${esc(error)}</div>`:''}${demo?'<div class="s13-demo">ДЕМО · вымышленные данные</div>':''}${selected?selected():oldPages[page]()}</main>${s13Main.has(page)?s13Bottom():''}`;bind();s95FitPricing();try{tg?.BackButton?.[intro||s13Main.has(page)?'hide':'show']()}catch{}};
 window.SbewoDev={demo:demoStart,resetIntro:()=>{pref('sbewo-v6-onboarded','no');pref('sbewo-v8-onboarded','no');page='welcome';s13Step=0;render()},goto};
 // Pricing page fits in the available Telegram viewport without scrolling.
@@ -753,4 +802,21 @@ goto=function(to){
 setInterval(()=>{
  if(!document.hidden&&['chats','chat'].includes(page))void s19LoadAvatars();
 },90000);
+// Link inbox cards to existing event details; do not reuse notification preferences route.
+const s106BaseBind=bind;
+bind=function(){
+ s106BaseBind();
+ document.querySelectorAll('[data-inbox-event]').forEach(el=>el.onclick=()=>{
+  const key=el.dataset.inboxEvent;
+  if(!db.items.some(m=>String(m.key)===String(key))){void refresh().then(()=>{if(db.items.some(m=>String(m.key)===String(key))){selectedKey=key;goto('eventdetail')}else{error='Событие больше не доступно в архиве';render()}});return;}
+  selectedKey=key;goto('eventdetail');
+ });
+ document.querySelectorAll('[data-inbox-news]').forEach(el=>el.onclick=()=>{s106NewsSelected=el.dataset.inboxNews;goto('inbox-news')});
+ const retry=$('[data-inbox-retry]');if(retry)retry.onclick=()=>void s106LoadInbox(true);
+};
+const s106BaseGoto=goto;
+goto=function(to){s106BaseGoto(to);if(to==='inbox')void s106LoadInbox(true)};
+// Refresh the badge while app is open. The backend owns read state across devices.
+setInterval(()=>{if(initData&&!demo&&!document.hidden&&!isIntro())void s106LoadInbox(page==='inbox')},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&initData&&!demo&&!isIntro())void s106LoadInbox(page==='inbox')});
 render();if(initData&&!isIntro())refresh();

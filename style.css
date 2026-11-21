@@ -3139,3 +3139,36 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   }
   .s105-profile-notifications .s105-profile-notification-link svg {width:21px;height:21px}
 }
+
+/* v106 — real notification inbox, consistent with Sbewo light design. */
+.s106-inbox-page{padding-bottom:30px}
+.s106-inbox-head{margin:10px 0 18px}
+.s106-inbox-head h1{margin:0 0 6px;font-size:23px;line-height:1.2;color:#17284c}
+.s106-inbox-head p{margin:0;color:#71809c;font-size:12px;line-height:1.45}
+.s106-inbox-list{display:flex;flex-direction:column;gap:10px}
+.s106-entry{width:100%;box-sizing:border-box;border:1px solid #e1ebf8;background:#fff;border-radius:21px;padding:15px 13px;display:flex;align-items:center;text-align:left;gap:12px;color:#19294b;box-shadow:0 4px 12px rgba(30,75,145,.055)}
+.s106-entry:disabled{opacity:1;cursor:default}
+.s106-entry.s106-unread{border-color:#bedcff;background:#f5faff}
+.s106-entry-icon{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:14px;background:#e0efff;color:#0878ee}
+.s106-entry-icon svg{width:21px;height:21px}
+.s106-tone-delete{background:#ffe9ed;color:#d62d54}
+.s106-tone-edit{background:#e0efff;color:#1278e8}
+.s106-tone-capture{background:#e0f4ff;color:#1484ba}
+.s106-tone-news{background:#e9e6ff;color:#6951cf}
+.s106-entry-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.s106-entry-body strong{font-size:14px;line-height:1.3;color:#18294e}
+.s106-entry-body small{font-size:12px;line-height:1.4;color:#536786;overflow-wrap:anywhere}
+.s106-entry-body time{font-size:10.5px;color:#8897ae}
+.s106-entry > svg{width:17px;height:17px;flex:none;color:#8597b0}
+.s106-inbox-empty{margin:22px 0;padding:32px 20px;background:#fff;border:1px solid #e1ebf8;border-radius:22px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center}
+.s106-inbox-empty svg{height:32px;width:32px;color:#4b96e5}
+.s106-inbox-empty strong{color:#1d3158;font-size:15px}
+.s106-inbox-empty p{margin:0;color:#70809b;font-size:12px;line-height:1.5}
+.s106-inbox-settings,.s106-retry{margin-top:17px;padding:13px 15px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border-radius:15px;border:1px solid #d6e7fb;background:#f3f8ff;color:#2866aa;font-size:13px;font-weight:650}
+.s106-inbox-settings svg{width:17px;height:17px}
+.s106-inbox-note{font-size:13px;color:#65799c;line-height:1.5}
+.s105-profile-notifications .s105-profile-notification-link:not(:has(.s105-notification-dot)){box-shadow:0 3px 9px rgba(45,95,160,.12)}
+
+.s106-news-body{background:#fff;border:1px solid #e1ebf8;border-radius:21px;padding:19px;color:#2b3d5b;line-height:1.6}
+.s106-news-body p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 20px;font-size:14px}
+.s106-news-body time{font-size:11px;color:#8d9bb0}
