@@ -575,8 +575,19 @@ function s78SettingsRow(icon,title,subtitle,target,tone='blue',tag=''){
  const fallback={archive:'archive',connections:'group',bell:'bell',shield:'shield',support:'help',partners:'group',telegram:'send'};
  const iconClasses={archive:'ri-archive-2-line',connections:'ri-equalizer-3-line',bell:'ri-notification-3-line',shield:'ri-shield-check-line',support:'ri-customer-service-2-line',partners:'ri-group-line',telegram:'ri-telegram-2-line'};
  const ic=`<i class="${iconClasses[icon]}" aria-hidden="true">${ico(fallback[icon])}</i>`;
- return `<button type="button" class="s78-row" data-go="${target}" aria-label="${esc(title)}"><span class="s78-row-icon s78-tone-${tone}">${ic}</span><span class="s78-row-text"><strong>${esc(title)}</strong><small>${esc(subtitle)}</small></span><span class="s78-chevron">${ico('chevron')}</span></button>`;
+ return `<button type="button" class="s78-row" ${target==='telegram-channel'?'data-sbewo-channel="1"':`data-go="${target}"`} aria-label="${esc(title)}"><span class="s78-row-icon s78-tone-${tone}">${ic}</span><span class="s78-row-text"><strong>${esc(title)}</strong><small>${esc(subtitle)}</small></span><span class="s78-chevron">${ico('chevron')}</span></button>`;
 }
+// Open the official Sbewo channel directly from Settings, inside Telegram when available.
+document.addEventListener('click',event=>{
+ const button=event.target.closest?.('[data-sbewo-channel]');
+ if(!button)return;
+ event.preventDefault();
+ const url='https://t.me/sbewo';
+ try{
+  if(typeof tg?.openTelegramLink==='function'){tg.openTelegramLink(url);return;}
+ }catch(_error){}
+ window.location.href=url;
+});
 function s19Settings(){return `<section class="s13-mainpage s19-page s19-settings-page s78-settings-page"><div class="s52-sub-card s77-tariffs-card" aria-label="Тарифы и подписка Sbewo"><div class="s52-sub-copy"><span class="s52-sub-label"><span class="s52-sub-star" aria-hidden="true">♛</span> Тарифы</span><h2>Тарифы<br>и подписка</h2><p>Выбери подходящий тариф, сравни планы и управляй подпиской в одном месте.</p><button data-go="pro" class="s52-sub-cta" aria-label="Открыть тарифы и подписку">Тарифы и подписка <span aria-hidden="true">→</span></button></div><div class="s52-sub-visual" aria-hidden="true"><img src="./kyu-settings-tariffs.png" alt="" loading="eager" decoding="async"></div></div>
 <div class="s78-settings-groups">
 <section class="s78-settings-group" aria-label="Управление приложением">
