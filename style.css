@@ -3070,6 +3070,131 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   .s13-app :where(button,.s102-knob,.s19-switch) { transition-duration:0.01ms!important; animation-duration:0.01ms!important; }
 }
 
+/* v105 — two explicit profile actions: avatar opens tariffs, bell opens notifications.
+   Preserve the current light theme, avatar status ring and original card geometry. */
+.s13-app .s14-home .s25-profile.s105-profile-notifications {
+  cursor:default;
+}
+.s105-profile-notifications .s105-profile-avatar-link {
+  appearance:none;
+  -webkit-appearance:none;
+  display:grid;
+  place-items:center;
+  flex:none;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.s105-profile-notifications .s105-profile-avatar-link:focus-visible,
+.s105-profile-notifications .s105-profile-notification-link:focus-visible {
+  outline:2px solid #1685ff;
+  outline-offset:3px;
+}
+.s105-profile-notifications .s105-profile-notification-link {
+  appearance:none;
+  -webkit-appearance:none;
+  position:relative;
+  display:grid;
+  place-items:center;
+  flex:0 0 48px;
+  width:48px;
+  height:48px;
+  padding:0;
+  margin:0;
+  border:1px solid #d7e6fb;
+  border-radius:16px;
+  background:linear-gradient(145deg,#f1f7ff,#e1efff);
+  color:#142452;
+  box-shadow:0 3px 9px rgba(45,95,160,.12);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.s105-profile-notifications .s105-profile-notification-link svg {
+  display:block;
+  width:23px;
+  height:23px;
+}
+.s105-profile-notifications .s105-notification-dot {
+  position:absolute;
+  top:-3px;
+  right:-3px;
+  width:10px;
+  height:10px;
+  border:2px solid #fff;
+  border-radius:50%;
+  background:#f43f5e;
+  box-sizing:content-box;
+}
+@media(max-width:360px) {
+  .s105-profile-notifications .s105-profile-notification-link {
+    width:44px;
+    height:44px;
+    flex-basis:44px;
+    border-radius:14px;
+  }
+  .s105-profile-notifications .s105-profile-notification-link svg {width:21px;height:21px}
+}
+
+/* v106 — real notification inbox, consistent with Sbewo light design. */
+.s106-inbox-page{padding-bottom:30px}
+.s106-inbox-head{margin:10px 0 18px}
+.s106-inbox-head h1{margin:0 0 6px;font-size:23px;line-height:1.2;color:#17284c}
+.s106-inbox-head p{margin:0;color:#71809c;font-size:12px;line-height:1.45}
+.s106-inbox-list{display:flex;flex-direction:column;gap:10px}
+.s106-entry{width:100%;box-sizing:border-box;border:1px solid #e1ebf8;background:#fff;border-radius:21px;padding:15px 13px;display:flex;align-items:center;text-align:left;gap:12px;color:#19294b;box-shadow:0 4px 12px rgba(30,75,145,.055)}
+.s106-entry:disabled{opacity:1;cursor:default}
+.s106-entry.s106-unread{border-color:#bedcff;background:#f5faff}
+.s106-entry-icon{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:14px;background:#e0efff;color:#0878ee}
+.s106-entry-icon svg{width:21px;height:21px}
+.s106-tone-delete{background:#ffe9ed;color:#d62d54}
+.s106-tone-edit{background:#e0efff;color:#1278e8}
+.s106-tone-capture{background:#e0f4ff;color:#1484ba}
+.s106-tone-news{background:#e9e6ff;color:#6951cf}
+.s106-entry-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.s106-entry-body strong{font-size:14px;line-height:1.3;color:#18294e}
+.s106-entry-body small{font-size:12px;line-height:1.4;color:#536786;overflow-wrap:anywhere}
+.s106-entry-body time{font-size:10.5px;color:#8897ae}
+.s106-entry > svg{width:17px;height:17px;flex:none;color:#8597b0}
+.s106-inbox-empty{margin:22px 0;padding:32px 20px;background:#fff;border:1px solid #e1ebf8;border-radius:22px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center}
+.s106-inbox-empty svg{height:32px;width:32px;color:#4b96e5}
+.s106-inbox-empty strong{color:#1d3158;font-size:15px}
+.s106-inbox-empty p{margin:0;color:#70809b;font-size:12px;line-height:1.5}
+.s106-inbox-settings,.s106-retry{margin-top:17px;padding:13px 15px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border-radius:15px;border:1px solid #d6e7fb;background:#f3f8ff;color:#2866aa;font-size:13px;font-weight:650}
+.s106-inbox-settings svg{width:17px;height:17px}
+.s106-inbox-note{font-size:13px;color:#65799c;line-height:1.5}
+.s105-profile-notifications .s105-profile-notification-link:not(:has(.s105-notification-dot)){box-shadow:0 3px 9px rgba(45,95,160,.12)}
+
+.s106-news-body{background:#fff;border:1px solid #e1ebf8;border-radius:21px;padding:19px;color:#2b3d5b;line-height:1.6}
+.s106-news-body p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 20px;font-size:14px}
+.s106-news-body time{font-size:11px;color:#8d9bb0}
+
+/* v107 — notification inbox reference: airy heading, original blue bell, white event cards. */
+.s13-app .s106-inbox-page{padding:13px 16px 34px;max-width:570px;box-sizing:border-box}
+.s106-inbox-hero{display:flex;align-items:center;justify-content:space-between;position:relative;gap:0;min-height:132px;margin:0 0 17px;isolation:isolate}
+.s106-inbox-hero-copy{flex:1 1 62%;min-width:0;position:relative;z-index:1;padding:12px 0 8px}
+.s106-inbox-hero h1{margin:0 0 9px!important;font-size:clamp(26px,7.1vw,35px)!important;letter-spacing:-1.05px;line-height:1.13;color:#11234a;font-weight:850}
+.s106-inbox-hero p{margin:0!important;font-size:clamp(12px,3.65vw,15px);line-height:1.42;color:#677794;max-width:275px}
+.s106-bell-mascot{width:35%;height:136px;max-width:160px;flex:none;object-fit:contain;object-position:center;display:block;pointer-events:none;margin-left:-6px;filter:none}
+.s106-inbox-list{display:flex;flex-direction:column;gap:10px}
+.s106-inbox-page .s106-entry{width:100%;min-height:78px;padding:15px 14px;display:flex;align-items:center;gap:15px;border-radius:21px;border:1px solid rgba(255,255,255,.86);background:#fff;box-shadow:0 6px 14px rgba(39,100,180,.095);color:#10214a;text-align:left}
+.s106-inbox-page .s106-entry.s106-unread{background:#fff;border-color:#c4dffe;box-shadow:0 5px 14px rgba(25,116,226,.11)}
+.s106-inbox-page .s106-entry-icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;display:grid;place-items:center;background:#e0efff;color:#0878ee}
+.s106-inbox-page .s106-entry-icon svg{width:24px;height:24px;stroke-width:2.4}
+.s106-inbox-page .s106-tone-delete{background:#ffe5ed;color:#df2955}
+.s106-inbox-page .s106-tone-edit{background:#dceeff;color:#0679f4}
+.s106-inbox-page .s106-tone-capture{background:#daf4fc;color:#078cb5}
+.s106-inbox-page .s106-tone-news{background:#ede9ff;color:#7361cc}
+.s106-inbox-page .s106-entry-body{gap:3px;min-width:0;flex:1}
+.s106-inbox-page .s106-entry-body strong{font-size:clamp(14px,3.6vw,17px);font-weight:800;line-height:1.22;color:#102249;letter-spacing:-.2px}
+.s106-inbox-page .s106-entry-body small{font-size:12px;line-height:1.25;color:#607092;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s106-inbox-page .s106-entry-body time{font-size:12px;line-height:1.3;color:#7582a0}
+.s106-inbox-page .s106-entry>svg{width:19px;height:19px;flex:none;color:#7d89a4}
+@media(max-width:360px){.s13-app .s106-inbox-page{padding-inline:12px}.s106-inbox-hero{min-height:120px}.s106-bell-mascot{height:121px;width:33%}.s106-inbox-page .s106-entry{gap:11px;padding:12px 11px}.s106-inbox-page .s106-entry-icon{width:40px;height:40px;flex-basis:40px}.s106-inbox-page .s106-entry-body strong{font-size:13.4px}.s106-inbox-page .s106-entry-body time{font-size:11px}}
 
 /* v104 — fourth nav destination, following existing pill design. */
 .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
