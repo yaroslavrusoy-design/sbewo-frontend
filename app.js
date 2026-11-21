@@ -604,12 +604,12 @@ function s106InboxPage(){
   const when=new Date(Number(a.time||0)*1000).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
   return `<button type="button" class="s106-entry ${a.unread?'s106-unread':''}" ${news?'data-inbox-news="'+esc(a.id)+'"':'data-inbox-event="'+esc(a.message_key||'')+'"'}>
     <span class="s106-entry-icon s106-tone-${esc(a.category)}">${ico(glyph)}</span>
-    <span class="s106-entry-body"><strong>${esc(a.title)}</strong><small>${esc(a.body)}</small><time>${esc(when)}</time></span>
-    ${!news?ico('chevron'):''}
+    <span class="s106-entry-body"><strong>${esc(a.title)}</strong>${a.body?`<small>${esc(a.body)}</small>`:''}<time>${esc(when)}</time></span>
+    ${ico('chevron')}
   </button>`;
  };
  return `<section class="s13-detail-page s106-inbox-page" aria-label="Входящие уведомления">
-  <div class="s106-inbox-head"><h1>Уведомления</h1><p>Новости Sbewo, удаления, изменения и сохранённые медиа</p></div>
+  <div class="s106-inbox-hero"><div class="s106-inbox-hero-copy"><h1>Уведомления</h1><p>Новости Sbewo, удаления, изменения и сохранённые медиа</p></div><img class="s106-bell-mascot" src="./sbewo-notification-bell.png" alt="" aria-hidden="true" decoding="async" fetchpriority="high"></div>
   ${s106Inbox.loading&&!s106Inbox.loaded?'<p class="s106-inbox-note" role="status">Загружаем уведомления…</p>':
   s106Inbox.error?`<p class="s106-inbox-note" role="alert">${esc(s106Inbox.error)}</p><button class="s106-retry" data-inbox-retry="1">Повторить</button>`:
   xs.length?`<div class="s106-inbox-list">${xs.map(entry).join('')}</div>`:
