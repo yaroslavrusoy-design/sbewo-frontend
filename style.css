@@ -3260,3 +3260,74 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
 @media(max-width:360px){.s13-app .s112-features{padding-left:2px;padding-right:2px;gap:6px}.s112-group{padding:6px}.s112-media-feature{height:115px}.s112-media-text strong{font-size:12.5px}.s112-media-text small{font-size:9px}.s112-tool-copy strong{font-size:10.2px}.s112-tool-copy small{font-size:8.5px}.s112-circle-feature,.s112-clone-feature{height:149px}.s112-tool{height:71.5px;padding-left:42px}.s112-tool-icon{left:5px;width:29px}}
 /* Scoped colour support; no changes to other pages or to the bottom navigation. */
 @media(prefers-color-scheme:dark){.s13-app .s112-features{color:#0b1740}}
+
+
+/* v113 — readable mobile layout; only Services content is affected. */
+.s13-app .s112-features{box-sizing:border-box;width:100%;max-width:570px;padding:8px 10px 125px;gap:11px}
+.s112-group{padding:11px 11px 12px;border-radius:26px;box-shadow:0 7px 21px rgba(65,118,215,.13)}
+.s112-group-head{gap:12px;padding:0 8px 11px;min-height:56px}
+.s112-group-icon{width:52px;height:52px;flex-basis:52px;border-radius:17px}
+.s112-group-icon i,.s112-group-icon.messages i,.s112-group-icon.automation i{font-size:28px}
+.s112-group-title{gap:3px}
+.s112-group-title strong{font-size:21px;line-height:1.08;letter-spacing:-.45px}
+.s112-group-title small{font-size:12.5px;line-height:1.2}
+.s112-media-feature{height:162px;border-radius:21px;padding:10px 55px 10px 2px}
+.s112-media-feature>img{width:45%;height:120%;margin-left:-5px}
+.s112-media-text{gap:5px}
+.s112-media-text strong{font-size:16px;line-height:1.04;letter-spacing:-.25px}
+.s112-media-text small{font-size:11.6px;line-height:1.19}
+.s112-feature-badge{font-size:10px;padding:5px 9px}
+.s112-command{font-size:12px;padding:5px 10px}
+.s112-media-feature>.s112-command{right:8px;top:36px}
+.s112-two-columns{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px}
+.s112-circle-feature,.s112-clone-feature{height:208px;border-radius:21px}
+.s112-circle-feature>img{height:128px;top:-3px;left:6%;width:88%}
+.s112-circle-feature>.s112-command{top:101px;right:7px}
+.s112-circle-info{left:11px;right:9px;bottom:12px;gap:5px}
+.s112-circle-info strong,.s112-clone-info strong{font-size:15.5px;line-height:1.07}
+.s112-circle-info small,.s112-clone-info small{font-size:11px;line-height:1.19}
+.s112-side-tools{gap:8px}
+.s112-tool{height:100px;border-radius:19px;padding:21px 7px 9px 44px}
+.s112-tool-icon{left:7px;top:26px;width:32px;height:32px}
+.s112-tool-copy{gap:7px}
+.s112-tool-copy strong{font-size:13px;line-height:1.07;max-width:100%;padding-right:22px;overflow-wrap:normal}
+.s112-tool-copy small{font-size:10.6px;line-height:1.17;overflow-wrap:break-word}
+.s112-tool>.s112-command{top:5px;right:5px;padding:3px 6px;font-size:10.5px}
+/* The clone mascot and the copy no longer occupy the same region. */
+.s112-clone-feature{height:208px;background:linear-gradient(180deg,#9dccff 0%,#a9d1ff 56%,#e0efff 100%)}
+.s112-clone-feature>img{left:1%;top:10px;width:98%;height:122px;object-position:center center}
+.s112-clone-feature>.s112-feature-badge{top:5px;left:auto;right:6px;font-size:9px;padding:4px 6px;z-index:2}
+.s112-clone-feature>.s112-command{top:108px;right:7px;font-size:10px;padding:3px 7px;z-index:2}
+.s112-clone-info{left:10px;right:9px;top:auto;bottom:10px;gap:5px;z-index:2}
+.s112-clone-info strong{font-size:15px}
+.s112-clone-info small{font-size:10.7px}
+@media(max-width:390px){
+ .s13-app .s112-features{padding-left:7px;padding-right:7px;gap:9px}
+ .s112-group{padding:9px 9px 10px}
+ .s112-group-head{padding-bottom:9px;gap:9px}
+ .s112-group-icon{width:47px;height:47px;flex-basis:47px}
+ .s112-group-title strong{font-size:19px}
+ .s112-group-title small{font-size:11.5px}
+ .s112-media-feature{height:165px;padding-right:45px}
+ .s112-media-feature>img{width:43%}
+ .s112-media-text strong{font-size:14px}
+ .s112-media-text small{font-size:10.5px}
+ .s112-media-feature>.s112-command{right:5px;font-size:11px;padding:4px 7px}
+ .s112-two-columns{gap:7px}
+ .s112-circle-feature,.s112-clone-feature{height:218px}
+ .s112-side-tools{gap:6px}
+ .s112-tool{height:106px;padding:22px 6px 8px 40px}
+ .s112-tool-icon{left:5px;width:29px;height:29px}
+ .s112-tool-copy strong{font-size:12px}
+ .s112-tool-copy small{font-size:10px}
+ .s112-clone-feature>img{height:126px}
+ .s112-clone-feature>.s112-command{top:115px}
+}
+@media(max-width:340px){
+ .s112-tool{padding-left:7px;padding-top:32px}
+ .s112-tool-icon{top:5px}
+ .s112-tool-copy strong{padding-left:25px;min-height:20px}
+ .s112-tool-copy small{font-size:9.6px}
+ .s112-media-text strong{font-size:13px}
+ .s112-media-text small{font-size:10px}
+}
