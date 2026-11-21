@@ -1,0 +1,284 @@
+/* Sbewo 2026 appearance system. No light-theme selector is modified. */
+:root {
+ --sbewo-light-background:#f4f6f8;
+ --sbewo-light-surface:#ffffff;
+ --sbewo-dark-background:#0B1120;
+ --sbewo-dark-surface:#1A253B;
+ --sbewo-dark-surface-raised:#23324D;
+ --sbewo-dark-blue:#1685FF;
+ --sbewo-dark-cyan:#38BDF8;
+ --sbewo-dark-text:#F8FAFC;
+ --sbewo-dark-muted:#B8C5DA;
+ --sbewo-dark-border:#334766;
+ --sbewo-dark-positive:#22C55E;
+ --sbewo-dark-danger:#F43F5E;
+ --sbewo-dark-warning:#F59E0B;
+}
+html[data-sbewo-theme="dark"]{
+ --background:var(--sbewo-dark-background);
+ --sky:var(--sbewo-dark-background);
+ --surface:var(--sbewo-dark-surface);
+ --text:var(--sbewo-dark-text);
+ --muted:var(--sbewo-dark-muted);
+ --line:var(--sbewo-dark-border);
+ --blue:var(--sbewo-dark-blue);
+ --deep:#09254a;
+ --shadow:0 6px 17px rgba(0,0,0,.14);
+ --s13-text:var(--sbewo-dark-text);
+ --ui-primary:var(--sbewo-dark-blue);
+ color-scheme:dark;
+ background:var(--sbewo-dark-background);
+}
+html[data-sbewo-theme="dark"] body,
+html[data-sbewo-theme="dark"] #app,
+html[data-sbewo-theme="dark"] .app,
+html[data-sbewo-theme="dark"] .app.s13-app,
+html[data-sbewo-theme="dark"] .app.s13-app.s13-has-bottom,
+html[data-sbewo-theme="dark"] .app.s13-app.s13-no-bottom,
+html[data-sbewo-theme="dark"] .app.s13-app > .s13-main,
+html[data-sbewo-theme="dark"] .app.s13-app .s13-main,
+html[data-sbewo-theme="dark"] .s13-no-bottom .s13-main:has(.s91-pricing-page),
+html[data-sbewo-theme="dark"] .app.s13-app.s13-no-bottom > .s13-main:has(> .s91-pricing-page){
+ background:var(--sbewo-dark-background)!important;
+ background-image:none!important;
+ color:var(--sbewo-dark-text)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :where(h1,h2,h3,h4,h5,h6,strong),
+html[data-sbewo-theme="dark"] .s13-app :where(.s13-row-copy strong,.s78-row-text strong,.s13-chat-row strong,.s14-profile-info strong,.s19-chat-name,.s19-event-title,.s13-event-title,.s102-heading){color:var(--sbewo-dark-text)!important}
+html[data-sbewo-theme="dark"] .s13-app :where(p,small,.s13-row-copy small,.s78-row-text small,.s13-chat-row small,.s19-event-preview,.s13-footnote,.s19-setting-info,.s102-notify-copy small){color:var(--sbewo-dark-muted)!important}
+/* All non-promotional surfaces use one shared graphite-blue token. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s13-panel,.s13-chat-row,.s13-message,.s13-detail-quote,.s13-faq,.s13-sheet,
+ .s14-profile-card,.s14-settings-card,.s21-profile-card,.s19-chat-card,.s19-chat-row,
+ .s19-settings-group,.s19-toggle-row,.s78-settings-group,.s78-row,
+ .s13-empty,.s84-groups-empty,.s19-card,.s19-event,.s13-event,
+ .s14-event-card,.s14-event-stack .event,.s39-event-card,.s39-day-heading,
+ .s50-archive-control,.s50-chat-card,.s50-chat-page .card,
+ .s52-edited-detail,.s52-revision-body,.s56-deleted-card,.s56-saved-copy,
+ .s102-notifications-page .s102-notify-row,.s102-notify-row,
+ .s91-feature-column,.s91-feature-list,.s91-plan,.s91-groups-placeholder,
+ .s13-option-grid button,.s13-numbered,.s13-timeline-item p,
+ .s78-info-page,.link-row,.card,.notice,.s13-search,.s19-search,
+ .s25-profile,.s98-status-profile,.s19-settings-card,.s19-alias-editor
+ ){
+ background:var(--sbewo-dark-surface)!important;
+ background-image:none!important;
+ border-color:var(--sbewo-dark-border)!important;
+ color:var(--sbewo-dark-text)!important;
+ box-shadow:0 5px 15px rgba(0,0,0,.12)!important;
+}
+/* Narrower nested surfaces should look like parts of the same card, not separate tiles. */
+html[data-sbewo-theme="dark"] .s13-app :is(.s78-row,.s13-list-row,.s19-toggle-row,.s102-notify-row){
+ box-shadow:none!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s13-list-row,.s78-row,.s19-toggle-row,.s19-setting-row,
+ .s19-settings-group .link-row,.s13-numbered,.s102-notify-row
+ ){border-bottom-color:var(--sbewo-dark-border)!important}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s13-row-copy,.s78-row-text,.s13-chat-row,.s13-faq,.s19-chat-card,
+ .s19-settings-group,.s13-message,.s102-notify-row
+ ){color:var(--sbewo-dark-text)!important}
+/* Secondary chips, selectors and labels. Active states retain bright blue. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s13-segment,.s13-segment button,.s19-segment,.s19-segment button,
+ .s91-plan-switch,.s91-plan-switch button,.s19-search,
+ .s13-search,.s13-actions-row button,.s13-tab-label,
+ .s14-home .s13-segment button,.s19-chat-filter,
+ .s50-filter,.s39-day-badge,.s39-date-chip,
+ .s65-preview-row,.s65-preview-row button,.s65-preview-options button,
+ .s13-row-ic,.s13-timeline-item time,.s39-time,.s39-event-time,
+ .s91-feature-icon,.s91-plan-radio,.s19-setting-icon,
+ .s13-bottom button:not(.active)
+ ){
+ background-color:var(--sbewo-dark-surface-raised)!important;
+ background-image:none!important;
+ border-color:var(--sbewo-dark-border)!important;
+ color:var(--sbewo-dark-muted)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s13-segment button.active,.s19-segment button.active,.s91-plan-switch button.active,.s65-preview-row button.active){
+ background:linear-gradient(180deg,#169cff,#0065ef)!important;
+ border-color:transparent!important;
+ color:#fff!important;
+}
+/* Form controls, placeholder and error states. */
+html[data-sbewo-theme="dark"] .s13-app :is(input,textarea,select){
+ background:var(--sbewo-dark-surface)!important;
+ color:var(--sbewo-dark-text)!important;
+ border-color:var(--sbewo-dark-border)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(input,textarea)::placeholder{color:#91a4c2!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s13-danger,.s13-danger-icon,.error-msg){background:#471c32!important;color:#ffd4dc!important;border-color:#783448!important}
+html[data-sbewo-theme="dark"] .s13-app .s13-check-result.good{background:#123f35!important;color:#b4f8d0!important}
+html[data-sbewo-theme="dark"] .s13-app .s13-check-result.bad{background:#471c32!important;color:#ffd4dc!important}
+/* Timeline: preserve the same markers and geometry, change only colors. */
+html[data-sbewo-theme="dark"] .s13-app :is(.s13-timeline-item,.s13-event,.s19-event,.s39-event-item,.s39-event-card){color:var(--sbewo-dark-text)!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s13-timeline-item>div,.s39-timeline,.s39-timeline::before){border-color:var(--sbewo-dark-cyan)!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s13-status,.s39-status,.s39-event-status,.s19-event-kind){color:var(--sbewo-dark-cyan)}
+/* Keep distinctive hero banners and mascot images intact. */
+html[data-sbewo-theme="dark"] .s13-app :is(.s52-sub-card,.s77-tariffs-card){
+ background:linear-gradient(135deg,#123e90 0%,#0751b6 100%)!important;
+ border:1px solid #2173d5!important;
+ color:#fff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s52-sub-card,.s77-tariffs-card) :is(h1,h2,h3,strong,p,span){color:#fff!important}
+html[data-sbewo-theme="dark"] .s13-app .s52-sub-cta{
+ background:linear-gradient(180deg,#f8fbff,#cfe5ff)!important;color:#0664df!important;
+ border-color:#d9ebff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s65-status-card,.s65-card,.s60-status-card){
+ /* Preserve original distinct subscription status colors; never cover Kyu. */
+ color:#fff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s65-status-card,.s65-card,.s60-status-card) :is(h1,h2,h3,strong,p,span){color:inherit}
+html[data-sbewo-theme="dark"] .s13-app :is(.s65-card-secondary,.s37-actions .secondary){background:transparent!important;color:#fff!important;border-color:rgba(237,247,255,.72)!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s65-card-primary,.s52-sub-cta){color:#075fe0!important}
+/* Settings icons keep individual colors but switch light pastel backgrounds to dark tints. */
+html[data-sbewo-theme="dark"] .s13-app .s78-row-icon.s78-tone-blue{background:#123c70!important;color:#48b6ff!important}
+html[data-sbewo-theme="dark"] .s13-app .s78-row-icon.s78-tone-pink{background:#542443!important;color:#ff75af!important}
+html[data-sbewo-theme="dark"] .s13-app .s78-row-icon.s78-tone-green{background:#164c41!important;color:#40d9a0!important}
+html[data-sbewo-theme="dark"] .s13-app .s78-row-icon.s78-tone-violet{background:#372465!important;color:#bb96ff!important}
+html[data-sbewo-theme="dark"] .s13-app .s78-row-icon.s78-tone-amber{background:#554222!important;color:#ffca65!important}
+html[data-sbewo-theme="dark"] .s13-app .s78-row-icon.s78-tone-sky{background:#16465c!important;color:#64d3ff!important}
+/* Pricing page: dark panels, same layout, same mascot. */
+html[data-sbewo-theme="dark"] .s13-app .s91-pricing-page,
+html[data-sbewo-theme="dark"] .s13-app .s91-pricing-head{background:transparent!important;background-image:none!important;color:var(--sbewo-dark-text)!important}
+html[data-sbewo-theme="dark"] .s13-app .s91-pricing-page :is(h1,h2,h3,strong){color:var(--sbewo-dark-text)!important}
+html[data-sbewo-theme="dark"] .s13-app .s91-pricing-page :is(p,small){color:var(--sbewo-dark-muted)!important}
+html[data-sbewo-theme="dark"] .s13-app .s91-plan.selected{background:#123c76!important;border-color:#1685ff!important}
+html[data-sbewo-theme="dark"] .s13-app .s91-checkout{border-color:#297ce6!important}
+html[data-sbewo-theme="dark"] .s13-app .s91-checkout :is(strong,span){color:#fff!important}
+/* Navigation capsule: no backplate, no decorative overlay, correct dark shadow. */
+html[data-sbewo-theme="dark"] .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom{
+ background:#18263e!important;
+ background-image:none!important;
+ border-color:var(--sbewo-dark-border)!important;
+ box-shadow:0 -3px 12px rgba(0,0,0,.22),0 12px 26px rgba(0,0,0,.32),-9px 10px 25px -12px rgba(0,0,0,.28),9px 10px 25px -12px rgba(0,0,0,.28)!important;
+}
+html[data-sbewo-theme="dark"] .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button{
+ color:#d5deef!important;background:transparent!important;background-image:none!important;
+}
+html[data-sbewo-theme="dark"] .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button.active{
+ color:#fff!important;background:linear-gradient(160deg,#114586,#0965d2)!important;
+}
+html[data-sbewo-theme="dark"] .app.s13-app.s13-has-bottom .s13-bottom.s21-bottom button.active i{color:#38bdf8!important}
+/* New appearance screen, reused in both themes. */
+.s-theme-page{padding-bottom:30px}
+.s-theme-description{font-size:13px;line-height:1.5;margin:0 0 16px;color:#627697}
+.s-theme-options{display:flex;flex-direction:column;gap:10px}
+.s-theme-option{width:100%;min-height:76px;display:flex;align-items:center;text-align:left;gap:12px;padding:12px 15px;background:#fff;border:1px solid #dbe7f7;border-radius:18px;color:#142650;box-shadow:0 4px 14px rgba(32,92,155,.07)}
+.s-theme-option.selected{border-color:#1685ff;box-shadow:0 0 0 1px rgba(22,133,255,.20)}
+.s-theme-option-icon{font-size:25px;flex:0 0 36px;text-align:center}
+.s-theme-option-text{display:flex;flex:1;flex-direction:column;gap:5px;min-width:0}
+.s-theme-option-text strong{font-size:15px}
+.s-theme-option-text small{font-size:12px;color:#677a9c;line-height:1.35}
+.s-theme-option-mark{height:23px;width:23px;flex:0 0 23px;border:1px solid #cbd9ed;border-radius:50%;display:grid;place-items:center;color:transparent}
+.s-theme-option.selected .s-theme-option-mark{background:#1685ff;border-color:#1685ff;color:#fff}
+.s-theme-option-mark svg{width:15px;height:15px}
+html[data-sbewo-theme="dark"] .s-theme-description{color:var(--sbewo-dark-muted)}
+html[data-sbewo-theme="dark"] .s-theme-option{background:var(--sbewo-dark-surface);border-color:var(--sbewo-dark-border);color:var(--sbewo-dark-text);box-shadow:0 5px 14px rgba(0,0,0,.12)}
+html[data-sbewo-theme="dark"] .s-theme-option.selected{border-color:var(--sbewo-dark-blue);box-shadow:0 0 0 1px rgba(22,133,255,.24)}
+html[data-sbewo-theme="dark"] .s-theme-option-text small{color:var(--sbewo-dark-muted)}
+html[data-sbewo-theme="dark"] .s-theme-option-mark{border-color:var(--sbewo-dark-border)}
+html[data-sbewo-theme="dark"] .s-theme-option.selected .s-theme-option-mark{background:var(--sbewo-dark-blue);border-color:var(--sbewo-dark-blue)}
+@media(prefers-reduced-motion:reduce){.s-theme-option{transition:none!important}}
+/* Additional nested detail, storage, archive, modal and notification surfaces. */
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s102-group,.s102-notify-note,.s102-open-bot,
+ .s50-filter-trigger,.s50-filter-menu,.s50-filter-menu button,
+ .s50-toolbar,.s50-export,.s50-clear-btn,
+ .s50-chat-header,.s50-chat-page .s19-events,.s50-chat-page .s19-chat-detailhead,
+ .s48-clear-option,.s48-clear-card,.s48-clear-page .s13-panel,
+ .s52-edited-card,.s52-detail-card,.s52-revision-card,
+ .s56-deleted-detail,.s56-edited-detail,
+ .s19-alias-editor,.s19-chat-detailhead,
+ .s13-sheet,.s19-message,.s19-quote,.s13-conversation .s13-message,
+ .s19-events .event,.s39-event,.s39-item,.s39-entry,
+ .s39-day-pill,.s19-chat-list button,.s19-chat-entry,
+ .s98-avatar-ring,.s96-status-profile,.s98-status-profile,
+ .s19-settings-panel,.s13-list-row,.s13-actions-row button,
+ .s19-pricing-option,.s19-price-option,.s91-plan-switch,
+ .s91-groups-placeholder,.s91-feature-list,.s91-feature-column
+ ){
+ background:var(--sbewo-dark-surface)!important;
+ background-image:none!important;
+ border-color:var(--sbewo-dark-border)!important;
+ color:var(--sbewo-dark-text)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s102-notifications-page,.s13-detail-page,.s13-mainpage,
+ .s19-page,.s50-chat-page,.s91-pricing-page
+ ){background:transparent!important;background-image:none!important;color:var(--sbewo-dark-text)!important}
+html[data-sbewo-theme="dark"] .s102-notifications-page::before,
+html[data-sbewo-theme="dark"] .s13-app .s14-connect-card::before,
+html[data-sbewo-theme="dark"] .s13-app .s91-pricing-page::before,
+html[data-sbewo-theme="dark"] .s13-app .s91-pricing-page::after{
+ content:none!important;display:none!important;background:none!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s102-group-title,.s102-heading h1,.s102-notify-copy strong,
+ .s50-chat-page h1,.s39-day-pill,.s39-event-title,
+ .s19-chat-detailhead h1,.s13-numbered,.s91-plan-switch button,
+ .s91-plan,.s50-filter-trigger,.s50-filter-menu button,
+ .s50-archive-description strong,.s91-feature-list,
+ .s78-chevron,.s102-group-title svg
+ ){color:var(--sbewo-dark-text)!important}
+html[data-sbewo-theme="dark"] .s13-app :is(
+ .s102-heading p,.s102-notify-copy small,.s50-archive-description small,
+ .s50-chat-page .s61-history-hint,.s19-chat-detailhead p,
+ .s102-notify-note,.s50-chat-header p,.s13-empty p,
+ .s39-event-preview,.s50-chat-page .s19-footnote
+ ){color:var(--sbewo-dark-muted)!important}
+html[data-sbewo-theme="dark"] .s13-app .s102-notify-row+.s102-notify-row::before{background:var(--sbewo-dark-border)!important}
+html[data-sbewo-theme="dark"] .s13-app .s78-row+.s78-row{border-top-color:var(--sbewo-dark-border)!important}
+html[data-sbewo-theme="dark"] .s13-app .s102-iconbox--blue{background:#153e6b!important;color:#57baff!important}
+html[data-sbewo-theme="dark"] .s13-app .s102-iconbox--violet{background:#382765!important;color:#b9a2ff!important}
+html[data-sbewo-theme="dark"] .s13-app .s102-iconbox--cyan{background:#154761!important;color:#65d7ff!important}
+html[data-sbewo-theme="dark"] .s13-app .s102-iconbox--rose{background:#55243d!important;color:#ff89ad!important}
+html[data-sbewo-theme="dark"] .s13-app .s102-iconbox--amber{background:#574126!important;color:#ffd28b!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s102-switch:not(.active),.s19-switch:not(.active),.switch[data-notify]:not(.active)){
+ background:#42536c!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s102-switch.active,.s19-switch.active,.switch[data-notify].active){background:var(--sbewo-dark-blue)!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s13-btn:not(.secondary):not(.danger),.s50-export,.s102-open-bot):focus-visible{outline:2px solid var(--sbewo-dark-cyan);outline-offset:2px}
+html[data-sbewo-theme="dark"] .s13-app :is(.s65-card,.s65-status-card,.s60-status-card,.s37-hero) :is(h1,h2,h3,p,strong,small){
+ color:#fff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s65-card-primary,.s52-sub-cta) :is(span,strong,svg){color:inherit!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s13-footnote,.s19-footnote,.s78-info-page>p){color:var(--sbewo-dark-muted)!important}
+/* Cover remaining unthemed feed states discovered in narrow-phone inspection. */
+html[data-sbewo-theme="dark"] .s13-app .s65-preview-panel{
+ background:var(--sbewo-dark-surface)!important;
+ border:1px solid var(--sbewo-dark-border)!important;
+ box-shadow:0 5px 15px rgba(0,0,0,.12)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s65-preview-label{color:var(--sbewo-dark-muted)!important}
+html[data-sbewo-theme="dark"] .s13-app .s65-preview-row button:not(.active){
+ background:var(--sbewo-dark-surface-raised)!important;
+ color:var(--sbewo-dark-muted)!important;
+ border-color:var(--sbewo-dark-border)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s19-chips button:not(.active),
+html[data-sbewo-theme="dark"] .s13-app .s19-scroll-tabs button:not(.active){
+ background:var(--sbewo-dark-surface-raised)!important;
+ color:var(--sbewo-dark-muted)!important;
+ border-color:var(--sbewo-dark-border)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s19-chips button.active,
+html[data-sbewo-theme="dark"] .s13-app .s19-scroll-tabs button.active{
+ background:var(--sbewo-dark-blue)!important;color:#fff!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s13-demo{background:#3a3222!important;color:#ffe4a0!important}
+html[data-sbewo-theme="dark"] .s13-app :is(.s39-day-heading,.s39-day-pill){background:transparent!important;color:var(--sbewo-dark-text)!important}
+html[data-sbewo-theme="dark"] .s13-app .s39-day-pill{
+ background:var(--sbewo-dark-surface)!important;
+ border-color:var(--sbewo-dark-border)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s19-event-card,.s39-event-card,.s14-event-stack .s13-event) :is(p,small,em){
+ color:var(--sbewo-dark-muted)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app :is(.s19-event-card,.s39-event-card,.s14-event-stack .s13-event) :is(strong,time){
+ color:var(--sbewo-dark-text)!important;
+}
+html[data-sbewo-theme="dark"] .s13-app .s19-chat-info em{color:var(--sbewo-dark-muted)!important}
+html[data-sbewo-theme="dark"] .s13-app .s19-chat-info small{color:var(--sbewo-dark-cyan)!important}
