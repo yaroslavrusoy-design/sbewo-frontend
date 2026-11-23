@@ -504,13 +504,28 @@ function s141EventIdentity(m){
  return `${peer}|${sender}`;
 }
 function s141HomeEvents(items){
- let previous=null,previousDay=null;
- return s39DatedEvents(items,m=>{
+ // Consecutive events from the same peer/sender and calendar day share ONE card.
+ // Never merge across another sender or date: the timeline stays chronological.
+ const result=[];
+ let group=[],lastIdentity=null,lastDay=null;
+ const flush=()=>{
+  if(!group.length)return;
+  if(group.length===1){result.push(s13Event(group[0]));group=[];return;}
+  const title=s13Human(group[0].chat);
+  const countLabel=`${group.length} ${group.length%10===1&&group.length%100!==11?'событие':group.length%10>=2&&group.length%10<=4&&(group.length%100<12||group.length%100>14)?'события':'событий'}`;
+  result.push(`<div class="s141-event-group" role="group" aria-label="${esc(title)}: ${countLabel}"><div class="s141-event-group-header"><strong>${esc(title)}</strong><span>${countLabel}</span></div><div class="s141-event-group-items">${group.map(m=>s13Event(m,{repeat:true})).join('')}</div></div>`);
+  group=[];
+ };
+ for(const m of items){
   const day=s39EventDayKey(m),identity=s141EventIdentity(m);
-  const repeat=previous===identity&&previousDay===day;
-  previous=identity;previousDay=day;
-  return s13Event(m,{repeat,groupStart:!repeat});
- });
+  if(day!==lastDay||identity!==lastIdentity){
+   flush();
+   if(day!==lastDay)result.push(`<div class="s39-day-heading"><span class="s39-day-pill">${s13Icon('calendar')} ${s39EventDateLabel(day)}</span></div>`);
+  }
+  group.push(m);lastIdentity=identity;lastDay=day;
+ }
+ flush();
+ return result.join('');
 }
 // Telegram private chats have positive peer IDs; group/supergroup IDs are negative.
 // Do not infer chat type from the display name: changing names must not move events.
