@@ -3859,3 +3859,14 @@ html.sbewo-fullscreen .s13-app{
  box-sizing:border-box;
  padding-top:var(--sbewo-fullscreen-top, 0px);
 }
+
+/* Native Telegram MainButton: hide only the action replaced by Telegram's bar.
+   Unsupported Telegram clients and regular browsers retain the HTML buttons. */
+#app[data-native-main="welcome"] [data-action="next-onboarding"],
+#app[data-native-main="chat-clear"] [data-clear-submit],
+#app[data-native-main="note"] [data-s19-note-save],
+#app[data-native-main="pro"] [data-s51-checkout]{display:none!important;}
+#app[data-native-main="welcome"] .s13-onboard-actions,
+#app[data-native-main="chat-clear"] .s48-clean-page,
+#app[data-native-main="note"] .s19-note-editor,
+#app[data-native-main="pro"] .s91-pricing-page{padding-bottom:max(22px,env(safe-area-inset-bottom,0px));}

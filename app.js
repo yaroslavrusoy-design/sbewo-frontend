@@ -1093,4 +1093,60 @@ s135Viewport();
 // Introspection and functional smoke checks without exposing private Telegram data.
 window.SbewoNavigation={current:()=>page,depth:()=>s135CurrentRoute,back:()=>back()};
 
+// Telegram's native main action: shown only when this screen has one primary CTA.
+// HTML actions remain intact as a browser/unsupported-client fallback.
+const s150MainButton=tg?.MainButton||tg?.BottomButton;
+let s150NativeTarget='';
+let s150NativeEnabled=false;
+function s150MainClick(){
+ if(!s150NativeEnabled||!s150NativeTarget)return;
+ const button=document.querySelector(s150NativeTarget);
+ if(button&&!button.disabled)button.click(); // Preserve existing API calls and confirmation dialogs.
+}
+let s150MainRegistered=false;
+function s150SyncMainButton(){
+ const root=document.getElementById('app');
+ if(!root)return;
+ root.removeAttribute('data-native-main');
+ s150NativeTarget='';s150NativeEnabled=false;
+ if(!s150MainButton||typeof s150MainButton.show!=='function'||typeof s150MainButton.hide!=='function'||typeof s150MainButton.onClick!=='function')return;
+ let target='',label='',danger=false;
+ if(page==='welcome'){
+  target='[data-action="next-onboarding"]';
+  label=s13Step===5?'Перейти к подключению':'Далее';
+ }else if(page==='chat-clear'){
+  target='[data-clear-submit]';label=s48Clearing?'Очищаем…':'Очистить архив';danger=true;
+ }else if(page==='eventdetail'&&s19NoteEditor){
+  target='[data-s19-note-save]';label='Сохранить заметку';
+ }else if(page==='pro'){
+  target='[data-s51-checkout]';
+  const button=document.querySelector(target);
+  label=button?.querySelector('span')?.textContent?.trim()||'Выбрать тариф';
+ }
+ const button=target?document.querySelector(target):null;
+ if(!button){try{s150MainButton.hide()}catch{};return}
+ const enabled=!button.disabled;
+ try{
+  if(!s150MainRegistered){s150MainButton.onClick(s150MainClick);s150MainRegistered=true}
+  const params={text:label,color:danger?'#e62f43':'#2481cc',text_color:'#ffffff',is_active:enabled,is_visible:true};
+  if(typeof s150MainButton.setParams==='function')s150MainButton.setParams(params);
+  else{
+   s150MainButton.setText?.(label);
+   s150MainButton.setColor?.(params.color);
+   s150MainButton.setTextColor?.('#ffffff');
+   if(enabled)s150MainButton.enable?.();else s150MainButton.disable?.();
+  }
+  s150MainButton.show();
+  s150NativeTarget=target;s150NativeEnabled=enabled;
+  root.setAttribute('data-native-main',page==='eventdetail'?'note':page);
+ }catch{
+  s150NativeTarget='';s150NativeEnabled=false;
+  root.removeAttribute('data-native-main');
+  try{s150MainButton.hide()}catch{}
+ }
+}
+const s150BaseRender=render;
+render=function(){s150BaseRender();s150SyncMainButton()};
+// Keep Telegram's native button from lingering on the wrong screen when a WebView is hidden.
+window.addEventListener('pagehide',()=>{try{s150MainButton?.hide?.()}catch{}});
 render();if(initData&&!isIntro())refresh();
