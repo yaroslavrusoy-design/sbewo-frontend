@@ -789,6 +789,10 @@ const s13Features=()=>`<section class="s13-mainpage s13-features-page s112-featu
   <button type="button" class="s117-hero s117-video" data-s112-tool="circle" aria-label="Видео в кружок"><span class="s117-hero-art"><img src="./kyu-feature-circle.png" alt="Кью в круге с символом видео" loading="eager" decoding="async"/></span><span class="s117-hero-copy"><strong>Видео в кружок</strong><small>Преобразует обычное видео в видеосообщение (кружок) в пару кликов.</small></span></button>
   <button type="button" class="s117-hero s117-auto" data-s112-tool="bot" aria-label="Автоответчик"><span class="s117-hero-art"><img src="./kyu-feature-autoreply.png" alt="Кью за ноутбуком" loading="eager" decoding="async"/></span><span class="s117-hero-copy"><strong>Автоответчик</strong><small>Автоматически отвечает на сообщения, когда вы не в сети.</small></span></button>
  </div>
+ <div class="s166-extra-grid" aria-label="Новые инструменты">
+  <button type="button" class="s166-extra-card" data-go="snippets"><span class="s166-extra-symbol"><i class="ri-file-copy-2-line" aria-hidden="true"></i></span><strong>Умные шаблоны</strong><small>Быстрые ответы по команде /price, /card и другим тегам</small><span class="s166-link">Настроить <i class="ri-arrow-right-s-line"></i></span></button>
+  <button type="button" class="s166-extra-card" data-s166-download="1"><span class="s166-extra-symbol"><i class="ri-download-cloud-2-line" aria-hidden="true"></i></span><strong>Скачать видео</strong><small>TikTok · Reels · Shorts · Pinterest, до 3 минут</small><span class="s166-link">Открыть бота <i class="ri-arrow-right-s-line"></i></span></button>
+ </div>
  <div class="s112-group s117-commands-group">
   <header class="s117-commands-header"><span class="s117-terminal" aria-hidden="true"><i class="ri-terminal-box-line"></i></span><h2>Полезные команды</h2><button type="button" class="s117-all-commands" data-s117-all="true">Все команды <i class="ri-arrow-right-s-line" aria-hidden="true"></i></button></header>
   <div class="s117-commands-grid">
@@ -799,10 +803,26 @@ const s13Features=()=>`<section class="s13-mainpage s13-features-page s112-featu
   </div>
  </div>
  <div class="s112-info" id="s112-info" hidden role="status"></div>
- <dialog class="s117-dialog" id="s117-dialog" aria-label="Все команды"><div class="s117-dialog-inner"><div class="s117-dialog-head"><strong>Все команды</strong><button type="button" data-s117-close aria-label="Закрыть"><i class="ri-close-line"></i></button></div><p>Команды и действия Sbewo</p><dl><dt>/vc</dt><dd>Видео в кружок</dd><dt>/spam</dt><dd>Массовая отправка (1–20 сообщений)</dd><dt>/tx</dt><dd>Постепенная отправка текста</dd><dt>/mu</dt><dd>Мут собеседника</dd><dt>/mir</dt><dd>Режим клонирования</dd><dt>/ar</dt><dd>Автоответчик</dd></dl><p>Для сохранения одноразового фото или видео достаточно ответить на него сообщением.</p></div></dialog>
+ <dialog class="s117-dialog" id="s117-dialog" aria-label="Все команды"><div class="s117-dialog-inner"><div class="s117-dialog-head"><strong>Все команды</strong><button type="button" data-s117-close aria-label="Закрыть"><i class="ri-close-line"></i></button></div><p>Команды и действия Sbewo</p><dl><dt>/vc</dt><dd>Видео в кружок</dd><dt>/spam</dt><dd>Массовая отправка (1–20 сообщений)</dd><dt>/tx</dt><dd>Постепенная отправка текста</dd><dt>/mu</dt><dd>Мут собеседника</dd><dt>/mir</dt><dd>Режим клонирования</dd><dt>/ar</dt><dd>Автоответчик</dd><dt>/dl ссылка</dt><dd>Загрузка короткого видео</dd><dt>/price</dt><dd>Пример персонального сниппета</dd></dl><p>Для сохранения одноразового фото или видео достаточно ответить на него сообщением.</p></div></dialog>
  </section>`;
 
-const s13Pages={welcome:s13Welcome,home:s13Home,features:s13Features,archive:s13Archive,'archive-view':s13Archive,chats:s13Chats,'connect-personal':s13ConnectionPersonal,eventdetail:s13EventDetail,revision:s13Revision,chat:s13Chat,'chat-clear':s48ClearPage,settings:s19Settings,'partner-program':s78Partner,'telegram-channel':s78TelegramChannel,catalog:s13Catalog,inbox:s106InboxPage,'inbox-news':s106NewsDetail,privacy:s13Privacy,access:s13Access,help:s13Help};
+let s166Items=[];
+let s166Loading=false;
+let s166Message='';
+let s166Editing='';
+const s166Snippets=()=>`${s13Header()}<section class="s13-detail-page s166-snippets">
+ <h1>Умные шаблоны</h1>
+ <p class="s166-description">Создай короткий тег и сохрани ответ. В подключённом личном чате отправь <b>/price</b>, а в другом чате используй <b>@${esc(USERNAME||'имя_бота')} price</b> для выбора текста.</p>
+ <div class="s166-panel"><label for="s166-tag">Команда</label><div class="s166-tag-field"><span>/</span><input id="s166-tag" maxlength="24" autocomplete="off" autocapitalize="off" placeholder="price" value="${esc(s166Editing)}"></div>
+ <label for="s166-body">Текст ответа</label><textarea id="s166-body" maxlength="2000" rows="5" placeholder="Например: стоимость услуги — 2 000 ₽"></textarea>
+ <button type="button" class="s13-btn" data-s166-save>Сохранить шаблон</button></div>
+ <div class="s166-header"><h2>Мои шаблоны</h2><span>${s166Items.length}/40</span></div>
+ ${s166Loading?'<p class="s166-description">Загружаем шаблоны…</p>':s166Items.length?`<div class="s166-list">${s166Items.map(x=>`<div class="s166-item"><div class="s166-item-copy"><strong>/${esc(x.tag)}</strong><small>${esc(x.body)}</small></div><div class="s166-actions"><button type="button" data-s166-copy="${esc(x.tag)}" aria-label="Скопировать текст">${ico('note')}</button><button type="button" data-s166-edit="${esc(x.tag)}">Изменить</button><button type="button" data-s166-delete="${esc(x.tag)}" aria-label="Удалить шаблон">${ico('trash')}</button></div></div>`).join('')}</div>`:'<p class="s166-description">Пока нет шаблонов. Создай первый выше.</p>'}
+ <p class="s166-feedback" role="status">${esc(s166Message)}</p>
+ <p class="s166-hint">Возможность работает через команды и inline-режим Telegram. Автоматически менять текст прямо в поле ввода других чатов бот не может.</p>
+ </section>`;
+async function s166Load(){if(demo){s166Items=[];s166Loading=false;render();return}if(!initData)return;s166Loading=true;render();try{const r=await call('/api/snippets');s166Items=r.items||[];s166Message=''}catch(e){s166Message=e.message}finally{s166Loading=false;render()}}
+const s13Pages={snippets:s166Snippets,welcome:s13Welcome,home:s13Home,features:s13Features,archive:s13Archive,'archive-view':s13Archive,chats:s13Chats,'connect-personal':s13ConnectionPersonal,eventdetail:s13EventDetail,revision:s13Revision,chat:s13Chat,'chat-clear':s48ClearPage,settings:s19Settings,'partner-program':s78Partner,'telegram-channel':s78TelegramChannel,catalog:s13Catalog,inbox:s106InboxPage,'inbox-news':s106NewsDetail,privacy:s13Privacy,access:s13Access,help:s13Help};
 noteAction=async function(){s19NoteEditor=!s19NoteEditor;render()};
 const s19BaseRefresh=refresh;
 refresh=async function(){await s19BaseRefresh();s19ChatAliasCache=db.aliases||{};await s19LoadAvatars();};
@@ -1192,4 +1212,42 @@ const s150BaseRender=render;
 render=function(){s150BaseRender();s150SyncMainButton()};
 // Keep Telegram's native button from lingering on the wrong screen when a WebView is hidden.
 window.addEventListener('pagehide',()=>{try{s150MainButton?.hide?.()}catch{}});
+// Feature tools: user-owned templates and short-video delivery.
+const s166BaseBind=bind;
+bind=function(){
+ s166BaseBind();
+ const download=document.querySelector('[data-s166-download]');
+ if(download)download.onclick=()=>{
+  if(!USERNAME){const info=document.getElementById('s112-info');if(info){info.textContent='В config.js не указан BOT_USERNAME';info.hidden=false}return}
+  const url='https://t.me/'+encodeURIComponent(USERNAME);
+  try{if(tg?.openTelegramLink)tg.openTelegramLink(url);else location.href=url}catch{location.href=url}
+ };
+ const save=document.querySelector('[data-s166-save]');
+ if(save)save.onclick=async()=>{
+  const tag=document.getElementById('s166-tag')?.value.trim().toLowerCase().replace(/^\/+/,'');
+  const body=document.getElementById('s166-body')?.value.trim();
+  if(!/^[a-z][a-z0-9_]{1,23}$/.test(tag||'')||!body){s166Message='Укажи тег от 2 до 24 символов (латиница) и текст.';document.querySelector('.s166-feedback').textContent=s166Message;return}
+  save.disabled=true;
+  try{await call('/api/snippets/save',{tag,body});s166Editing='';s166Message='Шаблон сохранён';const r=await call('/api/snippets');s166Items=r.items||[];render()}catch(e){s166Message=e.message;document.querySelector('.s166-feedback').textContent=s166Message;save.disabled=false}
+ };
+ document.querySelectorAll('[data-s166-edit]').forEach(b=>b.onclick=()=>{
+  const item=s166Items.find(x=>x.tag===b.dataset.s166Edit);if(!item)return;
+  document.getElementById('s166-tag').value=item.tag;
+  document.getElementById('s166-body').value=item.body;
+  document.getElementById('s166-tag').focus();
+ });
+ document.querySelectorAll('[data-s166-copy]').forEach(b=>b.onclick=async()=>{
+  const item=s166Items.find(x=>x.tag===b.dataset.s166Copy);if(!item)return;
+  try{await navigator.clipboard.writeText(item.body);s166Message='Текст скопирован'}catch{s166Message='Не удалось скопировать текст'}
+  document.querySelector('.s166-feedback').textContent=s166Message;
+ });
+ document.querySelectorAll('[data-s166-delete]').forEach(b=>b.onclick=async()=>{
+  const tag=b.dataset.s166Delete;
+  if(!await s136Confirm('Удалить шаблон /'+tag+'?'))return;
+  b.disabled=true;
+  try{await call('/api/snippets/delete',{tag});s166Message='Шаблон удалён';s166Items=s166Items.filter(x=>x.tag!==tag);render()}catch(e){s166Message=e.message;document.querySelector('.s166-feedback').textContent=s166Message;b.disabled=false}
+ });
+};
+const s166BaseGoto=goto;
+goto=function(target){s166BaseGoto(target);if(target==='snippets')void s166Load()};
 render();if(initData&&!isIntro())refresh();
