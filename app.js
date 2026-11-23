@@ -632,7 +632,7 @@ document.addEventListener('click',event=>{
  }catch(_error){}
  window.location.href=url;
 });
-function s19Settings(){return `<section class="s13-mainpage s19-page s19-settings-page s78-settings-page"><div class="s52-sub-card s77-tariffs-card" aria-label="Тарифы и подписка Sbewo"><div class="s52-sub-copy"><span class="s52-sub-label"><span class="s52-sub-star" aria-hidden="true">♛</span> Тарифы</span><h2>Тарифы<br>и подписка</h2><p>Выбери подходящий тариф, сравни планы и управляй подпиской в одном месте.</p><button data-go="pro" class="s52-sub-cta" aria-label="Открыть тарифы и подписку">Тарифы и подписка <span aria-hidden="true">→</span></button></div><div class="s52-sub-visual" aria-hidden="true"><img src="./kyu-settings-tariffs.png" alt="" loading="eager" decoding="async"></div></div>
+function s19Settings(){return `<section class="s13-mainpage s19-page s19-settings-page s78-settings-page"><div class="s52-sub-card s77-tariffs-card" aria-label="Тарифы и подписка Sbewo"><div class="s52-sub-copy"><span class="s52-sub-label"><span class="s52-sub-star" aria-hidden="true">♛</span> Тарифы</span><h2>Тарифы<br>и подписка</h2><p>Выбери подходящий тариф, сравни планы и управляй подпиской в одном месте.</p><button data-go="pro" class="s52-sub-cta" aria-label="Выбрать тариф">Выбрать тариф <span aria-hidden="true">→</span></button></div><div class="s52-sub-visual" aria-hidden="true"><img src="./kyu-settings-tariffs.png" alt="" loading="eager" decoding="async"></div></div>
 <div class="s78-settings-groups">
 <section class="s78-settings-group" aria-label="Сообщество и уведомления">
 ${s78SettingsRow('telegram','Наш Telegram-канал','Новости, обновления и полезные советы','telegram-channel','sky')}
