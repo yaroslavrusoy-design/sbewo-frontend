@@ -974,6 +974,9 @@ let s135Restoring=false;
 let s135Sequence=0;
 let s135CurrentRoute=0;
 let s135TransitionPending=false;
+// Remember each main tab's position when switching tabs without changing its content.
+const s160TabScroll=new Map();
+let s160BackTransition=false;
 const s135ReducedMotion=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
 function s135Snapshot(){
  const main=document.getElementById('main');
@@ -1032,7 +1035,8 @@ render=function(){
   if(samePage)main.scrollTop=scroll;
   else if(s135Navigating||oldPage!==page)main.scrollTop=0;
   if(s135TransitionPending){
-   if(!s135ReducedMotion())main.classList.add('sbewo-enter');
+   if(!s135ReducedMotion())main.classList.add(s160BackTransition?'sbewo-return':'sbewo-enter');
+   s160BackTransition=false;
    s135TransitionPending=false;
   }
  }
@@ -1055,11 +1059,21 @@ function s135SavePosition(){
 goto=function(target){
  if(target==='back'){back();return}
  const before=page;
+ const beforeMain=document.getElementById('main');
+ // Save the actual scroll of each root tab, including on nested navigation.
+ if(s13Main.has(before))s160TabScroll.set(before,beforeMain?.scrollTop||0);
  s135SavePosition();
  s135Navigating=true;
  s135TransitionPending=true;
+ s160BackTransition=false;
  try{s135BaseGoto(target)}finally{s135Navigating=false}
  if(page!==before){
+  const main=document.getElementById('main');
+  // Root tab switching should not destroy the user's reading position.
+  if(main&&s13Main.has(page)){
+   const saved=s160TabScroll.get(page);
+   if(typeof saved==='number')main.scrollTop=saved;
+  }
   s135CurrentRoute=++s135Sequence;
   s135Routes.set(s135CurrentRoute,s135Snapshot());
   try{history.pushState({sbewo:true,route:s135CurrentRoute},'')}catch{}
@@ -1078,6 +1092,9 @@ window.addEventListener('popstate',event=>{
  if(!event.state?.sbewo)return;
  const dest=s135Routes.get(event.state.route);
  if(!dest)return;
+ const isBack=event.state.route<s135CurrentRoute;
+ if(s13Main.has(page))s160TabScroll.set(page,document.getElementById('main')?.scrollTop||0);
+ s160BackTransition=isBack;
  s135Restoring=true;
  s135TransitionPending=true;
  s135CurrentRoute=event.state.route;
@@ -1085,6 +1102,7 @@ window.addEventListener('popstate',event=>{
  s135Navigating=true;
  try{render()}finally{s135Navigating=false;s135Restoring=false}
  const main=document.getElementById('main');if(main)main.scrollTop=dest.scroll||0;
+ if(s13Main.has(page))s160TabScroll.set(page,dest.scroll||0);
 });
 // Haptic feedback is optional: in browsers outside Telegram these calls are no-ops.
 document.addEventListener('click',event=>{
