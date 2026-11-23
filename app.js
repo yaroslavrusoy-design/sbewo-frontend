@@ -37,17 +37,11 @@ const KYU_IMAGES={
   'settings':'./kyu-settings.webp',
   'welcome':'./kyu-welcome.webp'
 };
-// Mascot assets are separate cacheable files, not megabytes of inline base64.
-// Prewarm a small number of likely next-page images after the initial paint.
-const sAssetWarmQueue=[
- './kyu-settings-tariffs.png','./kyu-pricing-peek.png',
- ...Object.values(KYU_IMAGES),
- './kyu-status-paid.png','./kyu-status-expired.png',
- './kyu-status-trial-3.png','./kyu-status-trial-2.png','./kyu-status-trial-1.png',
- './kyu-trash.png'
-];
+// Cache decoded mascots after a user actually approaches a screen.
+// Do not download every PNG on startup: most are large and rarely viewed.
 const sAssetWarmCache=new Map();
 function sWarmMascot(url){
+ if(!url)return Promise.resolve();
  if(sAssetWarmCache.has(url))return sAssetWarmCache.get(url);
  const img=new Image();
  const promise=new Promise(resolve=>{
@@ -58,18 +52,28 @@ function sWarmMascot(url){
  img.decoding='async';img.src=url;
  return promise;
 }
-function sWarmMascotsInBackground(){
- const queue=[...new Set(sAssetWarmQueue)];
- const step=()=>{const asset=queue.shift();if(!asset)return;
-  sWarmMascot(asset).finally(()=>{
-   if('requestIdleCallback' in window)window.requestIdleCallback(step,{timeout:2500});
-   else setTimeout(step,100);
-  });
- };
- if('requestIdleCallback' in window)window.requestIdleCallback(step,{timeout:2500});
- else setTimeout(step,250);
+// A single small prefetch for the next likely tab, not a multi-megabyte asset sweep.
+const sAssetRouteHints={
+ settings:['./kyu-settings-tariffs.png'],
+ features:['./kyu-feature-media.png','./kyu-feature-circle.png','./kyu-feature-autoreply.png'],
+ pro:['./kyu-pricing-peek.png'],
+ privacy:['./kyu-security-shield-v129.png'],
+ help:['./kyu-support-question.png']
+};
+function sWarmForRoute(route){
+ const conn=navigator.connection;
+ if(conn?.saveData||['slow-2g','2g'].includes(conn?.effectiveType))return;
+ const assets=sAssetRouteHints[route];
+ if(!assets)return;
+ // One asset at a time to avoid saturating the connection and delaying API calls.
+ let pending=Promise.resolve();
+ for(const url of assets)pending=pending.then(()=>sWarmMascot(url));
 }
-window.addEventListener('load',sWarmMascotsInBackground,{once:true});
+// Start early when the user presses a navigation target; rendering is not blocked.
+document.addEventListener('pointerdown',event=>{
+ const button=event.target.closest?.('[data-go]');
+ if(button)sWarmForRoute(button.dataset.go);
+},{passive:true,capture:true});
 const kyu=(k,cls='')=>`<img class="${cls}" src="${KYU_IMAGES[k]||KYU_IMAGES.empty}" alt="Кью — помощник Sbewo" loading="eager" decoding="async">`;
 const pref=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch{return null}};
 let page=(pref('sbewo-v8-onboarded')==='yes'||pref('sbewo-v6-onboarded')==='yes')?'home':'welcome',previous='home',onboard=0,flt='all',mediaFilter='all',query='',selectedChat='',selectedKey='',demo=false,busy=false,error='',theme=pref('sbewo-v5-theme')||'light';
@@ -1114,25 +1118,8 @@ document.addEventListener('click',event=>{
   else tg?.HapticFeedback?.impactOccurred?.('light');
  }catch{}
 }, {capture:true,passive:true});
-// Avoid sequential image warming on low-bandwidth devices; essential assets come first.
-const s135Assets=[
- './kyu-feature-media.png','./kyu-feature-circle.png','./kyu-feature-autoreply.png',
- './kyu-security-shield-v129.png','./kyu-support-question.png',
- './kyu-settings-tariffs.png', './kyu-home.webp'
-];
-function s135Prewarm(){
- const connection=navigator.connection;
- if(connection?.saveData)return;
- const assets=[...new Set(s135Assets)];
- const idle=window.requestIdleCallback||((callback)=>setTimeout(callback,200));
- idle(()=>{
-  // Small bounded batches avoid competing with initial route data fetch.
-  Promise.all(assets.slice(0,3).map(sWarmMascot)).finally(()=>{
-   idle(()=>{assets.slice(3).forEach(url=>{void sWarmMascot(url)})});
-  });
- });
-}
-window.addEventListener('load',s135Prewarm,{once:true});
+// The current screen is handled by the browser's normal image loading.
+// No second automatic preload queue: it duplicated the route-based warmer.
 try{
  tg?.onEvent?.('viewportChanged',s135Viewport);
  tg?.onEvent?.('fullscreenChanged',s135Viewport);
