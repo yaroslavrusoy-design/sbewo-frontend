@@ -7,7 +7,68 @@ try {
   link.href = home ? './kyu-home.webp' : './kyu-welcome.webp';
   document.head.appendChild(link);
 } catch {}
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"><link rel="stylesheet" href="./style.css?v=135.0"><script src="https://telegram.org/js/telegram-web-app.js"></script><script src="./config.js"></script><script src="./app.js?v=135.0" defer></script><script>
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"><script src="https://telegram.org/js/telegram-web-app.js"></script><script>
+/* Sbewo: always refresh local application assets on a new launch.
+   Keep this bootstrap inline so a previously cached loader cannot block updates. */
+(function () {
+  'use strict';
+  const launchId = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9);
+  const fresh = (name) => './' + name + '?sbewo_launch=' + encodeURIComponent(launchId);
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = fresh('style.css');
+  document.head.appendChild(css);
+
+  function loadScript(name) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = fresh(name);
+      script.async = false;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  Promise.resolve()
+    .then(() => loadScript('config.js'))
+    .then(() => loadScript('app.js'))
+    .catch(() => {
+      const root = document.getElementById('app');
+      if (root) root.textContent = 'Не удалось загрузить Sbewo. Проверь подключение к интернету и открой приложение заново.';
+    });
+
+  // Compare server ETags when the Mini App returns from the background.
+  // If GitHub Pages has new code, refresh the whole SPA (not individual modules).
+  let initialTag = null;
+  let checking = false;
+  let lastCheck = 0;
+  const checkInterval = 60 * 1000;
+  async function getRevision() {
+    const response = await fetch(fresh('app.js') + '&check=' + Date.now(), {
+      method: 'HEAD', cache: 'no-store'
+    });
+    if (!response.ok) return null;
+    return response.headers.get('etag') || response.headers.get('last-modified');
+  }
+  getRevision().then(tag => { initialTag = tag; }).catch(() => {});
+
+  async function checkForUpdate() {
+    if (document.hidden || !initialTag || checking || Date.now() - lastCheck < checkInterval) return;
+    checking = true;
+    lastCheck = Date.now();
+    try {
+      const currentTag = await getRevision();
+      if (currentTag && currentTag !== initialTag) window.location.reload();
+    } catch (_) { /* Offline: keep the currently loaded app usable. */ }
+    finally { checking = false; }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) void checkForUpdate();
+  });
+  window.addEventListener('focus', () => { void checkForUpdate(); });
+})();
+</script><script>
 /* Sbewo: touch-first Telegram Mini App interaction guards. */
 (function () {
   'use strict';
