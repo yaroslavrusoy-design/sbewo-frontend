@@ -365,7 +365,30 @@ async function s19LoadAvatars(force=false){
  finally{s19AvatarLoading=false}
 }
 const s19EventOnly=m=>m.deleted||m.edited||m.rescued_once;
-function s19ChatCard(name,items){const changed=items.filter(s19EventOnly),last=changed[0]||items[0];return `<button class="s19-chat-card" data-chat="${esc(name)}">${s19ChatAvatar(name,items)}<span class="s19-chat-info"><strong>${esc(s13Human(s38ChatName(name,items)))}</strong><small>${changed.length} событий · ${last?.deleted?'Удаление':last?.edited?'Правка':last?.rescued_once?'Сохранено фото':'Архив'}</small><em>${esc((last?.text||s19Kinds[last?.kind]||'').slice(0,65))}</em></span>${s13Icon('chevron')}</button>`;}
+// Display the grammatically correct Russian count for chat events.
+function s19EventCountLabel(count){const mod10=count%10,mod100=count%100;return `${count} ${mod10===1&&mod100!==11?'событие':mod10>=2&&mod10<=4&&(mod100<12||mod100>14)?'события':'событий'}`;}
+function s19EventTimestamp(m){return Number(m?.updated||m?.time||0)||0;}
+function s19LatestLabel(m){
+ const seconds=s19EventTimestamp(m);
+ if(!seconds)return '';
+ const date=new Date(seconds*1000),today=new Date();
+ if(Number.isNaN(date.getTime()))return '';
+ const sameDay=(a,b)=>a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();
+ const clock=date.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+ if(sameDay(date,today))return clock;
+ const yesterday=new Date(today.getFullYear(),today.getMonth(),today.getDate()-1);
+ if(sameDay(date,yesterday))return 'Вчера';
+ return date.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',...(date.getFullYear()!==today.getFullYear()?{year:'2-digit'}:{})});
+}
+function s19ChatCard(name,items){
+ const changed=items.filter(s19EventOnly);
+ const latestByTime=arr=>arr.reduce((latest,item)=>!latest||s19EventTimestamp(item)>s19EventTimestamp(latest)?item:latest,null);
+ const last=latestByTime(changed)||latestByTime(items);
+ const eventType=last?.deleted?'Удаление':last?.edited?'Правка':last?.rescued_once?'Сохранено фото':'Архив';
+ const statusClass=last?.deleted?'s19-action-delete':last?.edited?'s19-action-edit':'s19-action-other';
+ const time=s19LatestLabel(last);
+ return `<button class="s19-chat-card" data-chat="${esc(name)}">${s19ChatAvatar(name,items)}<span class="s19-chat-info"><strong>${esc(s13Human(s38ChatName(name,items)))}</strong><small><span class="s19-chat-count">${s19EventCountLabel(changed.length)}</span><span class="s19-chat-separator"> · </span><span class="s19-chat-action ${statusClass}">${eventType}</span></small><em>${esc((last?.text||s19Kinds[last?.kind]||'').slice(0,65))}</em></span><span class="s19-chat-trailing">${time?`<time class="s19-chat-lasttime" datetime="${new Date(s19EventTimestamp(last)*1000).toISOString()}" title="${esc(new Date(s19EventTimestamp(last)*1000).toLocaleString('ru-RU'))}">${esc(time)}</time>`:''}${s13Icon('chevron')}</span></button>`;
+}
 function s19ChatEvent(m){const original=m.versions?.[0]?.text||'',changed=m.versions?.at(-1)?.text||m.text||'';let desc=m.deleted?m.text||s19Kinds[m.kind]||'Удалённое сообщение':m.rescued_once?'Медиа сохранено после ответа':original&&original!==changed?original+' → '+changed:changed;return `<button class="s19-event-card" data-message="${esc(m.key)}"><span class="s19-event-icon ${m.deleted?'red':'blue'}">${ico(m.deleted?'trash':m.rescued_once?'image':'edit')}</span><span class="s19-event-body"><strong>${m.deleted?'Удалено':m.rescued_once?'Сохранено':'Изменено'} · ${esc(s19Kinds[m.kind]||'Сообщение')}</strong><small>${esc(desc||'Текст недоступен')}</small>${m.note?`<em>Заметка: ${esc(m.note)}</em>`:''}</span>${m.starred?`<span class="s19-star">★</span>`:''}<time>${fmt(m.updated||m.time)}</time></button>`;}
 
 const s13Event=(m,{repeat=false,groupStart=false}={})=>{const isDeleted=!!m.deleted,ver=Array.isArray(m.versions)?m.versions:[],from=ver[0]?.text||'',to=ver.at(-1)?.text||m.text||'',title=s13Human(m.chat);return `<button class="s13-event${repeat?' s141-event-repeat':''}${groupStart?' s141-event-group-start':''}" data-message="${esc(m.key)}" aria-label="${esc(title)}: ${isDeleted?'удалено':m.rescued_once?'сохранено':'изменено'}, ${esc(s13Time(m))}"><span class="s13-event-time">${s13Time(m)}</span><span class="s13-event-main">${repeat?'':`<span class="s13-event-title">${esc(title)}</span>`}<span class="s13-status ${isDeleted?'red':'blue'}">${isDeleted?'Удалено':m.rescued_once?'Сохранено':'Изменено'}</span><span class="s13-event-preview">${isDeleted?esc(m.text||s19Kinds[m.kind]||'Текст не сохранён'):m.rescued_once?'Фото сохранено после ответа':esc(from&&from!==to?from+' → '+to:to)}</span></span>${s13Icon('chevron')}</button>`;};

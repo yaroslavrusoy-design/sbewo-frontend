@@ -3900,13 +3900,13 @@ html.sbewo-fullscreen .s13-app{
 /* Chat list: readable event counts, event colors and latest activity time. */
 .s19-chat-info small .s19-chat-count,.s19-chat-info small .s19-chat-separator{color:#667f9e}
 .s19-chat-info small .s19-chat-action.s19-action-delete{color:#d33852;font-weight:650}
-.s19-chat-info small .s19-chat-action.s19-action-edit{color:#b47a00;font-weight:650}
+.s19-chat-info small .s19-chat-action.s19-action-edit{color:#2477cf;font-weight:650}
 .s19-chat-info small .s19-chat-action.s19-action-other{color:#52739c;font-weight:600}
 .s19-chat-card .s19-chat-trailing{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;gap:10px;flex:none;min-width:42px}
 .s19-chat-card .s19-chat-trailing>svg{width:17px;height:17px;color:#738db5;margin-top:auto}
 .s19-chat-card .s19-chat-lasttime{font-size:12px;font-weight:600;line-height:1.3;white-space:nowrap;color:#536c90;font-variant-numeric:tabular-nums}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-count,html[data-sbewo-theme="dark"] .s13-app .s19-chat-separator,.s13-app.theme-dark .s19-chat-count,.s13-app.theme-dark .s19-chat-separator{color:#afc3db}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-delete,.s13-app.theme-dark .s19-chat-action.s19-action-delete{color:#ff8197}
-html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-edit,.s13-app.theme-dark .s19-chat-action.s19-action-edit{color:#ffd166}
+html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-edit,.s13-app.theme-dark .s19-chat-action.s19-action-edit{color:#88bfff}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-other,.s13-app.theme-dark .s19-chat-action.s19-action-other{color:#b0c5df}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-lasttime,.s13-app.theme-dark .s19-chat-lasttime{color:#b6c8e1}
