@@ -3070,8 +3070,7 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   .s13-app :where(button,.s102-knob,.s19-switch) { transition-duration:0.01ms!important; animation-duration:0.01ms!important; }
 }
 
-/* v105 — two explicit profile actions: avatar opens tariffs, bell opens notifications.
-   Preserve the current light theme, avatar status ring and original card geometry. */
+/* v105 — profile avatar opens tariffs; subscription ring and card geometry retained. */
 .s13-app .s14-home .s25-profile.s105-profile-notifications {
   cursor:default;
 }
@@ -3090,54 +3089,9 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
-.s105-profile-notifications .s105-profile-avatar-link:focus-visible,
-.s105-profile-notifications .s105-profile-notification-link:focus-visible {
+.s105-profile-notifications .s105-profile-avatar-link:focus-visible {
   outline:2px solid #1685ff;
   outline-offset:3px;
-}
-.s105-profile-notifications .s105-profile-notification-link {
-  appearance:none;
-  -webkit-appearance:none;
-  position:relative;
-  display:grid;
-  place-items:center;
-  flex:0 0 48px;
-  width:48px;
-  height:48px;
-  padding:0;
-  margin:0;
-  border:1px solid #d7e6fb;
-  border-radius:16px;
-  background:linear-gradient(145deg,#f1f7ff,#e1efff);
-  color:#142452;
-  box-shadow:0 3px 9px rgba(45,95,160,.12);
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-.s105-profile-notifications .s105-profile-notification-link svg {
-  display:block;
-  width:23px;
-  height:23px;
-}
-.s105-profile-notifications .s105-notification-dot {
-  position:absolute;
-  top:-3px;
-  right:-3px;
-  width:10px;
-  height:10px;
-  border:2px solid #fff;
-  border-radius:50%;
-  background:#f43f5e;
-  box-sizing:content-box;
-}
-@media(max-width:360px) {
-  .s105-profile-notifications .s105-profile-notification-link {
-    width:44px;
-    height:44px;
-    flex-basis:44px;
-    border-radius:14px;
-  }
-  .s105-profile-notifications .s105-profile-notification-link svg {width:21px;height:21px}
 }
 
 /* v106 — real notification inbox, consistent with Sbewo light design. */
@@ -3167,7 +3121,6 @@ html.remix-ready .s78-row-icon i[class^="ri-"] svg{display:none!important;}
 .s106-inbox-settings,.s106-retry{margin-top:17px;padding:13px 15px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border-radius:15px;border:1px solid #d6e7fb;background:#f3f8ff;color:#2866aa;font-size:13px;font-weight:650}
 .s106-inbox-settings svg{width:17px;height:17px}
 .s106-inbox-note{font-size:13px;color:#65799c;line-height:1.5}
-.s105-profile-notifications .s105-profile-notification-link:not(:has(.s105-notification-dot)){box-shadow:0 3px 9px rgba(45,95,160,.12)}
 
 .s106-news-body{background:#fff;border:1px solid #e1ebf8;border-radius:21px;padding:19px;color:#2b3d5b;line-height:1.6}
 .s106-news-body p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 20px;font-size:14px}
@@ -3900,13 +3853,13 @@ html.sbewo-fullscreen .s13-app{
 /* Chat list: readable event counts, event colors and latest activity time. */
 .s19-chat-info small .s19-chat-count,.s19-chat-info small .s19-chat-separator{color:#667f9e}
 .s19-chat-info small .s19-chat-action.s19-action-delete{color:#d33852;font-weight:650}
-.s19-chat-info small .s19-chat-action.s19-action-edit{color:#2477cf;font-weight:650}
+.s19-chat-info small .s19-chat-action.s19-action-edit{color:#b47a00;font-weight:650}
 .s19-chat-info small .s19-chat-action.s19-action-other{color:#52739c;font-weight:600}
 .s19-chat-card .s19-chat-trailing{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;gap:10px;flex:none;min-width:42px}
 .s19-chat-card .s19-chat-trailing>svg{width:17px;height:17px;color:#738db5;margin-top:auto}
 .s19-chat-card .s19-chat-lasttime{font-size:12px;font-weight:600;line-height:1.3;white-space:nowrap;color:#536c90;font-variant-numeric:tabular-nums}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-count,html[data-sbewo-theme="dark"] .s13-app .s19-chat-separator,.s13-app.theme-dark .s19-chat-count,.s13-app.theme-dark .s19-chat-separator{color:#afc3db}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-delete,.s13-app.theme-dark .s19-chat-action.s19-action-delete{color:#ff8197}
-html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-edit,.s13-app.theme-dark .s19-chat-action.s19-action-edit{color:#88bfff}
+html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-edit,.s13-app.theme-dark .s19-chat-action.s19-action-edit{color:#ffd166}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-action.s19-action-other,.s13-app.theme-dark .s19-chat-action.s19-action-other{color:#b0c5df}
 html[data-sbewo-theme="dark"] .s13-app .s19-chat-lasttime,.s13-app.theme-dark .s19-chat-lasttime{color:#b6c8e1}
