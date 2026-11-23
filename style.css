@@ -3785,3 +3785,12 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
 .s13-app .s13-main.sbewo-enter>section{animation:sbewo-screen-enter .19s cubic-bezier(.2,.7,.2,1) both}
 @keyframes sbewo-screen-enter{from{opacity:.86;transform:translateY(5px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.s13-app .s13-main.sbewo-enter>section{animation:none!important}}
+
+/* Home event readability and adjacent-person grouping (other pages unchanged). */
+.s14-home .s14-event-stack .s13-event-time{
+ font-size:13px;font-weight:750;color:#24395d;background:#e3efff;
+ font-variant-numeric:tabular-nums;
+}
+.s14-home .s14-event-stack .s141-event-repeat{margin-top:-6px;}
+.s14-home .s14-event-stack .s141-event-repeat .s13-event-main{gap:4px;}
+.s14-home .s14-event-stack .s141-event-repeat .s13-status{margin-right:0;}

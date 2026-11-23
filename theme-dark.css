@@ -415,3 +415,8 @@ html[data-sbewo-theme="dark"] .s13-app .s19-event-icon.red{
 html[data-sbewo-theme="dark"] .s13-app .s19-event-icon.blue{
  background:#183e69!important;color:#7bc5ff!important;
 }
+
+/* Keep home timeline timestamps legible in dark mode, too. */
+html[data-sbewo-theme="dark"] .s13-app .s14-home .s13-event-time{
+ color:#f0f6ff!important;background:#344765!important;
+}

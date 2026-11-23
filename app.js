@@ -334,7 +334,7 @@ const s19EventOnly=m=>m.deleted||m.edited||m.rescued_once;
 function s19ChatCard(name,items){const changed=items.filter(s19EventOnly),last=changed[0]||items[0];return `<button class="s19-chat-card" data-chat="${esc(name)}">${s19ChatAvatar(name,items)}<span class="s19-chat-info"><strong>${esc(s13Human(s38ChatName(name,items)))}</strong><small>${changed.length} событий · ${last?.deleted?'Удаление':last?.edited?'Правка':last?.rescued_once?'Сохранено фото':'Архив'}</small><em>${esc((last?.text||s19Kinds[last?.kind]||'').slice(0,65))}</em></span>${s13Icon('chevron')}</button>`;}
 function s19ChatEvent(m){const original=m.versions?.[0]?.text||'',changed=m.versions?.at(-1)?.text||m.text||'';let desc=m.deleted?m.text||s19Kinds[m.kind]||'Удалённое сообщение':m.rescued_once?'Медиа сохранено после ответа':original&&original!==changed?original+' → '+changed:changed;return `<button class="s19-event-card" data-message="${esc(m.key)}"><span class="s19-event-icon ${m.deleted?'red':'blue'}">${ico(m.deleted?'trash':m.rescued_once?'image':'edit')}</span><span class="s19-event-body"><strong>${m.deleted?'Удалено':m.rescued_once?'Сохранено':'Изменено'} · ${esc(s19Kinds[m.kind]||'Сообщение')}</strong><small>${esc(desc||'Текст недоступен')}</small>${m.note?`<em>Заметка: ${esc(m.note)}</em>`:''}</span>${m.starred?`<span class="s19-star">★</span>`:''}<time>${fmt(m.updated||m.time)}</time></button>`;}
 
-const s13Event=(m)=>{const isDeleted=!!m.deleted,ver=Array.isArray(m.versions)?m.versions:[],from=ver[0]?.text||'',to=ver.at(-1)?.text||m.text||'',title=s13Human(m.chat);return `<button class="s13-event" data-message="${esc(m.key)}"><span class="s13-event-time">${s13Time(m)}</span><span class="s13-event-main"><span class="s13-event-title">${esc(title)}</span><span class="s13-status ${isDeleted?'red':'blue'}">${isDeleted?'Удалено':m.rescued_once?'Сохранено':'Изменено'}</span><span class="s13-event-preview">${isDeleted?esc(m.text||s19Kinds[m.kind]||'Текст не сохранён'):m.rescued_once?'Фото сохранено после ответа':esc(from&&from!==to?from+' → '+to:to)}</span></span>${s13Icon('chevron')}</button>`;};
+const s13Event=(m,{repeat=false,groupStart=false}={})=>{const isDeleted=!!m.deleted,ver=Array.isArray(m.versions)?m.versions:[],from=ver[0]?.text||'',to=ver.at(-1)?.text||m.text||'',title=s13Human(m.chat);return `<button class="s13-event${repeat?' s141-event-repeat':''}${groupStart?' s141-event-group-start':''}" data-message="${esc(m.key)}" aria-label="${esc(title)}: ${isDeleted?'удалено':m.rescued_once?'сохранено':'изменено'}, ${esc(s13Time(m))}"><span class="s13-event-time">${s13Time(m)}</span><span class="s13-event-main">${repeat?'':`<span class="s13-event-title">${esc(title)}</span>`}<span class="s13-status ${isDeleted?'red':'blue'}">${isDeleted?'Удалено':m.rescued_once?'Сохранено':'Изменено'}</span><span class="s13-event-preview">${isDeleted?esc(m.text||s19Kinds[m.kind]||'Текст не сохранён'):m.rescued_once?'Фото сохранено после ответа':esc(from&&from!==to?from+' → '+to:to)}</span></span>${s13Icon('chevron')}</button>`;};
 function s13Welcome(){
  const slides=[
  ['Добро пожаловать в Sbewo','Познакомься с Кью — помощником, который замечает доступные изменения в подключённых чатах.','welcome'],
@@ -456,6 +456,22 @@ function s39DatedEvents(items,renderItem){
   return heading+renderItem(m);
  }).join('');
 }
+// Home only: visually group adjacent events from the same conversation and sender.
+// A different person/chat or a new calendar day starts a fresh group; order stays unchanged.
+function s141EventIdentity(m){
+ const peer=m.chat_id!=null&&String(m.chat_id).trim()?`id:${m.chat_id}`:`chat:${m.chat||''}`;
+ const sender=s40IsGroupEvent(m)?String(m.sender_id||m.sender||''):'';
+ return `${peer}|${sender}`;
+}
+function s141HomeEvents(items){
+ let previous=null,previousDay=null;
+ return s39DatedEvents(items,m=>{
+  const day=s39EventDayKey(m),identity=s141EventIdentity(m);
+  const repeat=previous===identity&&previousDay===day;
+  previous=identity;previousDay=day;
+  return s13Event(m,{repeat,groupStart:!repeat});
+ });
+}
 // Telegram private chats have positive peer IDs; group/supergroup IDs are negative.
 // Do not infer chat type from the display name: changing names must not move events.
 const s40IsGroupEvent=m=>{
@@ -463,7 +479,7 @@ const s40IsGroupEvent=m=>{
  if(m?.chat_id!=null&&String(m.chat_id).trim()&&Number.isSafeInteger(id)&&id!==0)return id<0;
  return false; // Legacy entries without peer ID are treated as private, not guessed by name.
 };
-function s13Home(){let xs=records().filter(m=>s13EventScope==='groups'?s40IsGroupEvent(m):!s40IsGroupEvent(m));if(flt==='deleted')xs=xs.filter(x=>x.deleted);if(flt==='edited')xs=xs.filter(x=>x.edited);return `<section class="s13-mainpage s14-home">${s14ProfileBlock()}${s14HomeConnectCard()}${s65PreviewPanel()}${s13Tab([['personal','Личные','personal'],['groups','Группы','groups']],s13EventScope,'s13-scope')}${xs.length?`<div class="s13-stack s14-event-stack">${s39DatedEvents(xs,s13Event)}</div>`:(s13EventScope==='groups'?s84GroupsEmpty():s13Empty('Пока тихо',db.connected?'Кью покажет здесь новые доступные удаления и правки.':'После подключения здесь появятся доступные события.','empty',db.connected?'':s13Btn('Подключить Sbewo','connect-personal')))}</section>`;}
+function s13Home(){let xs=records().filter(m=>s13EventScope==='groups'?s40IsGroupEvent(m):!s40IsGroupEvent(m));if(flt==='deleted')xs=xs.filter(x=>x.deleted);if(flt==='edited')xs=xs.filter(x=>x.edited);return `<section class="s13-mainpage s14-home">${s14ProfileBlock()}${s14HomeConnectCard()}${s65PreviewPanel()}${s13Tab([['personal','Личные','personal'],['groups','Группы','groups']],s13EventScope,'s13-scope')}${xs.length?`<div class="s13-stack s14-event-stack">${s141HomeEvents(xs)}</div>`:(s13EventScope==='groups'?s84GroupsEmpty():s13Empty('Пока тихо',db.connected?'Кью покажет здесь новые доступные удаления и правки.':'После подключения здесь появятся доступные события.','empty',db.connected?'':s13Btn('Подключить Sbewo','connect-personal')))}</section>`;}
 function s13Archive(){return `${s13Header('close')}<section class="s13-mainpage s14-root-page"><div class="s14-compact-intro"><div><h2>Сохранённые переписки</h2><p>Ищи по чатам, медиа и избранному без лишних переходов.</p></div>${s13Face('archive')}</div>${s13Tab([['chats','Чаты'],['media','Медиа'],['favorites','Избранное']],s13ArchiveTab,'s13-archive')}<input id="search" class="s13-search" placeholder="Найти в архиве" value="${esc(query)}" />${s13ArchiveTab==='chats'?s13ChatList():s13ArchiveTab==='media'?mediaList():starList()}<p class="s13-footnote">Данные появляются после подключения. Полученные и сохранённые файлы можно открыть из карточки события.</p></section>`;}
 function s13ChatList(){const xs=connections().filter(([name,items])=>s38ChatName(name,items).toLowerCase().includes(query.toLowerCase()));return xs.length?`<div class="s13-stack">${xs.map(([name,items])=>`<button class="s13-chat-row" data-chat="${esc(name)}">${avatar(s38ChatName(name,items))}<span><strong>${esc(s13Human(s38ChatName(name,items)))}</strong><small>${items.length} сохранённых записей</small></span>${s13Icon('chevron')}</button>`).join('')}</div>`:s13Empty('Архив пуст','Когда Sbewo получит разрешённые события, они появятся здесь.','archive');}
 function s13Chats(){
