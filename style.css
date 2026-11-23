@@ -3981,3 +3981,86 @@ html[data-sbewo-theme="dark"] .s13-app .s19-chat-lasttime,.s13-app.theme-dark .s
     transform: none;
   }
 }
+
+
+/* Sbewo design system — Stage 3: unified card spacing and alignment.
+   Scoped to list cards; deliberately does not target bottom navigation,
+   marketing/hero tiles, event rows inside event groups, or modal sheets. */
+:root {
+  --sb-card-radius: 18px;
+  --sb-list-inset: 16px;
+  --sb-list-gap: 12px;
+  --sb-card-content-gap: 4px;
+  --sb-list-icon-size: 40px;
+}
+
+/* Chat list: consistent card edges and one aligned row for avatar + text. */
+.s13-app .s19-chat-list,
+.s13-app .s19-events {
+  gap: var(--sb-list-gap);
+}
+.s13-app .s19-chat-card {
+  box-sizing: border-box;
+  padding: var(--sb-list-inset);
+  gap: var(--sb-list-gap);
+  border-radius: var(--sb-card-radius);
+}
+.s13-app .s19-chat-card .s19-chat-info {
+  min-width: 0;
+  gap: var(--sb-card-content-gap);
+}
+.s13-app .s19-chat-card .s19-chat-trailing {
+  align-self: stretch;
+}
+
+/* Settings: one text column after uniformly sized icon cells.
+   Existing row dividers, theme colors and click handlers are untouched. */
+.s13-app .m12-settings-group,
+.s13-app .v9-settings-panel {
+  border-radius: var(--sb-card-radius);
+}
+.s13-app .m12-settings-group .link-row,
+.s13-app .v9-settings-panel .link-row,
+.s13-app .settings-list .link-row {
+  box-sizing: border-box;
+  gap: var(--sb-list-gap);
+}
+.s13-app .m12-settings-group .link-row .bubble,
+.s13-app .v9-settings-panel .link-row .bubble,
+.s13-app .settings-list .link-row .bubble {
+  box-sizing: border-box;
+  width: var(--sb-list-icon-size);
+  height: var(--sb-list-icon-size);
+  flex: 0 0 var(--sb-list-icon-size);
+}
+.s13-app .m12-settings-group .link-row .grow,
+.s13-app .v9-settings-panel .link-row .grow,
+.s13-app .settings-list .link-row .grow {
+  min-width: 0;
+}
+
+/* Home timeline: a single shared outer card, consistent side padding.
+   Inner events retain independent click targets and dividing lines. */
+.s13-app .s14-home .s141-event-group {
+  border-radius: var(--sb-card-radius);
+}
+.s13-app .s14-home .s141-event-group-header {
+  padding: 14px var(--sb-list-inset) 8px;
+}
+.s13-app .s14-home .s141-event-group-items .s13-event {
+  padding-left: var(--sb-list-inset);
+  padding-right: var(--sb-list-inset);
+}
+
+/* Respect the existing compact layout on narrow phones. */
+@media (max-width: 359px) {
+  .s13-app .s19-chat-card { padding: 12px; }
+  .s13-app .s14-home .s141-event-group-header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .s13-app .s14-home .s141-event-group-items .s13-event {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
