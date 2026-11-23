@@ -3852,3 +3852,10 @@ html.remix-ready .s13-features-icon i::before{display:inline-block;}
 html[data-sbewo-theme="dark"] .s13-app .s142-skeleton-card{background:#223449;border-color:#35485e}
 html[data-sbewo-theme="dark"] .s13-app .s142-shimmer{background-image:linear-gradient(105deg,#34475e 12%,#496078 38%,#34475e 65%)}
 @media(prefers-reduced-motion:reduce){.s13-app .s142-shimmer{animation:none}}
+
+/* Fullscreen Mini App: keep content below Telegram's native header controls and
+   device camera cutout while preserving the existing bottom capsule positioning. */
+html.sbewo-fullscreen .s13-app{
+ box-sizing:border-box;
+ padding-top:var(--sbewo-fullscreen-top, 0px);
+}

@@ -1,5 +1,11 @@
 'use strict';
-const tg=window.Telegram?.WebApp;try{tg?.ready();tg?.expand();tg?.setHeaderColor('#eaf5ff');tg?.setBackgroundColor('#f4f6f8')}catch{}
+const tg=window.Telegram?.WebApp;
+try{
+ tg?.ready();tg?.expand();
+ tg?.setHeaderColor('#eaf5ff');tg?.setBackgroundColor('#f4f6f8');
+ // Bot API 8.0+: request a true fullscreen webview; unsupported clients keep expand().
+ if(typeof tg?.requestFullscreen==='function' && !tg.isFullscreen)tg.requestFullscreen();
+}catch{}
 // Ask before closing the Mini App via the Telegram header or dismissal gesture.
 // This does not intercept internal navigation or programmatic page refreshes.
 try{tg?.enableClosingConfirmation?.()}catch{}
@@ -959,9 +965,18 @@ function s135SyncNavigation(){
 }
 function s135Viewport(){
  const height=Number(tg?.viewportStableHeight)||window.innerHeight;
- if(Number.isFinite(height)&&height>300){document.documentElement.style.setProperty('--sbewo-viewport-height',`${Math.round(height)}px`)}
- const bottom=Number(tg?.safeAreaInset?.bottom)||0;
+ if(Number.isFinite(height)&&height>300)document.documentElement.style.setProperty('--sbewo-viewport-height',`${Math.round(height)}px`);
+ const safe=tg?.safeAreaInset;
+ const content=tg?.contentSafeAreaInset;
+ const bottom=Number(safe?.bottom)||0;
  if(bottom>=0&&bottom<150)document.documentElement.style.setProperty('--sbewo-tg-bottom',`${bottom}px`);
+ // In fullscreen, avoid both the device cutout and Telegram's own overlay controls.
+ // Only opt into the extra top inset when Telegram confirms fullscreen mode.
+ const fullscreen=tg?.isFullscreen===true;
+ document.documentElement.classList.toggle('sbewo-fullscreen',fullscreen);
+ const safeTop=Math.max(0,Number(safe?.top)||0);
+ const contentTop=Math.max(0,Number(content?.top)||0);
+ document.documentElement.style.setProperty('--sbewo-fullscreen-top',`${Math.min(180,safeTop+contentTop)}px`);
 }
 // Maintain scroll position when polling or changing a toggle re-renders the current screen.
 render=function(){
@@ -1064,6 +1079,8 @@ function s135Prewarm(){
 window.addEventListener('load',s135Prewarm,{once:true});
 try{
  tg?.onEvent?.('viewportChanged',s135Viewport);
+ tg?.onEvent?.('fullscreenChanged',s135Viewport);
+ tg?.onEvent?.('fullscreenFailed',s135Viewport);
  tg?.onEvent?.('safeAreaChanged',s135Viewport);
  tg?.onEvent?.('contentSafeAreaChanged',s135Viewport);
  tg?.onEvent?.('themeChanged',()=>{
